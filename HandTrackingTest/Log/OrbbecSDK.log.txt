@@ -1,0 +1,420 @@
+[05/13 23:11:13.677318][info][17720][DeviceManager.cpp:25] Current found device(s): (1)
+[05/13 23:11:13.677378][info][17720][DeviceManager.cpp:34] 	- Name: FemtoBolt, PID: 0x066b, SN/ID: CL8F253006W, Connection: USB2.1
+[05/13 23:11:13.677385][info][17720][DeviceManager.cpp:405] Enable net device enumeration: true
+[05/13 23:11:14.701146][info][17720][DeviceManager.cpp:25] Current device(s) list: (1)
+[05/13 23:11:14.701171][info][17720][DeviceManager.cpp:34] 	- Name: FemtoBolt, PID: 0x066b, SN/ID: CL8F253006W, Connection: USB2.1
+[05/13 23:11:15.210707][warning][17720][FemtoBoltDevice.cpp:113] Execute failure! A std::exception has occurred!
+ - where: FemtoBoltDevice.cpp(113):libobsensor::FemtoBoltDevice::initSensorList::<lambda_1392369c4eca61e2b08b5eacb87929af>::operator ()
+ - msg: Could not load library "C:\Users\SH4G\Downloads\Museo_del_niño\HandTrackingTest\Assets\Plugins\extensions/frameprocessor/ob_frame_processor.dll"
+Unknown error (FormatMessage failed)
+ - type: class dylib::load_error
+[05/13 23:11:15.210737][warning][17720][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: IDeviceComponent.hpp(37)
+ - msg: DeviceComponentPtr is nullptr
+ - type: UNKNOWN
+ - status: 101
+[05/13 23:11:15.210757][warning][17720][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: DeviceComponentPtr is nullptr
+ - type: class libobsensor::recoverable_exception
+ - status: 101
+[05/13 23:11:15.210767][warning][17720][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: DeviceBase.cpp(376)
+ - msg: Device Component 'frame processor factory' not found!
+ - type: NOT_FOUND
+ - status: 114
+[05/13 23:11:15.210778][warning][17720][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: Device Component 'frame processor factory' not found!
+ - type: class libobsensor::recoverable_exception
+ - status: 114
+[05/13 23:11:15.210784][warning][17720][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: DeviceBase.cpp(376)
+ - msg: Device Component 'frame processor factory' not found!
+ - type: NOT_FOUND
+ - status: 114
+[05/13 23:11:15.210791][warning][17720][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: Device Component 'frame processor factory' not found!
+ - type: class libobsensor::recoverable_exception
+ - status: 114
+[05/13 23:11:15.210798][info][17720][DeviceManager.cpp:199] Device created successfully! Name: Femto Bolt, PID: 0x066b, SN/ID: CL8F253006W FW: 1.0.9
+[05/13 23:15:09.201885][info][17720][DeviceManager.cpp:25] Current found device(s): (1)
+[05/13 23:15:09.201903][info][17720][DeviceManager.cpp:34] 	- Name: FemtoBolt, PID: 0x066b, SN/ID: CL8F253006W, Connection: USB2.1
+[05/13 23:15:09.201906][info][17720][DeviceManager.cpp:405] Enable net device enumeration: true
+[05/13 23:15:10.220411][info][17720][DeviceManager.cpp:25] Current device(s) list: (1)
+[05/13 23:15:10.220428][info][17720][DeviceManager.cpp:34] 	- Name: FemtoBolt, PID: 0x066b, SN/ID: CL8F253006W, Connection: USB2.1
+[05/13 23:15:10.721372][warning][17720][FemtoBoltDevice.cpp:113] Execute failure! A std::exception has occurred!
+ - where: FemtoBoltDevice.cpp(113):libobsensor::FemtoBoltDevice::initSensorList::<lambda_1392369c4eca61e2b08b5eacb87929af>::operator ()
+ - msg: Could not load library "C:\Users\SH4G\Downloads\Museo_del_niño\HandTrackingTest\Assets\Plugins\extensions/frameprocessor/ob_frame_processor.dll"
+Unknown error (FormatMessage failed)
+ - type: class dylib::load_error
+[05/13 23:15:10.721396][warning][17720][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: IDeviceComponent.hpp(37)
+ - msg: DeviceComponentPtr is nullptr
+ - type: UNKNOWN
+ - status: 101
+[05/13 23:15:10.721410][warning][17720][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: DeviceComponentPtr is nullptr
+ - type: class libobsensor::recoverable_exception
+ - status: 101
+[05/13 23:15:10.721452][warning][17720][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: DeviceBase.cpp(376)
+ - msg: Device Component 'frame processor factory' not found!
+ - type: NOT_FOUND
+ - status: 114
+[05/13 23:15:10.721463][warning][17720][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: Device Component 'frame processor factory' not found!
+ - type: class libobsensor::recoverable_exception
+ - status: 114
+[05/13 23:15:10.721469][warning][17720][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: DeviceBase.cpp(376)
+ - msg: Device Component 'frame processor factory' not found!
+ - type: NOT_FOUND
+ - status: 114
+[05/13 23:15:10.721476][warning][17720][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: Device Component 'frame processor factory' not found!
+ - type: class libobsensor::recoverable_exception
+ - status: 114
+[05/13 23:15:10.721482][info][17720][DeviceManager.cpp:199] Device created successfully! Name: Femto Bolt, PID: 0x066b, SN/ID: CL8F253006W FW: 1.0.9
+[05/13 23:15:10.721506][info][17720][Pipeline.cpp:54] [CL8F253006W] Pipeline created with device: {name: Femto Bolt, sn: CL8F253006W}, @0x204EFD2ABD0
+[05/13 23:15:10.765747][warning][17720][FemtoBoltDevice.cpp:128] Execute failure! A std::exception has occurred!
+ - where: FemtoBoltDevice.cpp(128):libobsensor::FemtoBoltDevice::initSensorList::<lambda_f35409ba55c5d788aba3f41714a50d81>::operator ()
+ - msg: Could not load library "C:\Users\SH4G\Downloads\Museo_del_niño\HandTrackingTest\Assets\Plugins\extensions/depthengine/depthengine.dll"
+Unknown error (FormatMessage failed)
+ - type: class dylib::load_error
+[05/13 23:15:10.765773][warning][17720][FemtoBoltDevice.cpp:128] create RawPhaseStreamer failed.
+[05/13 23:15:10.765784][warning][17720][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: IDeviceComponent.hpp(37)
+ - msg: DeviceComponentPtr is nullptr
+ - type: UNKNOWN
+ - status: 101
+[05/13 23:15:10.765798][warning][17720][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: DeviceComponentPtr is nullptr
+ - type: class libobsensor::recoverable_exception
+ - status: 101
+[05/13 23:15:10.876547][warning][17720][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100
+[05/13 23:15:14.437069][warning][33068][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**24 logs in 3560ms, last: 23:15:13.864196**]
+[05/13 23:15:23.700151][warning][36192][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**3 logs in 9263ms, last: 23:15:17.914677**]
+[05/13 23:16:29.802312][warning][17720][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100
+[05/13 23:16:30.678470][info][17720][Pipeline.cpp:367] [CL8F253006W] Try to stop pipeline!
+[05/13 23:16:30.678489][info][17720][Pipeline.cpp:392] [CL8F253006W] Stop pipeline done!
+[05/13 23:16:30.896346][info][3904][Pipeline.cpp:65] [CL8F253006W] Pipeline destroyed! @0x204EFD2ABD0
+[05/13 23:16:30.896449][info][3904][SensorBase.cpp:47] [CL8F253006W] SensorBase is destroyed
+[05/13 23:16:31.429302][warning][33928][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**8 logs in 1626ms, last: 23:16:30.650065**]
+[05/13 23:16:35.202340][info][17720][DeviceManager.cpp:25] Current found device(s): (1)
+[05/13 23:16:35.202355][info][17720][DeviceManager.cpp:34] 	- Name: FemtoBolt, PID: 0x066b, SN/ID: CL8F253006W, Connection: USB2.1
+[05/13 23:16:35.202358][info][17720][DeviceManager.cpp:405] Enable net device enumeration: true
+[05/13 23:16:36.232286][info][17720][DeviceManager.cpp:25] Current device(s) list: (1)
+[05/13 23:16:36.232306][info][17720][DeviceManager.cpp:34] 	- Name: FemtoBolt, PID: 0x066b, SN/ID: CL8F253006W, Connection: USB2.1
+[05/13 23:16:36.737660][warning][17720][FemtoBoltDevice.cpp:113] Execute failure! A std::exception has occurred!
+ - where: FemtoBoltDevice.cpp(113):libobsensor::FemtoBoltDevice::initSensorList::<lambda_1392369c4eca61e2b08b5eacb87929af>::operator ()
+ - msg: Could not load library "C:\Users\SH4G\Downloads\Museo_del_niño\HandTrackingTest\Assets\Plugins\extensions/frameprocessor/ob_frame_processor.dll"
+Unknown error (FormatMessage failed)
+ - type: class dylib::load_error
+[05/13 23:16:36.737688][warning][17720][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: IDeviceComponent.hpp(37)
+ - msg: DeviceComponentPtr is nullptr
+ - type: UNKNOWN
+ - status: 101
+[05/13 23:16:36.737701][warning][17720][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: DeviceComponentPtr is nullptr
+ - type: class libobsensor::recoverable_exception
+ - status: 101
+[05/13 23:16:36.737709][warning][17720][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: DeviceBase.cpp(376)
+ - msg: Device Component 'frame processor factory' not found!
+ - type: NOT_FOUND
+ - status: 114
+[05/13 23:16:36.737718][warning][17720][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: Device Component 'frame processor factory' not found!
+ - type: class libobsensor::recoverable_exception
+ - status: 114
+[05/13 23:16:36.737723][warning][17720][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: DeviceBase.cpp(376)
+ - msg: Device Component 'frame processor factory' not found!
+ - type: NOT_FOUND
+ - status: 114
+[05/13 23:16:36.737730][warning][17720][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: Device Component 'frame processor factory' not found!
+ - type: class libobsensor::recoverable_exception
+ - status: 114
+[05/13 23:16:36.737737][info][17720][DeviceManager.cpp:199] Device created successfully! Name: Femto Bolt, PID: 0x066b, SN/ID: CL8F253006W FW: 1.0.9
+[05/13 23:16:36.737749][info][17720][Pipeline.cpp:54] [CL8F253006W] Pipeline created with device: {name: Femto Bolt, sn: CL8F253006W}, @0x20522AB8070
+[05/13 23:16:36.781591][warning][17720][FemtoBoltDevice.cpp:128] Execute failure! A std::exception has occurred!
+ - where: FemtoBoltDevice.cpp(128):libobsensor::FemtoBoltDevice::initSensorList::<lambda_f35409ba55c5d788aba3f41714a50d81>::operator ()
+ - msg: Could not load library "C:\Users\SH4G\Downloads\Museo_del_niño\HandTrackingTest\Assets\Plugins\extensions/depthengine/depthengine.dll"
+Unknown error (FormatMessage failed)
+ - type: class dylib::load_error
+[05/13 23:16:36.781605][warning][17720][FemtoBoltDevice.cpp:128] create RawPhaseStreamer failed.
+[05/13 23:16:36.781612][warning][17720][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: IDeviceComponent.hpp(37)
+ - msg: DeviceComponentPtr is nullptr
+ - type: UNKNOWN
+ - status: 101
+[05/13 23:16:36.781623][warning][17720][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: DeviceComponentPtr is nullptr
+ - type: class libobsensor::recoverable_exception
+ - status: 101
+[05/13 23:16:36.892031][warning][17720][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100
+[05/13 23:16:39.965301][warning][17720][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**25 logs in 3073ms**]
+[05/13 23:16:46.069204][warning][9480][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**13 logs in 6103ms, last: 23:16:41.324620**]
+[05/13 23:17:11.415935][warning][17720][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100
+[05/13 23:17:14.520997][warning][36216][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**12 logs in 3105ms, last: 23:17:12.676651**]
+[05/13 23:17:20.647105][warning][14076][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**3 logs in 6126ms, last: 23:17:14.864087**]
+[05/13 23:17:44.656870][warning][17720][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100
+[05/13 23:17:46.568502][info][17720][Pipeline.cpp:367] [CL8F253006W] Try to stop pipeline!
+[05/13 23:17:46.568521][info][17720][Pipeline.cpp:392] [CL8F253006W] Stop pipeline done!
+[05/13 23:17:46.794701][info][3904][Pipeline.cpp:65] [CL8F253006W] Pipeline destroyed! @0x20522AB8070
+[05/13 23:17:46.794794][info][3904][SensorBase.cpp:47] [CL8F253006W] SensorBase is destroyed
+[05/13 23:17:47.420919][warning][15184][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**18 logs in 2764ms, last: 23:17:46.540304**]
+[05/13 23:18:35.786049][info][17128][DeviceManager.cpp:25] Current found device(s): (1)
+[05/13 23:18:35.786089][info][17128][DeviceManager.cpp:34] 	- Name: FemtoBolt, PID: 0x066b, SN/ID: CL8F253006W, Connection: USB2.1
+[05/13 23:18:35.786094][info][17128][DeviceManager.cpp:405] Enable net device enumeration: true
+[05/13 23:18:36.812939][info][17128][DeviceManager.cpp:25] Current device(s) list: (1)
+[05/13 23:18:36.812956][info][17128][DeviceManager.cpp:34] 	- Name: FemtoBolt, PID: 0x066b, SN/ID: CL8F253006W, Connection: USB2.1
+[05/13 23:18:37.323646][warning][17128][FemtoBoltDevice.cpp:113] Execute failure! A std::exception has occurred!
+ - where: FemtoBoltDevice.cpp(113):libobsensor::FemtoBoltDevice::initSensorList::<lambda_1392369c4eca61e2b08b5eacb87929af>::operator ()
+ - msg: Could not load library "C:\Users\SH4G\Downloads\Museo_del_niño\HandTrackingTest\Assets\Plugins\extensions/frameprocessor/ob_frame_processor.dll"
+Unknown error (FormatMessage failed)
+ - type: class dylib::load_error
+[05/13 23:18:37.323680][warning][17128][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: IDeviceComponent.hpp(37)
+ - msg: DeviceComponentPtr is nullptr
+ - type: UNKNOWN
+ - status: 101
+[05/13 23:18:37.323701][warning][17128][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: DeviceComponentPtr is nullptr
+ - type: class libobsensor::recoverable_exception
+ - status: 101
+[05/13 23:18:37.323713][warning][17128][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: DeviceBase.cpp(376)
+ - msg: Device Component 'frame processor factory' not found!
+ - type: NOT_FOUND
+ - status: 114
+[05/13 23:18:37.323725][warning][17128][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: Device Component 'frame processor factory' not found!
+ - type: class libobsensor::recoverable_exception
+ - status: 114
+[05/13 23:18:37.323731][warning][17128][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: DeviceBase.cpp(376)
+ - msg: Device Component 'frame processor factory' not found!
+ - type: NOT_FOUND
+ - status: 114
+[05/13 23:18:37.323738][warning][17128][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: Device Component 'frame processor factory' not found!
+ - type: class libobsensor::recoverable_exception
+ - status: 114
+[05/13 23:18:37.323744][info][17128][DeviceManager.cpp:199] Device created successfully! Name: Femto Bolt, PID: 0x066b, SN/ID: CL8F253006W FW: 1.0.9
+[05/13 23:18:37.323765][info][17128][Pipeline.cpp:54] [CL8F253006W] Pipeline created with device: {name: Femto Bolt, sn: CL8F253006W}, @0x1707331B580
+[05/13 23:18:37.369294][warning][17128][FemtoBoltDevice.cpp:128] Execute failure! A std::exception has occurred!
+ - where: FemtoBoltDevice.cpp(128):libobsensor::FemtoBoltDevice::initSensorList::<lambda_f35409ba55c5d788aba3f41714a50d81>::operator ()
+ - msg: Could not load library "C:\Users\SH4G\Downloads\Museo_del_niño\HandTrackingTest\Assets\Plugins\extensions/depthengine/depthengine.dll"
+Unknown error (FormatMessage failed)
+ - type: class dylib::load_error
+[05/13 23:18:37.369354][warning][17128][FemtoBoltDevice.cpp:128] create RawPhaseStreamer failed.
+[05/13 23:18:37.369365][warning][17128][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: IDeviceComponent.hpp(37)
+ - msg: DeviceComponentPtr is nullptr
+ - type: UNKNOWN
+ - status: 101
+[05/13 23:18:37.369379][warning][17128][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: DeviceComponentPtr is nullptr
+ - type: class libobsensor::recoverable_exception
+ - status: 101
+[05/13 23:18:37.480975][warning][17128][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100
+[05/13 23:18:40.555454][warning][17128][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**25 logs in 3074ms**]
+[05/13 23:18:46.658653][warning][16484][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**5 logs in 6103ms, last: 23:18:41.082609**]
+[05/13 23:19:41.696678][warning][17128][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100
+[05/13 23:19:43.071234][info][17128][Pipeline.cpp:367] [CL8F253006W] Try to stop pipeline!
+[05/13 23:19:43.071254][info][17128][Pipeline.cpp:392] [CL8F253006W] Stop pipeline done!
+[05/13 23:19:43.264385][info][34620][Pipeline.cpp:65] [CL8F253006W] Pipeline destroyed! @0x1707331B580
+[05/13 23:19:43.264497][info][34620][SensorBase.cpp:47] [CL8F253006W] SensorBase is destroyed
+[05/13 23:19:44.004028][warning][1644][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**10 logs in 2307ms, last: 23:19:43.034285**]
+[05/13 23:31:58.163622][info][31580][DeviceManager.cpp:25] Current found device(s): (1)
+[05/13 23:31:58.163641][info][31580][DeviceManager.cpp:34] 	- Name: FemtoBolt, PID: 0x066b, SN/ID: CL8F253006W, Connection: USB2.1
+[05/13 23:31:58.163645][info][31580][DeviceManager.cpp:405] Enable net device enumeration: true
+[05/13 23:31:59.185508][info][31580][DeviceManager.cpp:25] Current device(s) list: (1)
+[05/13 23:31:59.185527][info][31580][DeviceManager.cpp:34] 	- Name: FemtoBolt, PID: 0x066b, SN/ID: CL8F253006W, Connection: USB2.1
+[05/13 23:31:59.747220][warning][31580][FemtoBoltDevice.cpp:113] Execute failure! A std::exception has occurred!
+ - where: FemtoBoltDevice.cpp(113):libobsensor::FemtoBoltDevice::initSensorList::<lambda_1392369c4eca61e2b08b5eacb87929af>::operator ()
+ - msg: Could not load library "C:\Users\SH4G\Downloads\Museo_del_niño\HandTrackingTest\Assets\Plugins\extensions/frameprocessor/ob_frame_processor.dll"
+Unknown error (FormatMessage failed)
+ - type: class dylib::load_error
+[05/13 23:31:59.747246][warning][31580][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: IDeviceComponent.hpp(37)
+ - msg: DeviceComponentPtr is nullptr
+ - type: UNKNOWN
+ - status: 101
+[05/13 23:31:59.747268][warning][31580][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: DeviceComponentPtr is nullptr
+ - type: class libobsensor::recoverable_exception
+ - status: 101
+[05/13 23:31:59.747278][warning][31580][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: DeviceBase.cpp(376)
+ - msg: Device Component 'frame processor factory' not found!
+ - type: NOT_FOUND
+ - status: 114
+[05/13 23:31:59.747313][warning][31580][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: Device Component 'frame processor factory' not found!
+ - type: class libobsensor::recoverable_exception
+ - status: 114
+[05/13 23:31:59.747322][warning][31580][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: DeviceBase.cpp(376)
+ - msg: Device Component 'frame processor factory' not found!
+ - type: NOT_FOUND
+ - status: 114
+[05/13 23:31:59.747330][warning][31580][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: Device Component 'frame processor factory' not found!
+ - type: class libobsensor::recoverable_exception
+ - status: 114
+[05/13 23:31:59.747337][info][31580][DeviceManager.cpp:199] Device created successfully! Name: Femto Bolt, PID: 0x066b, SN/ID: CL8F253006W FW: 1.0.9
+[05/13 23:31:59.747357][info][31580][Pipeline.cpp:54] [CL8F253006W] Pipeline created with device: {name: Femto Bolt, sn: CL8F253006W}, @0x13F839F4660
+[05/13 23:31:59.800945][warning][31580][FemtoBoltDevice.cpp:128] Execute failure! A std::exception has occurred!
+ - where: FemtoBoltDevice.cpp(128):libobsensor::FemtoBoltDevice::initSensorList::<lambda_f35409ba55c5d788aba3f41714a50d81>::operator ()
+ - msg: Could not load library "C:\Users\SH4G\Downloads\Museo_del_niño\HandTrackingTest\Assets\Plugins\extensions/depthengine/depthengine.dll"
+Unknown error (FormatMessage failed)
+ - type: class dylib::load_error
+[05/13 23:31:59.800966][warning][31580][FemtoBoltDevice.cpp:128] create RawPhaseStreamer failed.
+[05/13 23:31:59.800974][warning][31580][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: IDeviceComponent.hpp(37)
+ - msg: DeviceComponentPtr is nullptr
+ - type: UNKNOWN
+ - status: 101
+[05/13 23:31:59.800988][warning][31580][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: DeviceComponentPtr is nullptr
+ - type: class libobsensor::recoverable_exception
+ - status: 101
+[05/13 23:31:59.911610][warning][31580][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100
+[05/13 23:32:03.516152][warning][31644][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**18 logs in 3604ms, last: 23:32:02.302881**]
+[05/13 23:32:51.762372][warning][31580][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100
+[05/13 23:32:52.880550][info][31580][Pipeline.cpp:367] [CL8F253006W] Try to stop pipeline!
+[05/13 23:32:52.880570][info][31580][Pipeline.cpp:392] [CL8F253006W] Stop pipeline done!
+[05/13 23:32:53.079839][info][19640][Pipeline.cpp:65] [CL8F253006W] Pipeline destroyed! @0x13F839F4660
+[05/13 23:32:53.079938][info][19640][SensorBase.cpp:47] [CL8F253006W] SensorBase is destroyed
+[05/13 23:32:53.095297][warning][3896][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**10 logs in 1332ms, last: 23:32:52.852872**]
+[05/13 23:32:58.574260][info][31580][DeviceManager.cpp:25] Current found device(s): (1)
+[05/13 23:32:58.574273][info][31580][DeviceManager.cpp:34] 	- Name: FemtoBolt, PID: 0x066b, SN/ID: CL8F253006W, Connection: USB2.1
+[05/13 23:32:58.574275][info][31580][DeviceManager.cpp:405] Enable net device enumeration: true
+[05/13 23:32:59.593560][info][31580][DeviceManager.cpp:25] Current device(s) list: (1)
+[05/13 23:32:59.593577][info][31580][DeviceManager.cpp:34] 	- Name: FemtoBolt, PID: 0x066b, SN/ID: CL8F253006W, Connection: USB2.1
+[05/13 23:33:00.099100][warning][31580][FemtoBoltDevice.cpp:113] Execute failure! A std::exception has occurred!
+ - where: FemtoBoltDevice.cpp(113):libobsensor::FemtoBoltDevice::initSensorList::<lambda_1392369c4eca61e2b08b5eacb87929af>::operator ()
+ - msg: Could not load library "C:\Users\SH4G\Downloads\Museo_del_niño\HandTrackingTest\Assets\Plugins\extensions/frameprocessor/ob_frame_processor.dll"
+Unknown error (FormatMessage failed)
+ - type: class dylib::load_error
+[05/13 23:33:00.099169][warning][31580][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: IDeviceComponent.hpp(37)
+ - msg: DeviceComponentPtr is nullptr
+ - type: UNKNOWN
+ - status: 101
+[05/13 23:33:00.099185][warning][31580][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: DeviceComponentPtr is nullptr
+ - type: class libobsensor::recoverable_exception
+ - status: 101
+[05/13 23:33:00.099194][warning][31580][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: DeviceBase.cpp(376)
+ - msg: Device Component 'frame processor factory' not found!
+ - type: NOT_FOUND
+ - status: 114
+[05/13 23:33:00.099202][warning][31580][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: Device Component 'frame processor factory' not found!
+ - type: class libobsensor::recoverable_exception
+ - status: 114
+[05/13 23:33:00.099208][warning][31580][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: DeviceBase.cpp(376)
+ - msg: Device Component 'frame processor factory' not found!
+ - type: NOT_FOUND
+ - status: 114
+[05/13 23:33:00.099215][warning][31580][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: Device Component 'frame processor factory' not found!
+ - type: class libobsensor::recoverable_exception
+ - status: 114
+[05/13 23:33:00.099221][info][31580][DeviceManager.cpp:199] Device created successfully! Name: Femto Bolt, PID: 0x066b, SN/ID: CL8F253006W FW: 1.0.9
+[05/13 23:33:52.044327][info][31580][DeviceManager.cpp:25] Current found device(s): (1)
+[05/13 23:33:52.044341][info][31580][DeviceManager.cpp:34] 	- Name: FemtoBolt, PID: 0x066b, SN/ID: CL8F253006W, Connection: USB2.1
+[05/13 23:33:52.044343][info][31580][DeviceManager.cpp:405] Enable net device enumeration: true
+[05/13 23:33:53.067353][info][31580][DeviceManager.cpp:25] Current device(s) list: (1)
+[05/13 23:33:53.067370][info][31580][DeviceManager.cpp:34] 	- Name: FemtoBolt, PID: 0x066b, SN/ID: CL8F253006W, Connection: USB2.1
+[05/13 23:33:53.572941][warning][31580][FemtoBoltDevice.cpp:113] Execute failure! A std::exception has occurred!
+ - where: FemtoBoltDevice.cpp(113):libobsensor::FemtoBoltDevice::initSensorList::<lambda_1392369c4eca61e2b08b5eacb87929af>::operator ()
+ - msg: Could not load library "C:\Users\SH4G\Downloads\Museo_del_niño\HandTrackingTest\Assets\Plugins\extensions/frameprocessor/ob_frame_processor.dll"
+Unknown error (FormatMessage failed)
+ - type: class dylib::load_error
+[05/13 23:33:53.572967][warning][31580][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: IDeviceComponent.hpp(37)
+ - msg: DeviceComponentPtr is nullptr
+ - type: UNKNOWN
+ - status: 101
+[05/13 23:33:53.572980][warning][31580][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: DeviceComponentPtr is nullptr
+ - type: class libobsensor::recoverable_exception
+ - status: 101
+[05/13 23:33:53.572989][warning][31580][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: DeviceBase.cpp(376)
+ - msg: Device Component 'frame processor factory' not found!
+ - type: NOT_FOUND
+ - status: 114
+[05/13 23:33:53.572998][warning][31580][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: Device Component 'frame processor factory' not found!
+ - type: class libobsensor::recoverable_exception
+ - status: 114
+[05/13 23:33:53.573036][warning][31580][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: DeviceBase.cpp(376)
+ - msg: Device Component 'frame processor factory' not found!
+ - type: NOT_FOUND
+ - status: 114
+[05/13 23:33:53.573046][warning][31580][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: Device Component 'frame processor factory' not found!
+ - type: class libobsensor::recoverable_exception
+ - status: 114
+[05/13 23:33:53.573052][info][31580][DeviceManager.cpp:199] Device created successfully! Name: Femto Bolt, PID: 0x066b, SN/ID: CL8F253006W FW: 1.0.9
+[05/13 23:33:53.573452][info][31580][Pipeline.cpp:54] [CL8F253006W] Pipeline created with device: {name: Femto Bolt, sn: CL8F253006W}, @0x141AB944AE0
+[05/13 23:33:53.617014][warning][31580][FemtoBoltDevice.cpp:128] Execute failure! A std::exception has occurred!
+ - where: FemtoBoltDevice.cpp(128):libobsensor::FemtoBoltDevice::initSensorList::<lambda_f35409ba55c5d788aba3f41714a50d81>::operator ()
+ - msg: Could not load library "C:\Users\SH4G\Downloads\Museo_del_niño\HandTrackingTest\Assets\Plugins\extensions/depthengine/depthengine.dll"
+Unknown error (FormatMessage failed)
+ - type: class dylib::load_error
+[05/13 23:33:53.617028][warning][31580][FemtoBoltDevice.cpp:128] create RawPhaseStreamer failed.
+[05/13 23:33:53.617036][warning][31580][ObException.cpp:26] A recoverable_exception has occurred!
+ - where: IDeviceComponent.hpp(37)
+ - msg: DeviceComponentPtr is nullptr
+ - type: UNKNOWN
+ - status: 101
+[05/13 23:33:53.617046][warning][31580][DeviceBase.cpp:357] Execute failure! A libobsensor_exception has occurred!
+ - where: DeviceBase.cpp(357):libobsensor::DeviceBase::getComponent
+ - msg: DeviceComponentPtr is nullptr
+ - type: class libobsensor::recoverable_exception
+ - status: 101
+[05/13 23:33:53.727857][warning][31580][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100
+[05/13 23:33:56.772285][warning][31580][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**25 logs in 3044ms**]
+[05/13 23:34:02.876090][warning][37040][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**37 logs in 6103ms, last: 23:34:01.647218**]
+[05/13 23:34:37.741992][warning][31580][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100
+[05/13 23:34:40.851289][warning][35408][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**6 logs in 3109ms, last: 23:34:38.372101**]
+[05/13 23:34:41.937307][info][31580][Pipeline.cpp:367] [CL8F253006W] Try to stop pipeline!
+[05/13 23:34:41.937328][info][31580][Pipeline.cpp:392] [CL8F253006W] Stop pipeline done!
+[05/13 23:34:42.128682][info][19640][Pipeline.cpp:65] [CL8F253006W] Pipeline destroyed! @0x141AB944AE0
+[05/13 23:34:42.128803][info][19640][SensorBase.cpp:47] [CL8F253006W] SensorBase is destroyed
+[05/13 23:34:47.164690][warning][20688][Pipeline.cpp:335] [CL8F253006W] Wait for frame timeout, you can try to increase the wait time! current timeout=100 [**8 logs in 6313ms, last: 23:34:41.909630**]
