@@ -12,7 +12,8 @@ public class SpawnPiramides : MonoBehaviour
     public AudioSource audioSource;
     public AudioSource audioRanchitos;
 
-    public GameObject personaje;
+    public GameObject[] personajes;
+    public GameObject[] caballos;
 
     void Start()
     {
@@ -32,6 +33,11 @@ public class SpawnPiramides : MonoBehaviour
         {
             escalasRanchitos[i] = ranchitos[i].transform.localScale;
             ranchitos[i].SetActive(false);
+        }
+
+        for (int i = 0; i < caballos.Length; i++)
+        {
+            caballos[i].SetActive(false);
         }
     }
 
@@ -59,7 +65,15 @@ public class SpawnPiramides : MonoBehaviour
             yield return StartCoroutine(AnimarEscala(p, escalasOriginales[i], tiempoPorObjeto));
         }
 
-        personaje.SetActive(true);
+        for (int i = 0; i < personajes.Length; i++)
+        {
+            personajes[i].SetActive(true);
+        }
+
+        for (int i = 0; i < caballos.Length; i++)
+        {
+            caballos[i].SetActive(true);
+        }
 
         // luego ranchitos
         float tiempoPorRanchito = audioSource.clip.length / ranchitos.Length;
