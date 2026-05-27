@@ -2,23 +2,35 @@ using UnityEngine;
 
 public class DragObject : MonoBehaviour
 {
-
     public GameManager gameManager;
+
+    public Transform zonaCorrecta;
+
+    public GameObject outlineObject;
+
     private bool yaColocado = false;
     private bool isDragging = false;
+
     private float distance;
-    private Color colorOriginal;
-    
-    public Transform zonaCorrecta;
+
+    private Vector3 offsetCentro;
 
     void Start()
     {
-        colorOriginal = GetComponent<Renderer>().material.color;
+        // guardar offset una sola vez
+        offsetCentro =
+            transform.position -
+            GetComponent<Renderer>().bounds.center;
+
+        // apagar outline al iniciar
+        if (outlineObject != null)
+        {
+            outlineObject.SetActive(false);
+        }
     }
 
     void OnMouseDown()
     {
-        // Si ya está colocado, no hacer nada
         if (yaColocado)
         {
             return;
@@ -31,7 +43,11 @@ public class DragObject : MonoBehaviour
         {
             if (hit.transform == transform)
             {
-                distance = Vector3.Distance(transform.position, Camera.main.transform.position);
+                distance = Vector3.Distance(
+                    transform.position,
+                    Camera.main.transform.position
+                );
+
                 isDragging = true;
             }
         }
@@ -41,27 +57,35 @@ public class DragObject : MonoBehaviour
     {
         isDragging = false;
 
+        if (yaColocado)
+        {
+            return;
+        }
+
         if (zonaCorrecta != null)
         {
-            float distancia = Vector3.Distance(transform.position, zonaCorrecta.position);
+            float distancia = Vector3.Distance(
+                transform.position,
+                zonaCorrecta.position
+            );
 
             if (distancia < 3f)
             {
-                Vector3 offset = transform.position - GetComponent<Renderer>().bounds.center;
-
-                transform.position = new Vector3(
-                    zonaCorrecta.position.x,
-                    transform.position.y,
-                    zonaCorrecta.position.z
-                ) + offset;
+                transform.position =
+                    new Vector3(
+                        zonaCorrecta.position.x,
+                        transform.position.y,
+                        zonaCorrecta.position.z
+                    ) + offsetCentro;
 
                 if (!yaColocado)
                 {
                     yaColocado = true;
+
                     gameManager.RegistrarColocacion();
 
-                    // 🔥 activar aparición de pirámides
-                    FindObjectOfType<SpawnPiramides>().ActivarPiramides();
+                    FindObjectOfType<SpawnPiramides>()
+                        .ActivarPiramides();
                 }
 
                 Debug.Log("¡Colocación correcta!");
@@ -71,21 +95,34 @@ public class DragObject : MonoBehaviour
 
     void Update()
     {
-        if (isDragging)
+        if (isDragging && !yaColocado)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray =
+                Camera.main.ScreenPointToRay(Input.mousePosition);
+
             Vector3 point = ray.GetPoint(distance);
-            transform.position = new Vector3(point.x, transform.position.y, point.z);
+
+            transform.position = new Vector3(
+                point.x,
+                transform.position.y,
+                point.z
+            );
         }
     }
 
     void OnMouseEnter()
     {
-        GetComponent<Renderer>().material.color = Color.yellow;
+        if (!yaColocado && outlineObject != null)
+        {
+            outlineObject.SetActive(true);
+        }
     }
 
     void OnMouseExit()
     {
-        GetComponent<Renderer>().material.color = colorOriginal;
+        if (outlineObject != null)
+        {
+            outlineObject.SetActive(false);
+        }
     }
 }
