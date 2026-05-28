@@ -17,10 +17,14 @@ public class DragObject : MonoBehaviour
 
     void Start()
     {
-        // guardar offset una sola vez
-        offsetCentro =
-            transform.position -
-            GetComponent<Renderer>().bounds.center;
+        // guardar SOLO offset horizontal
+        Bounds bounds = GetComponent<Renderer>().bounds;
+
+        offsetCentro = new Vector3(
+            transform.position.x - bounds.center.x,
+            0,
+            transform.position.z - bounds.center.z
+        );
 
         // apagar outline al iniciar
         if (outlineObject != null)
@@ -78,15 +82,12 @@ public class DragObject : MonoBehaviour
                         zonaCorrecta.position.z
                     ) + offsetCentro;
 
-                if (!yaColocado)
-                {
-                    yaColocado = true;
+                yaColocado = true;
 
-                    gameManager.RegistrarColocacion();
+                gameManager.RegistrarColocacion();
 
-                    FindObjectOfType<SpawnPiramides>()
-                        .ActivarPiramides();
-                }
+                FindObjectOfType<SpawnPiramides>()
+                    .ActivarPiramides();
 
                 Debug.Log("¡Colocación correcta!");
             }

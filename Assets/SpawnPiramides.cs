@@ -51,7 +51,7 @@ public class SpawnPiramides : MonoBehaviour
         // 🔥 reproducir audio UNA sola vez
         audioSource.PlayOneShot(audioSource.clip);
 
-        float tiempoPorObjeto = audioSource.clip.length / piramides.Length;
+        float tiempoPorObjeto = 0.5f;
 
         // primero pirámides
         for (int i = 0; i < piramides.Length; i++)
