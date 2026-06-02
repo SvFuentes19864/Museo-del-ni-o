@@ -1,0 +1,249 @@
+fileFormatVersion: 2
+guid: 3addc4e4b3517a44aa3baa9b351ac1bd
+ModelImporter:
+  serializedVersion: 24200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 08 - Default
+    second: {fileID: 2100000, guid: 5aec09db38c675a4fa852b5416cbb912, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 09 - Default
+    second: {fileID: 2100000, guid: 19990bdc95a44024ea10b79c1a2a91c4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 13 - Default
+    second: {fileID: 2100000, guid: bd95d274beef26243b93986636fb24e6, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      internalID: 1827226128182048838
+      firstFrame: 0
+      lastFrame: 100
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: Low Poly Horse(Clone)
+      parentName: 
+      position: {x: -0.01744346, y: 3.7616305, z: -1.522841}
+      rotation: {x: 0.00000006657903, y: -0, z: -0, w: 1}
+      scale: {x: 0.69243616, y: 1.5910158, z: 0.99999994}
+    - name: Tail
+      parentName: Low Poly Horse(Clone)
+      position: {x: 0.025191262, y: -0.2709949, z: -1.2558167}
+      rotation: {x: -1.6658097e-21, y: 0.7071067, z: 1.6658093e-21, w: 0.7071069}
+      scale: {x: 1, y: 0.6285293, z: 1.4441766}
+    - name: Head
+      parentName: Low Poly Horse(Clone)
+      position: {x: 0.00000012804651, y: 0.87880844, z: 4.7988963}
+      rotation: {x: -0.5372995, y: 0, z: -0, w: 0.84339154}
+      scale: {x: 1.4441766, y: 0.99999994, z: 0.74230355}
+    - name: Left_arm
+      parentName: Low Poly Horse(Clone)
+      position: {x: -0.9166462, y: -0.2725507, z: 3.2263706}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.91374665, y: 0.3976775, z: 0.6327112}
+    - name: Joint
+      parentName: Left_arm
+      position: {x: -0.019250909, y: -1.7381679, z: 0.20431873}
+      rotation: {x: 0.6755902, y: -0, z: -0, w: 0.7372773}
+      scale: {x: 1.5804999, y: 1.5805002, z: 1.5805}
+    - name: Left_knee
+      parentName: Joint
+      position: {x: 0.012180264, y: 0.08772488, z: 0.43749335}
+      rotation: {x: -0.8188367, y: 0.052445237, z: 0.06834791, w: -0.567525}
+      scale: {x: 0.5134809, y: 0.5134807, z: 0.5134807}
+    - name: Left_hoof
+      parentName: Left_knee
+      position: {x: 0.015342716, y: -2.337226, z: -0.23640825}
+      rotation: {x: 0.73727715, y: 0, z: 0, w: 0.6755904}
+      scale: {x: 1.9474921, y: 1.9474921, z: 1.9474921}
+    - name: Left_leg
+      parentName: Low Poly Horse(Clone)
+      position: {x: -0.9166462, y: -0.5185197, z: -0.17190559}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.91374665, y: 0.3976775, z: 0.6327112}
+    - name: Joint
+      parentName: Left_leg
+      position: {x: -0.019251248, y: -1.428205, z: 0.056504495}
+      rotation: {x: 0.6755902, y: -0, z: -0, w: 0.7372773}
+      scale: {x: 1.5804999, y: 1.5805002, z: 1.2206473}
+    - name: Left_knee
+      parentName: Joint
+      position: {x: 0.012180361, y: 0.04644106, z: 0.3068524}
+      rotation: {x: -0.73727727, y: 0, z: -0, w: 0.6755903}
+      scale: {x: 0.5134809, y: 0.6648574, z: 0.51348084}
+    - name: Left_hoof
+      parentName: Left_knee
+      position: {x: 0.015342668, y: -2.3372262, z: -0.23640887}
+      rotation: {x: 0.73727715, y: 0, z: 0, w: 0.6755904}
+      scale: {x: 1.9474921, y: 1.9474919, z: 1.9474924}
+    - name: Right_leg
+      parentName: Low Poly Horse(Clone)
+      position: {x: 0.8944888, y: -0.5185197, z: -0.17190559}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.91374665, y: 0.3976775, z: 0.6327112}
+    - name: Joint
+      parentName: Right_leg
+      position: {x: -0.0000003391266, y: -1.428205, z: 0.056504495}
+      rotation: {x: 0.6755902, y: -0, z: -0, w: 0.7372773}
+      scale: {x: 1.5804999, y: 1.5805002, z: 1.2206473}
+    - name: Right_knee
+      parentName: Joint
+      position: {x: -0.007878298, y: 0.04644106, z: 0.3068524}
+      rotation: {x: -0.73727727, y: 0, z: -0, w: 0.6755903}
+      scale: {x: 0.5134809, y: 0.6648574, z: 0.51348084}
+    - name: Right_hoof
+      parentName: Joint
+      position: {x: -0.00000009689331, y: -0.0008004356, z: 1.8662773}
+      rotation: {x: 1.2246469e-16, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 0.9999999, z: 1.2948047}
+    - name: Right_arm
+      parentName: Low Poly Horse(Clone)
+      position: {x: 0.8944888, y: -0.2725507, z: 3.2263706}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.91374665, y: 0.3976775, z: 0.6327112}
+    - name: Joint
+      parentName: Right_arm
+      position: {x: -0.00000019378662, y: -1.7381679, z: 0.20431873}
+      rotation: {x: 0.6755902, y: -0, z: -0, w: 0.7372773}
+      scale: {x: 1.5804999, y: 1.5805002, z: 1.5805}
+    - name: Right_knee
+      parentName: Joint
+      position: {x: -0.007878201, y: 0.08772488, z: 0.43749335}
+      rotation: {x: -0.73727727, y: 0, z: -0, w: 0.6755903}
+      scale: {x: 0.5134809, y: 0.5134807, z: 0.5134807}
+    - name: Right_hoof
+      parentName: Right_knee
+      position: {x: 0.015342861, y: -2.337226, z: -0.23640825}
+      rotation: {x: 0.73727715, y: 0, z: 0, w: 0.6755904}
+      scale: {x: 1.9474921, y: 1.9474921, z: 1.9474921}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 1
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
