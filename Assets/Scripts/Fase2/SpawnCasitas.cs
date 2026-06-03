@@ -235,6 +235,18 @@ public class SpawnCasitas : MonoBehaviour
                 )
             );
         }
+
+        // ESPERAR 6 SEGUNDOS
+        yield return new WaitForSeconds(6f);
+
+        // INICIAR TORMENTA
+        TormentaManager tormenta =
+            FindObjectOfType<TormentaManager>();
+
+        if (tormenta != null)
+        {
+            tormenta.IniciarTormenta();
+        }
     }
 
     IEnumerator AnimarCamino(
