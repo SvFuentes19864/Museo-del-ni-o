@@ -26,6 +26,11 @@ public class SpawnFase3 : MonoBehaviour
     [Header("NPCs")]
     public GameObject[] personajes;
 
+    [Header("Caravanas")]
+    public GameObject[] caravanas;
+    public float distanciaCaravana = 4f;
+    public float duracionCaravana = 3f;
+
     [Header("Casas Alrededor")]
     public GameObject[] casasAlrededor;
     private Vector3[] escalasCasas;
@@ -87,6 +92,12 @@ public class SpawnFase3 : MonoBehaviour
         for (int i = 0; i < personajes.Length; i++)
         {
             personajes[i].SetActive(false);
+        }
+
+        // CARAVANAS
+        for (int i = 0; i < caravanas.Length; i++)
+        {
+            caravanas[i].SetActive(false);
         }
 
         // CASAS
@@ -220,6 +231,18 @@ public class SpawnFase3 : MonoBehaviour
             personajes[i].SetActive(true);
         }
 
+        // CARAVANAS
+        for (int i = 0; i < caravanas.Length; i++)
+        {
+            caravanas[i].SetActive(true);
+
+            StartCoroutine(
+                MoverCaravana(
+                    caravanas[i]
+                )
+            );
+        }
+
         // CASAS ALREDEDOR
         for (int i = 0; i < casasAlrededor.Length; i++)
         {
@@ -240,6 +263,40 @@ public class SpawnFase3 : MonoBehaviour
                 )
             );
         }
+    }
+
+    IEnumerator MoverCaravana(
+        GameObject caravana
+    )
+    {
+        Vector3 posicionInicial =
+            caravana.transform.position;
+
+        Vector3 posicionFinal =
+            posicionInicial +
+            caravana.transform.forward *
+            distanciaCaravana;
+
+        float tiempo = 0f;
+
+        while (tiempo < duracionCaravana)
+        {
+            tiempo += Time.deltaTime;
+
+            float t = tiempo / duracionCaravana;
+
+            caravana.transform.position =
+                Vector3.Lerp(
+                    posicionInicial,
+                    posicionFinal,
+                    t
+                );
+
+            yield return null;
+        }
+
+        caravana.transform.position =
+            posicionFinal;
     }
 
     IEnumerator AnimarEscala(
