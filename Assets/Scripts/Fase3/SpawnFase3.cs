@@ -30,6 +30,14 @@ public class SpawnFase3 : MonoBehaviour
     public GameObject[] casasAlrededor;
     private Vector3[] escalasCasas;
 
+    [Header("Audios")]
+    public AudioSource audioParque;
+    public AudioSource audioArboles;
+    public AudioSource audioFuente;
+    public AudioSource audioBancas;
+    public AudioSource audioEdificios;
+    public AudioSource audioCasas;
+
     void Start()
     {
         // SUELO
@@ -103,6 +111,11 @@ public class SpawnFase3 : MonoBehaviour
         // SUELO DEL PARQUE
         if (sueloParque != null)
         {
+            if (audioParque != null)
+            {
+                audioParque.PlayOneShot(audioParque.clip);
+            }
+
             sueloParque.SetActive(true);
             sueloParque.transform.localScale = Vector3.zero;
 
@@ -118,6 +131,11 @@ public class SpawnFase3 : MonoBehaviour
         // ÁRBOLES
         for (int i = 0; i < arboles.Length; i++)
         {
+            if (audioArboles != null)
+            {
+                audioArboles.PlayOneShot(audioArboles.clip);
+            }
+
             arboles[i].SetActive(true);
             arboles[i].transform.localScale = Vector3.zero;
 
@@ -133,6 +151,11 @@ public class SpawnFase3 : MonoBehaviour
         // FUENTE
         if (fuente != null)
         {
+            if (audioFuente != null)
+            {
+                audioFuente.PlayOneShot(audioFuente.clip);
+            }
+
             fuente.SetActive(true);
             fuente.transform.localScale = Vector3.zero;
 
@@ -148,6 +171,11 @@ public class SpawnFase3 : MonoBehaviour
         // BANCAS
         for (int i = 0; i < bancas.Length; i++)
         {
+            if (audioBancas != null)
+            {
+                audioBancas.PlayOneShot(audioBancas.clip);
+            }
+
             bancas[i].SetActive(true);
             bancas[i].transform.localScale = Vector3.zero;
 
@@ -163,6 +191,11 @@ public class SpawnFase3 : MonoBehaviour
         // EDIFICIOS EMBLEMÁTICOS
         for (int i = 0; i < edificiosEmblematicos.Length; i++)
         {
+            if (audioEdificios != null)
+            {
+                audioEdificios.PlayOneShot(audioEdificios.clip);
+            }
+
             edificiosEmblematicos[i].SetActive(true);
 
             edificiosEmblematicos[i].transform.localScale =
@@ -190,6 +223,11 @@ public class SpawnFase3 : MonoBehaviour
         // CASAS ALREDEDOR
         for (int i = 0; i < casasAlrededor.Length; i++)
         {
+            if (audioCasas != null)
+            {
+                audioCasas.PlayOneShot(audioCasas.clip);
+            }
+
             casasAlrededor[i].SetActive(true);
             casasAlrededor[i].transform.localScale =
                 Vector3.zero;
