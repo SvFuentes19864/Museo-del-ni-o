@@ -3,6 +3,8 @@ using System.Collections;
 
 public class SpawnFase3 : MonoBehaviour
 {
+    public TerremotoManager terremotoManager;
+
     [Header("Parque")]
     public GameObject sueloParque;
     private Vector3 escalaSuelo;
@@ -263,6 +265,14 @@ public class SpawnFase3 : MonoBehaviour
                 )
             );
         }
+
+        yield return new WaitForSeconds(5f);
+
+        if (terremotoManager != null)
+        {
+            terremotoManager.IniciarTerremoto();
+        }
+
     }
 
     IEnumerator MoverCaravana(
