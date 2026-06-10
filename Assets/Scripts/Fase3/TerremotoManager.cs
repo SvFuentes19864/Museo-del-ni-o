@@ -21,6 +21,7 @@ public class TerremotoManager : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource audioTerremoto;
+    public AudioSource audioSirenas;
 
     [Header("Configuración")]
     public float duracionTerremoto = 6f;
@@ -40,6 +41,11 @@ public class TerremotoManager : MonoBehaviour
                 npcsNuevos[i].SetActive(false);
             }
         }
+
+        if (audioSirenas != null)
+        {
+            audioSirenas.Stop();
+        }
     }
 
     public void IniciarTerremoto()
@@ -54,7 +60,7 @@ public class TerremotoManager : MonoBehaviour
         Vector3 posicionOriginal =
             mapa.position;
 
-        // AUDIO
+        // AUDIO TERREMOTO
         if (audioTerremoto != null)
         {
             audioTerremoto.Play();
@@ -94,7 +100,7 @@ public class TerremotoManager : MonoBehaviour
         mapa.position =
             posicionOriginal;
 
-        // EL POLVO SIGUE 1 SEGUNDO MÁS
+        // EL POLVO SIGUE 3 SEGUNDOS MÁS
         yield return new WaitForSeconds(3f);
 
         // NPCs DESAPARECEN DENTRO DEL POLVO
@@ -106,7 +112,7 @@ public class TerremotoManager : MonoBehaviour
             }
         }
 
-        // CAMBIO A ESCOMBROS MIENTRAS HAY POLVO
+        // CAMBIO A ESCOMBROS
         if (ciudadNormal != null)
         {
             ciudadNormal.SetActive(false);
@@ -124,6 +130,12 @@ public class TerremotoManager : MonoBehaviour
             {
                 npcsNuevos[i].SetActive(true);
             }
+        }
+
+        // SIRENAS DE EMERGENCIA
+        if (audioSirenas != null)
+        {
+            audioSirenas.Play();
         }
 
         // EL POLVO CONTINÚA OTRO SEGUNDO
