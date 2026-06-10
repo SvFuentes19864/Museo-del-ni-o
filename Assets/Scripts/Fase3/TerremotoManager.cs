@@ -12,6 +12,9 @@ public class TerremotoManager : MonoBehaviour
     [Header("NPCs")]
     public GameObject[] npcs;
 
+    [Header("NPCs Nuevos")]
+    public GameObject[] npcsNuevos;
+
     [Header("Ciudad")]
     public GameObject ciudadNormal;
     public GameObject escombros;
@@ -22,6 +25,22 @@ public class TerremotoManager : MonoBehaviour
     [Header("Configuración")]
     public float duracionTerremoto = 6f;
     public float intensidad = 0.15f;
+
+    void Start()
+    {
+        if (escombros != null)
+        {
+            escombros.SetActive(false);
+        }
+
+        for (int i = 0; i < npcsNuevos.Length; i++)
+        {
+            if (npcsNuevos[i] != null)
+            {
+                npcsNuevos[i].SetActive(false);
+            }
+        }
+    }
 
     public void IniciarTerremoto()
     {
@@ -96,6 +115,15 @@ public class TerremotoManager : MonoBehaviour
         if (escombros != null)
         {
             escombros.SetActive(true);
+        }
+
+        // APARECEN NPCs NUEVOS
+        for (int i = 0; i < npcsNuevos.Length; i++)
+        {
+            if (npcsNuevos[i] != null)
+            {
+                npcsNuevos[i].SetActive(true);
+            }
         }
 
         // EL POLVO CONTINÚA OTRO SEGUNDO
