@@ -1,0 +1,335 @@
+fileFormatVersion: 2
+guid: f028a7d396b62294ca0c1e7ccc9a5d13
+ModelImporter:
+  serializedVersion: 24200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1
+    second: {fileID: 2100000, guid: e57ebf82f3abd7345a989d42054b72c2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.001
+    second: {fileID: 2100000, guid: 7e199d243830c0b40954f42dff55bbe9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.002
+    second: {fileID: 2100000, guid: 23d61ba495f0f7046962c5171bb240db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.004
+    second: {fileID: 2100000, guid: a99175d858172dc4e97e91f1fffe8107, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.005
+    second: {fileID: 2100000, guid: 73c0570aa839aa440932563fae1c3788, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.006
+    second: {fileID: 2100000, guid: 8447c29b3c2025f4d8e05c4ee077eb16, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.007
+    second: {fileID: 2100000, guid: 0c391419c0170e546b5e640389e6b74e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.008
+    second: {fileID: 2100000, guid: 1fd0a284adca27a4b875dde822fecb11, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.009
+    second: {fileID: 2100000, guid: 975ae76e37afd0248928ada019592206, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.010
+    second: {fileID: 2100000, guid: 171e39a2225fded4ba7b85f35a96b472, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.011
+    second: {fileID: 2100000, guid: 6ab107707008e32439ad67361611d5e6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.012
+    second: {fileID: 2100000, guid: 7018897ec7fd1eb4fa9d948e949deb80, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.013
+    second: {fileID: 2100000, guid: 3bba134319796bb4799a28bdae4cb68a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.014
+    second: {fileID: 2100000, guid: f729874bd83673a4a8d2544062420a2c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.016
+    second: {fileID: 2100000, guid: f03ebc34e34e6e34dbd4bda6cffb1b5c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.017
+    second: {fileID: 2100000, guid: e5a0b3dc714c8ee48966299cec393f6c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.018
+    second: {fileID: 2100000, guid: 8fe602133b5f84d4b94ba170971db083, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.019
+    second: {fileID: 2100000, guid: 031e33149b08f1f47a6425ca3dbcdec0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.020
+    second: {fileID: 2100000, guid: 3718765380665664784f1ec8f101fc24, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.021
+    second: {fileID: 2100000, guid: 3e8c9556cbffa4f47a52eb00cdb8d68a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.022
+    second: {fileID: 2100000, guid: c9178347e538b2c4290b3844a3126685, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.023
+    second: {fileID: 2100000, guid: ad18e223a578e904b8bf3839fa336731, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.024
+    second: {fileID: 2100000, guid: 10cdd887d277cd148b7fe425b4da2c05, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.025
+    second: {fileID: 2100000, guid: 08bfee83e7df58c48b4f3fb144de89d3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.026
+    second: {fileID: 2100000, guid: 611e1756c3672a94da7e4578c3052b50, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.027
+    second: {fileID: 2100000, guid: ad776262686c4a846ac94c7d8996541e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.028
+    second: {fileID: 2100000, guid: 040695d9ad853034f9ccf9fe595b53d2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.029
+    second: {fileID: 2100000, guid: d0227127ac59b2440b9853f0aedcd524, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.030
+    second: {fileID: 2100000, guid: e26ba3adab79e8b4eb3c80598f59e8d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.031
+    second: {fileID: 2100000, guid: 30953f33d3671514eb77a3a68d6a4576, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.032
+    second: {fileID: 2100000, guid: bbf5b1e1cbd4b6f4794afeb0538e821c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.033
+    second: {fileID: 2100000, guid: d2e8fb2397ea3ce4eb685e69cef18465, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.034
+    second: {fileID: 2100000, guid: c4478324f8976e64fa6b57beb58a74c2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.035
+    second: {fileID: 2100000, guid: c69282e019f06424593205fe432826fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.036
+    second: {fileID: 2100000, guid: 6a9d0de44462fee47923a4c46f6f1cab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.037
+    second: {fileID: 2100000, guid: beebf85441b9eaa438bc973ccdf187f5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.038
+    second: {fileID: 2100000, guid: 5ba7146176e18384481f9502c378f49c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.039
+    second: {fileID: 2100000, guid: 191a2f85e42eb7244a342fa138b6425d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.040
+    second: {fileID: 2100000, guid: fef58cfdd370e234182538ce4ebbaddc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.041
+    second: {fileID: 2100000, guid: 74dabf73a228a4f47b201e53eaba81b0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.042
+    second: {fileID: 2100000, guid: 288ad454ac191814e9941808fc896e97, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral1.043
+    second: {fileID: 2100000, guid: 6842ca72d83382d4dbab67b990255ca5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral2
+    second: {fileID: 2100000, guid: 62a7d6a968860a946b585e82d0bb9897, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral3
+    second: {fileID: 2100000, guid: 6af3b55a29c0db341893bb1004fdeb87, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catedral4
+    second: {fileID: 2100000, guid: ef38a454efd02c448b975488d75438da, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

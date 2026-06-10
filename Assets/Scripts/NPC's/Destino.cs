@@ -11,7 +11,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     float Distancia;
 
     [Header("Animaciones")]
-    public Animation Anim;
+    public Animator Anim;
     public string CaminandoAnim;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,7 +26,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         Distancia = Vector3.Distance(transform.position, Objetivo.position);
 
-        if (Distancia > 1)
+        if (Distancia < 2)
         {
             Objetivo = Objetivos[Random.Range(0, Objetivos.Length)];
         }
