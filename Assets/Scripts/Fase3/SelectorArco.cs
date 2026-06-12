@@ -6,16 +6,45 @@ public class SelectorArco : MonoBehaviour
     [Header("Posiciones")]
     public Transform[] posiciones;
 
-    [Header("Configuración")]
-    public float tiempoInicial = 0.05f;
-    public float incrementoVelocidad = 0.03f;
-    public int saltosMinimos = 20;
-    public int saltosMaximos = 35;
+    [Header("Ruleta")]
+    public int saltosMinimos = 6;
+    public int saltosMaximos = 10;
+
+    [Header("Velocidad")]
+    public float tiempoEntreSaltos = 0.15f;
+
+    [Header("Fade")]
+    public float duracionFade = 0.07f;
+
+    [Header("Audio")]
+    public AudioSource audioRuleta;
+    public AudioSource audioGanador;
 
     private int ultimoGanador = -1;
+    private int ultimoIndiceMostrado = -1;
+
+    private MeshRenderer meshRendererArco;
+    private Material materialArco;
+
+    private Quaternion rotacionOriginal;
+    private float alturaOriginal;
 
     void Start()
     {
+        rotacionOriginal = transform.rotation;
+        alturaOriginal = transform.position.y;
+
+        meshRendererArco = GetComponent<MeshRenderer>();
+
+        if (meshRendererArco != null)
+        {
+            materialArco = meshRendererArco.material;
+
+            Color color = materialArco.color;
+            color.a = 0f;
+            materialArco.color = color;
+        }
+
         StartCoroutine(Ruleta());
     }
 
@@ -40,45 +69,154 @@ public class SelectorArco : MonoBehaviour
 
         ultimoGanador = ganador;
 
-        int indiceActual = 0;
-
         int totalSaltos =
             Random.Range(
                 saltosMinimos,
                 saltosMaximos + 1
             );
 
-        float espera = tiempoInicial;
-
-        for (int i = 0; i < totalSaltos; i++)
+        for (int salto = 0; salto < totalSaltos; salto++)
         {
-            if (posiciones[indiceActual] != null)
+            int indiceAleatorio;
+
+            do
             {
-                transform.position =
-                    posiciones[indiceActual].position;
+                indiceAleatorio =
+                    Random.Range(
+                        0,
+                        posiciones.Length
+                    );
             }
+            while (
+                posiciones.Length > 1 &&
+                indiceAleatorio ==
+                ultimoIndiceMostrado
+            );
 
-            indiceActual++;
+            ultimoIndiceMostrado =
+                indiceAleatorio;
 
-            if (indiceActual >= posiciones.Length)
-            {
-                indiceActual = 0;
-            }
+            transform.position =
+                new Vector3(
+                    posiciones[indiceAleatorio].position.x,
+                    alturaOriginal,
+                    posiciones[indiceAleatorio].position.z
+                );
 
-            yield return new WaitForSeconds(espera);
+            transform.rotation =
+                rotacionOriginal;
 
-            espera += incrementoVelocidad;
+            if (audioRuleta != null)
+                {
+                    audioRuleta.Play();
+                }
+
+            yield return StartCoroutine(
+                FadeIn()
+            );
+
+            yield return new WaitForSeconds(
+                tiempoEntreSaltos
+            );
+
+            yield return StartCoroutine(
+                FadeOut()
+            );
         }
 
-        if (posiciones[ganador] != null)
+        transform.position =
+            new Vector3(
+                posiciones[ganador].position.x,
+                alturaOriginal,
+                posiciones[ganador].position.z
+            );
+
+        transform.rotation =
+            rotacionOriginal;
+
+        if (audioRuleta != null)
         {
-            transform.position =
-                posiciones[ganador].position;
+            audioRuleta.PlayOneShot(
+                audioRuleta.clip
+            );
+        }
+
+        yield return StartCoroutine(
+            FadeIn()
+        );
+
+        if (audioGanador != null)
+        {
+            audioGanador.PlayOneShot(
+                audioGanador.clip
+            );
         }
 
         Debug.Log(
             "Jugador seleccionado: " +
             (ganador + 1)
         );
+    }
+
+    IEnumerator FadeIn()
+    {
+        if (materialArco == null)
+        {
+            yield break;
+        }
+
+        Color color = materialArco.color;
+
+        float tiempo = 0f;
+
+        while (tiempo < duracionFade)
+        {
+            tiempo += Time.deltaTime;
+
+            color.a =
+                Mathf.Lerp(
+                    0f,
+                    1f,
+                    tiempo / duracionFade
+                );
+
+            materialArco.color = color;
+
+            yield return null;
+        }
+
+        color.a = 1f;
+        materialArco.color = color;
+    }
+
+    IEnumerator FadeOut()
+    {
+        if (materialArco == null)
+        {
+            yield break;
+        }
+
+        Color color = materialArco.color;
+
+        float tiempo = 0f;
+
+        while (tiempo < duracionFade)
+        {
+            tiempo += Time.deltaTime;
+
+            color.a =
+                Mathf.Lerp(
+                    1f,
+                    0f,
+                    tiempo / duracionFade
+                );
+
+            materialArco.color = color;
+
+            yield return null;
+        }
+
+        color.a = 0f;
+        materialArco.color = color;
     }
 }
