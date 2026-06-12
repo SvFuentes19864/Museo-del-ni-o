@@ -48,7 +48,7 @@ public class SpawnPiramides : MonoBehaviour
 
     IEnumerator AparecerUnaPorUna()
     {
-        // 🔥 reproducir audio UNA sola vez
+        // reproducir audio UNA sola vez
         audioSource.PlayOneShot(audioSource.clip);
 
         float tiempoPorObjeto = 0.5f;
@@ -62,7 +62,13 @@ public class SpawnPiramides : MonoBehaviour
             audioSource.PlayOneShot(audioSource.clip);
             p.transform.localScale = Vector3.zero;
 
-            yield return StartCoroutine(AnimarEscala(p, escalasOriginales[i], tiempoPorObjeto));
+            yield return StartCoroutine(
+                AnimarEscala(
+                    p,
+                    escalasOriginales[i],
+                    tiempoPorObjeto
+                )
+            );
         }
 
         for (int i = 0; i < personajes.Length; i++)
@@ -76,22 +82,54 @@ public class SpawnPiramides : MonoBehaviour
         }
 
         // luego ranchitos
-        float tiempoPorRanchito = audioSource.clip.length / ranchitos.Length;
+        float tiempoPorRanchito =
+            audioSource.clip.length /
+            ranchitos.Length;
 
-        // luego ranchitos
         for (int i = 0; i < ranchitos.Length; i++)
         {
             GameObject r = ranchitos[i];
 
             r.SetActive(true);
-            audioRanchitos.PlayOneShot(audioRanchitos.clip); // 🔥 sonido aquí
+            audioRanchitos.PlayOneShot(
+                audioRanchitos.clip
+            );
+
             r.transform.localScale = Vector3.zero;
 
-            yield return StartCoroutine(AnimarEscala(r, escalasRanchitos[i], tiempoPorRanchito));
+            yield return StartCoroutine(
+                AnimarEscala(
+                    r,
+                    escalasRanchitos[i],
+                    tiempoPorRanchito
+                )
+            );
+        }
+
+        // Esperar 2 segundos
+        yield return new WaitForSeconds(2f);
+
+        // Iniciar transición
+        TransicionFaseManager transicion =
+            FindObjectOfType<TransicionFaseManager>();
+
+        if (transicion != null)
+        {
+            transicion.IniciarTransicion();
+        }
+        else
+        {
+            Debug.LogWarning(
+                "No se encontró TransicionFaseManager en la escena."
+            );
         }
     }
 
-    IEnumerator AnimarEscala(GameObject obj, Vector3 escalaFinal, float duracion)
+    IEnumerator AnimarEscala(
+        GameObject obj,
+        Vector3 escalaFinal,
+        float duracion
+    )
     {
         float tiempo = 0f;
 
@@ -100,10 +138,17 @@ public class SpawnPiramides : MonoBehaviour
             tiempo += Time.deltaTime;
             float t = tiempo / duracion;
 
-            obj.transform.localScale = Vector3.Lerp(Vector3.zero, escalaFinal, t);
+            obj.transform.localScale =
+                Vector3.Lerp(
+                    Vector3.zero,
+                    escalaFinal,
+                    t
+                );
+
             yield return null;
         }
 
-        obj.transform.localScale = escalaFinal;
+        obj.transform.localScale =
+            escalaFinal;
     }
 }

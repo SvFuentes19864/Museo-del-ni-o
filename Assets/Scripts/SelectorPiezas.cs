@@ -47,7 +47,10 @@ public class SelectorArco : MonoBehaviour
             color.a = 0f;
             materialArco.color = color;
         }
+    }
 
+    public void IniciarRuleta()
+    {
         StartCoroutine(Ruleta());
     }
 
