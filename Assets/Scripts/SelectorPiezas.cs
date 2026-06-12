@@ -20,6 +20,9 @@ public class SelectorArco : MonoBehaviour
     public AudioSource audioRuleta;
     public AudioSource audioGanador;
 
+    [Header("Offset Visual")]
+    public Vector3 offsetVisual;
+
     private int ultimoGanador = -1;
     private int ultimoIndiceMostrado = -1;
 
@@ -101,15 +104,15 @@ public class SelectorArco : MonoBehaviour
                     posiciones[indiceAleatorio].position.x,
                     alturaOriginal,
                     posiciones[indiceAleatorio].position.z
-                );
+                ) + offsetVisual;
 
             transform.rotation =
                 rotacionOriginal;
 
             if (audioRuleta != null)
-                {
-                    audioRuleta.Play();
-                }
+            {
+                audioRuleta.Play();
+            }
 
             yield return StartCoroutine(
                 FadeIn()
@@ -129,7 +132,7 @@ public class SelectorArco : MonoBehaviour
                 posiciones[ganador].position.x,
                 alturaOriginal,
                 posiciones[ganador].position.z
-            );
+            ) + offsetVisual;
 
         transform.rotation =
             rotacionOriginal;
@@ -150,6 +153,15 @@ public class SelectorArco : MonoBehaviour
             audioGanador.PlayOneShot(
                 audioGanador.clip
             );
+        }
+
+        // DESACTIVAR TODOS LOS PUNTOS Y SUS HIJOS
+        for (int i = 0; i < posiciones.Length; i++)
+        {
+            if (posiciones[i] != null)
+            {
+                posiciones[i].gameObject.SetActive(false);
+            }
         }
 
         Debug.Log(
