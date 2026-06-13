@@ -10,6 +10,18 @@ public class IntroManager : MonoBehaviour
     public AudioSource narracion;
     public Image fadeImage;
 
+    [Header("Audio Ambiente")]
+    public AudioSource audioAmbiente;
+
+    [Header("Fade Out Ambiente")]
+    public float duracionFadeOutAmbiente = 2f;
+
+    [Header("Audio Máquina del Tiempo")]
+    public AudioSource audioMaquinaTiempo;
+
+    [Tooltip("Segundos después de iniciar el conteo TRES para reproducir el sonido")]
+    public float retrasoAudioMaquinaTiempo = 0f;
+
     [Header("Puntos Cinemáticos")]
     public Transform puntoInicial;
     public Transform puntoUno;
@@ -66,6 +78,27 @@ public class IntroManager : MonoBehaviour
             )
         );
 
+        // Sonido máquina del tiempo
+        if (audioMaquinaTiempo != null)
+        {
+            yield return new WaitForSeconds(
+                retrasoAudioMaquinaTiempo
+            );
+
+            audioMaquinaTiempo.Play();
+        }
+
+        // Fade out del ambiente al mismo tiempo
+        if (audioAmbiente != null)
+        {
+            StartCoroutine(
+                FadeOutAudio(
+                    audioAmbiente,
+                    duracionFadeOutAmbiente
+                )
+            );
+        }
+
         // VIAJAMOS
         yield return new WaitForSeconds(0.4f);
 
@@ -83,6 +116,33 @@ public class IntroManager : MonoBehaviour
         SceneManager.LoadScene(
             escenaFase1
         );
+    }
+
+    IEnumerator FadeOutAudio(
+        AudioSource audioSource,
+        float duracion
+    )
+    {
+        float volumenInicial =
+            audioSource.volume;
+
+        float tiempo = 0f;
+
+        while (tiempo < duracion)
+        {
+            tiempo += Time.deltaTime;
+
+            audioSource.volume =
+                Mathf.Lerp(
+                    volumenInicial,
+                    0f,
+                    tiempo / duracion
+                );
+
+            yield return null;
+        }
+
+        audioSource.volume = 0f;
     }
 
     IEnumerator MoverCamara(

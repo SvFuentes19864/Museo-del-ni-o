@@ -8,21 +8,23 @@ public class TransicionFaseManager : MonoBehaviour
     [Header("Audio")]
     public AudioSource narradorSalida;
 
-    [Header("Tiempo para iniciar vuelo")]
+    [Header("Sonido Máquina del Tiempo")]
+    public AudioSource audioMaquinaTiempo;
+
+    [Header("Tiempo para iniciar cinemática")]
     public float tiempoAntesDeVuelo = 18f;
 
-    [Header("Cámaras")]
-    public Camera camaraPrincipal;
-    public Camera camaraCinematica;
+    [Header("Cinemachine")]
+    public GameObject dollyCart;
 
-    [Header("Puntos")]
-    public Transform puntoInicioTransicion;
-    public Transform puntoVuelo1;
-    public Transform puntoVuelo2;
-    public Transform puntoFade;
+    [Header("Duración de la cinemática")]
+    public float duracionCinematica = 5f;
 
     [Header("Fade")]
     public Image fadeImage;
+
+    [Tooltip("Cuántos segundos antes de terminar la cinemática comienza el fade")]
+    public float tiempoAntesDelFade = 1.5f;
 
     [Header("Siguiente Escena")]
     public string siguienteEscena = "Fase2";
@@ -34,99 +36,49 @@ public class TransicionFaseManager : MonoBehaviour
 
     IEnumerator SecuenciaTransicion()
     {
-        // Iniciar audio inmediatamente
+        // Asegurar que la cinemática esté apagada al inicio
+        if (dollyCart != null)
+        {
+            dollyCart.SetActive(false);
+        }
+
+        // Audio narrador
         if (narradorSalida != null)
         {
             narradorSalida.Play();
         }
 
-        // Esperar hasta la parte donde menciona la máquina del tiempo
+        // Esperar al segundo 18
         yield return new WaitForSeconds(tiempoAntesDeVuelo);
 
-        // Cambiar a cámara cinematográfica
-        camaraPrincipal.enabled = false;
-        camaraCinematica.enabled = true;
-
-        camaraCinematica.transform.position =
-            puntoInicioTransicion.position;
-
-        camaraCinematica.transform.rotation =
-            puntoInicioTransicion.rotation;
-
-        // MOVIMIENTO 1
-        yield return StartCoroutine(
-            MoverCamara(
-                puntoVuelo1,
-                2f
-            )
-        );
-
-        // MOVIMIENTO 2
-        yield return StartCoroutine(
-            MoverCamara(
-                puntoVuelo2,
-                2f
-            )
-        );
-
-        // MOVIMIENTO FINAL
-        yield return StartCoroutine(
-            MoverCamara(
-                puntoFade,
-                1.5f
-            )
-        );
-
-        // FADE
-        yield return StartCoroutine(
-            FadeBlanco()
-        );
-
-        // CAMBIO DE ESCENA
-        SceneManager.LoadScene(
-            siguienteEscena
-        );
-    }
-
-    IEnumerator MoverCamara(
-        Transform destino,
-        float duracion
-    )
-    {
-        Vector3 posicionInicial =
-            camaraCinematica.transform.position;
-
-        Quaternion rotacionInicial =
-            camaraCinematica.transform.rotation;
-
-        float tiempo = 0f;
-
-        while (tiempo < duracion)
+        // Iniciar cinemática
+        if (dollyCart != null)
         {
-            tiempo += Time.deltaTime;
-
-            camaraCinematica.transform.position =
-                Vector3.Lerp(
-                    posicionInicial,
-                    destino.position,
-                    tiempo / duracion
-                );
-
-            camaraCinematica.transform.rotation =
-                Quaternion.Lerp(
-                    rotacionInicial,
-                    destino.rotation,
-                    tiempo / duracion
-                );
-
-            yield return null;
+            dollyCart.SetActive(true);
         }
 
-        camaraCinematica.transform.position =
-            destino.position;
+        // Esperar hasta el momento de iniciar fade
+        yield return new WaitForSeconds(
+            Mathf.Max(
+                0,
+                duracionCinematica - tiempoAntesDelFade
+            )
+        );
 
-        camaraCinematica.transform.rotation =
-            destino.rotation;
+        // Sonido de máquina del tiempo
+        if (audioMaquinaTiempo != null)
+        {
+            audioMaquinaTiempo.Play();
+        }
+
+        // Fade mientras la cámara sigue moviéndose
+        StartCoroutine(FadeBlanco());
+
+        // Esperar el resto de la cinemática
+        yield return new WaitForSeconds(tiempoAntesDelFade);
+
+        // Cargar siguiente escena
+        SceneManager.LoadScene(siguienteEscena);
     }
 
     IEnumerator FadeBlanco()
@@ -139,12 +91,11 @@ public class TransicionFaseManager : MonoBehaviour
         {
             tiempo += Time.deltaTime;
 
-            color.a =
-                Mathf.Lerp(
-                    0f,
-                    1f,
-                    tiempo
-                );
+            color.a = Mathf.Lerp(
+                0f,
+                1f,
+                tiempo
+            );
 
             fadeImage.color = color;
 

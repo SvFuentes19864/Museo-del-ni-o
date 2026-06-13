@@ -9,8 +9,21 @@ public class Fase1IntroManager : MonoBehaviour
     [Header("Ruleta")]
     public SelectorArco selectorArco;
 
+    private MeshRenderer[] renderersArco;
+
     IEnumerator Start()
     {
+        if (selectorArco != null)
+        {
+            renderersArco =
+                selectorArco.GetComponentsInChildren<MeshRenderer>(true);
+
+            foreach (MeshRenderer r in renderersArco)
+            {
+                r.enabled = false;
+            }
+        }
+
         if (narrador != null)
         {
             narrador.Play();
@@ -18,6 +31,14 @@ public class Fase1IntroManager : MonoBehaviour
             yield return new WaitForSeconds(
                 narrador.clip.length
             );
+        }
+
+        if (renderersArco != null)
+        {
+            foreach (MeshRenderer r in renderersArco)
+            {
+                r.enabled = true;
+            }
         }
 
         if (selectorArco != null)
