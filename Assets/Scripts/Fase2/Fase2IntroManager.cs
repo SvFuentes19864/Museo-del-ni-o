@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class Fase1IntroManager : MonoBehaviour
+public class Fase2IntroManager : MonoBehaviour
 {
     [Header("Audio")]
     public AudioSource narrador;
@@ -11,23 +11,18 @@ public class Fase1IntroManager : MonoBehaviour
     public Image fadeImage;
     public float duracionFadeIn = 1.5f;
 
-    [Header("Ruleta")]
-    public SelectorArco selectorArco;
+    [Header("Iglesia")]
+    public GameObject iglesia;
 
-    private MeshRenderer[] renderersArco;
+    [Header("Ruleta")]
+    public SelectorArco selectorPiezas;
 
     IEnumerator Start()
     {
-        // Ocultar pirámide ANTES del fade
-        if (selectorArco != null)
+        // Ocultar iglesia
+        if (iglesia != null)
         {
-            renderersArco =
-                selectorArco.GetComponentsInChildren<MeshRenderer>(true);
-
-            foreach (MeshRenderer r in renderersArco)
-            {
-                r.enabled = false;
-            }
+            iglesia.SetActive(false);
         }
 
         // Empezar completamente blanco
@@ -56,19 +51,16 @@ public class Fase1IntroManager : MonoBehaviour
             );
         }
 
-        // Mostrar pirámide
-        if (renderersArco != null)
+        // Mostrar iglesia
+        if (iglesia != null)
         {
-            foreach (MeshRenderer r in renderersArco)
-            {
-                r.enabled = true;
-            }
+            iglesia.SetActive(true);
         }
 
         // Iniciar ruleta
-        if (selectorArco != null)
+        if (selectorPiezas != null)
         {
-            selectorArco.IniciarRuleta();
+            selectorPiezas.IniciarRuleta();
         }
     }
 

@@ -3614,10 +3614,10 @@ MonoBehaviour:
         z: 0
       Rotation:
         value:
-          x: -0.38278407
-          y: 5.0449805e-10
-          z: 0.038890142
-          w: 0.92301893
+          x: -0.3827839
+          y: 0
+          z: 0.038890168
+          w: 0.9230189
     m_MetaData:
     - Mode: 2
       Tension: 0.5
@@ -11388,6 +11388,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fase1IntroManager
   narrador: {fileID: 963257087}
+  fadeImage: {fileID: 1467836512}
+  duracionFadeIn: 1.5
   selectorArco: {fileID: 2120340858}
 --- !u!4 &1716740701
 Transform:

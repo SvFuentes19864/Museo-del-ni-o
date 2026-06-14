@@ -87,6 +87,14 @@ public class SpawnCasitas : MonoBehaviour
 
     public void ActivarCasitas()
     {
+        Fase2NarracionesManager narraciones =
+            FindObjectOfType<Fase2NarracionesManager>();
+
+        if (narraciones != null)
+        {
+            narraciones.IniciarNarraciones();
+        }
+
         StartCoroutine(AparecerCasitas());
     }
 

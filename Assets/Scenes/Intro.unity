@@ -855,8 +855,16 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1940429001}
     m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 4444425c44ab61f47bb685f36e8cec27, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 358.6224
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4444425c44ab61f47bb685f36e8cec27, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 358.62234
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4444425c44ab61f47bb685f36e8cec27, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -883,11 +891,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4444425c44ab61f47bb685f36e8cec27, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4444425c44ab61f47bb685f36e8cec27, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4444425c44ab61f47bb685f36e8cec27, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -1351,6 +1359,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &1500454678 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4444425c44ab61f47bb685f36e8cec27, type: 3}
+  m_PrefabInstance: {fileID: 732174923}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1729423523
 GameObject:
   m_ObjectHideFlags: 0
@@ -1439,6 +1452,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1424813895}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1940429000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1940429001}
+  m_Layer: 0
+  m_Name: PlanetaPadre
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1940429001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940429000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.60876137, z: 0, w: 0.7933534}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1500454678}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 75, z: 0}
 --- !u!1 &2097284605
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,7 +1523,7 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 378434152}
   - {fileID: 1495159362}
-  - {fileID: 732174923}
+  - {fileID: 1940429001}
   - {fileID: 737832101}
   - {fileID: 790237942}
   - {fileID: 1729423524}

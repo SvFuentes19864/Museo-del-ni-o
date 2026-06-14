@@ -13,6 +13,10 @@ public class TormentaManager : MonoBehaviour
     public AudioSource audioBosque;
     public AudioSource audioTormenta;
 
+    [Tooltip("Volumen final de la tormenta")]
+    [Range(0f, 1f)]
+    public float volumenFinalTormenta = 1f;
+
     [Header("Lluvia")]
     public ParticleSystem lluvia;
 
@@ -74,7 +78,7 @@ public class TormentaManager : MonoBehaviour
             audioTormenta.volume =
                 Mathf.Lerp(
                     0f,
-                    1f,
+                    volumenFinalTormenta,
                     t
                 );
 
@@ -85,7 +89,8 @@ public class TormentaManager : MonoBehaviour
             intensidadFinal;
 
         audioBosque.volume = 0f;
-        audioTormenta.volume = 1f;
+        audioTormenta.volume =
+            volumenFinalTormenta;
     }
 
     IEnumerator EsperarInundacion()
