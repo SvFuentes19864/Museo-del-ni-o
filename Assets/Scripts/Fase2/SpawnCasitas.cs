@@ -7,6 +7,11 @@ public class SpawnCasitas : MonoBehaviour
     public GameObject camino;
     public AudioSource audioCamino;
 
+    [Header("Dissolve Camino")]
+    public Material materialCamino;
+    public float cutoffInicial = -10f;
+    public float cutoffFinal = 10f;
+
     private Vector3 escalaCamino;
 
     [Header("Casitas")]
@@ -29,7 +34,12 @@ public class SpawnCasitas : MonoBehaviour
 
     [Header("Farolillos")]
     public GameObject[] farolillos;
+
     private Vector3[] escalasFarolillos;
+    
+    
+    [Header("Tormenta")]
+    public float retrasoAntesTormenta = 6f;
 
     void Start()
     {
@@ -38,6 +48,14 @@ public class SpawnCasitas : MonoBehaviour
         {
             escalaCamino = camino.transform.localScale;
             camino.SetActive(false);
+        }
+
+        if (materialCamino != null)
+        {
+            materialCamino.SetFloat(
+                "_CutoffHeight",
+                cutoffInicial
+            );
         }
 
         // CASITAS
@@ -105,23 +123,13 @@ public class SpawnCasitas : MonoBehaviour
         {
             camino.SetActive(true);
 
-            camino.transform.localScale = new Vector3(
-                0.01f,
-                escalaCamino.y,
-                escalaCamino.z
-            );
-
             if (audioCamino != null)
             {
                 audioCamino.Play();
             }
 
             yield return StartCoroutine(
-                AnimarCamino(
-                    camino,
-                    escalaCamino,
-                    4f
-                )
+                AnimarDissolveCamino(4f)
             );
 
             if (audioCamino != null)
@@ -244,10 +252,10 @@ public class SpawnCasitas : MonoBehaviour
             );
         }
 
-        // ESPERAR 6 SEGUNDOS
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(
+            retrasoAntesTormenta
+        );
 
-        // INICIAR TORMENTA
         TormentaManager tormenta =
             FindObjectOfType<TormentaManager>();
 
@@ -257,12 +265,15 @@ public class SpawnCasitas : MonoBehaviour
         }
     }
 
-    IEnumerator AnimarCamino(
-        GameObject obj,
-        Vector3 escalaFinal,
+    IEnumerator AnimarDissolveCamino(
         float duracion
     )
     {
+        if (materialCamino == null)
+        {
+            yield break;
+        }
+
         float tiempo = 0f;
 
         while (tiempo < duracion)
@@ -271,20 +282,22 @@ public class SpawnCasitas : MonoBehaviour
 
             float t = tiempo / duracion;
 
-            obj.transform.localScale = new Vector3(
+            materialCamino.SetFloat(
+                "_CutoffHeight",
                 Mathf.Lerp(
-                    0.01f,
-                    escalaFinal.x,
+                    cutoffInicial,
+                    cutoffFinal,
                     t
-                ),
-                escalaFinal.y,
-                escalaFinal.z
+                )
             );
 
             yield return null;
         }
 
-        obj.transform.localScale = escalaFinal;
+        materialCamino.SetFloat(
+            "_CutoffHeight",
+            cutoffFinal
+        );
     }
 
     IEnumerator AnimarEscala(

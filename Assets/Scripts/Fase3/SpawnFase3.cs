@@ -116,6 +116,14 @@ public class SpawnFase3 : MonoBehaviour
 
     public void ActivarFase3()
     {
+        Fase3NarracionesManager narraciones =
+            FindObjectOfType<Fase3NarracionesManager>();
+
+        if (narraciones != null)
+        {
+            narraciones.IniciarNarraciones();
+        }
+
         StartCoroutine(AparecerFase3());
     }
 

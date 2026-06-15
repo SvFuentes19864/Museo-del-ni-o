@@ -104,7 +104,7 @@ public class DragObjectArco : MonoBehaviour
             Ray ray =
                 Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            Vector3 point = ray.GetPoint(distance);
+            Vector3 point = ray.GetPoint(distance * 1.5f);
 
             transform.position = new Vector3(
                 point.x,

@@ -26,11 +26,19 @@ public class InundacionManager : MonoBehaviour
     public float alturaFinal = 8f;
     public float duracion = 20f;
 
+    [Header("Transición")]
+    public TransicionFaseManager transicionFaseManager;
+
+    [Tooltip("Segundos antes de terminar la inundación para iniciar la transición")]
+    public float tiempoAntesTransicion = 5f;
+
     private Vector3 posicionFinalEsfera;
     private Vector3 posicionInicialEsfera;
 
     private Vector3 escalaFinalAguaVolcan;
     private Vector3 escalaInicialAguaVolcan;
+
+    private bool transicionIniciada = false;
 
     void Start()
     {
@@ -54,6 +62,8 @@ public class InundacionManager : MonoBehaviour
 
             esferaVolcan.transform.position =
                 posicionInicialEsfera;
+
+            esferaVolcan.SetActive(false);
         }
 
         if (aguaVolcan != null)
@@ -70,6 +80,8 @@ public class InundacionManager : MonoBehaviour
 
             aguaVolcan.transform.localScale =
                 escalaInicialAguaVolcan;
+
+            aguaVolcan.SetActive(false);
         }
     }
 
@@ -82,33 +94,32 @@ public class InundacionManager : MonoBehaviour
 
     IEnumerator SecuenciaInundacion()
     {
-        // Esfera emerge
         if (esferaVolcan != null)
         {
+            esferaVolcan.SetActive(true);
+
             yield return StartCoroutine(
                 EmergerEsfera()
             );
         }
 
-        // Espera configurable
         yield return new WaitForSeconds(
             retrasoAguaVolcan
         );
 
-        // Agua baja por el volcán
         if (aguaVolcan != null)
         {
+            aguaVolcan.SetActive(true);
+
             yield return StartCoroutine(
                 DesplegarAguaVolcan()
             );
         }
 
-        // Espera configurable
         yield return new WaitForSeconds(
             retrasoInundacionPrincipal
         );
 
-        // Inundación principal
         if (agua != null)
         {
             agua.SetActive(true);
@@ -206,6 +217,20 @@ public class InundacionManager : MonoBehaviour
                     posicionFinal,
                     t
                 );
+
+            // Iniciar transición antes de terminar
+            if (
+                !transicionIniciada &&
+                tiempo >= duracion - tiempoAntesTransicion
+            )
+            {
+                transicionIniciada = true;
+
+                if (transicionFaseManager != null)
+                {
+                    transicionFaseManager.IniciarTransicion();
+                }
+            }
 
             yield return null;
         }
