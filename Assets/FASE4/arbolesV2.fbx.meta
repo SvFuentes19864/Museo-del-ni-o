@@ -3,7 +3,47 @@ guid: 42ef5d570746b0745afafa4ce7781776
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.018
+    second: {fileID: 2100000, guid: 281963d483e0df948817802ac314d8c2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.019
+    second: {fileID: 2100000, guid: dceda8cf8935a6e42a91b4dc7c72b7be, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.023
+    second: {fileID: 2100000, guid: 1bf9bbda41eac6d48a3e714f56336e9b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.024
+    second: {fileID: 2100000, guid: 93ba7af0556154e49b2ef80ef4c3fb14, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.190
+    second: {fileID: 2100000, guid: 0da3c30c50d01dc45a82158559d3bc35, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.191
+    second: {fileID: 2100000, guid: 85dd05597a69dfc4e8eaeecbaaa04c0b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.192
+    second: {fileID: 2100000, guid: 9b321761d19c14d4480bc2c95fa72690, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sakura_Mat
+    second: {fileID: 2100000, guid: 167c2013910796d4cb437e2b6a26abb4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
