@@ -11,8 +11,6 @@ public class DragObjectCerrito : MonoBehaviour
     private bool yaColocado = false;
     private bool isDragging = false;
 
-    private float distance;
-
     private Vector3 offsetCentro;
 
     void Start()
@@ -51,28 +49,7 @@ public class DragObjectCerrito : MonoBehaviour
             return;
         }
 
-        Ray ray =
-            Camera.main.ScreenPointToRay(
-                Input.mousePosition
-            );
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (
-                hit.transform == transform ||
-                hit.transform.IsChildOf(transform)
-            )
-            {
-                distance = Vector3.Distance(
-                    transform.position,
-                    Camera.main.transform.position
-                );
-
-                isDragging = true;
-            }
-        }
+        isDragging = true;
     }
 
     void OnMouseUp()
@@ -108,6 +85,18 @@ public class DragObjectCerrito : MonoBehaviour
                     gameManager.RegistrarColocacion();
                 }
 
+                SpawnF4_1 spawn =
+                    FindObjectOfType<SpawnF4_1>();
+
+                if (spawn != null)
+                {
+                    spawn.ActivarFase4();
+                }
+
+                Debug.Log(
+                    "¡Cerrito del Carmen colocado correctamente!"
+                );
+
                 Debug.Log(
                     "¡Cerrito del Carmen colocado correctamente!"
                 );
@@ -124,15 +113,26 @@ public class DragObjectCerrito : MonoBehaviour
                     Input.mousePosition
                 );
 
-            Vector3 point =
-                ray.GetPoint(distance * 1.5f);
-
-            transform.position =
-                new Vector3(
-                    point.x,
-                    transform.position.y,
-                    point.z
+            Plane plane =
+                new Plane(
+                    Vector3.up,
+                    transform.position
                 );
+
+            float enter;
+
+            if (plane.Raycast(ray, out enter))
+            {
+                Vector3 point =
+                    ray.GetPoint(enter);
+
+                transform.position =
+                    new Vector3(
+                        point.x,
+                        transform.position.y,
+                        point.z
+                    );
+            }
         }
     }
 
