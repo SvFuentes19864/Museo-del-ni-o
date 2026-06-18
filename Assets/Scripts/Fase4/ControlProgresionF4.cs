@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.Cinemachine;
 
 public class ControlProgresionF4 : MonoBehaviour
 {
@@ -17,12 +18,31 @@ public class ControlProgresionF4 : MonoBehaviour
     public GameObject torreReformador;
     public GameObject pEspana;
 
-    [Header("Narración Inicial")]
+    [Header("Narraciones")]
     public AudioSource introF4;
     public AudioSource finalF4;
 
+    [Header("Cámaras")]
+    public CinemachineCamera camaraPrincipal;
+
+    public CinemachineCamera camaraParte1;
+
+    public CinemachineCamera camaraParte2A;
+    public CinemachineCamera camaraParte2B;
+
+    public CinemachineCamera camaraParte3;
+
+    public CinemachineCamera camaraParte4;
+
+    public CinemachineCamera camaraParte5A;
+    public CinemachineCamera camaraParte5B;
+    public CinemachineCamera camaraParte5C;
+
     public void MostrarIglesiaRecoleccion()
     {
+
+        ActivarCamara(camaraParte2A);
+
         if (iglesiaRecoleccion != null)
         {
             iglesiaRecoleccion.SetActive(true);
@@ -31,6 +51,9 @@ public class ControlProgresionF4 : MonoBehaviour
 
     public void MostrarParqueJocotenango()
     {
+
+        ActivarCamara(camaraParte2B);
+
         if (parqueJocotenango != null)
         {
             parqueJocotenango.SetActive(true);
@@ -39,6 +62,9 @@ public class ControlProgresionF4 : MonoBehaviour
 
     public void MostrarAcueducto()
     {
+
+        ActivarCamara(camaraParte3);
+
         if (acueducto != null)
         {
             acueducto.SetActive(true);
@@ -47,6 +73,9 @@ public class ControlProgresionF4 : MonoBehaviour
 
     public void MostrarIglesiaSantoDomingo()
     {
+
+        ActivarCamara(camaraParte4);
+
         if (iglesiaSantoDomingo != null)
         {
             iglesiaSantoDomingo.SetActive(true);
@@ -55,6 +84,9 @@ public class ControlProgresionF4 : MonoBehaviour
 
     public void MostrarMunicipalidad()
     {
+
+        ActivarCamara(camaraParte5A);
+
         if (municipalidad != null)
         {
             municipalidad.SetActive(true);
@@ -63,6 +95,9 @@ public class ControlProgresionF4 : MonoBehaviour
 
     public void MostrarTorreReformador()
     {
+
+        ActivarCamara(camaraParte5B);
+
         if (torreReformador != null)
         {
             torreReformador.SetActive(true);
@@ -71,6 +106,9 @@ public class ControlProgresionF4 : MonoBehaviour
 
     public void MostrarPEspana()
     {
+
+        ActivarCamara(camaraParte5C);
+
         if (pEspana != null)
         {
             pEspana.SetActive(true);
@@ -202,6 +240,9 @@ public class ControlProgresionF4 : MonoBehaviour
 
     IEnumerator IntroInicialF4()
     {
+
+        ActivarCamara(camaraPrincipal);
+
         if (introF4 != null)
         {
             introF4.Play();
@@ -215,10 +256,16 @@ public class ControlProgresionF4 : MonoBehaviour
         {
             cerrito.SetActive(true);
         }
+
+        ActivarCamara(camaraParte1);
+
     }
 
     IEnumerator NarracionFinalF4()
     {
+        
+        ActivarCamara(camaraPrincipal);
+
         if (finalF4 != null)
         {
             finalF4.Play();
@@ -283,5 +330,30 @@ public class ControlProgresionF4 : MonoBehaviour
         StartCoroutine(
             IntroInicialF4()
         );
+    }
+
+    void ActivarCamara(
+        CinemachineCamera camaraActiva
+    )
+    {
+        camaraParte1.Priority = 0;
+
+        camaraParte2A.Priority = 0;
+        camaraParte2B.Priority = 0;
+
+        camaraParte3.Priority = 0;
+
+        camaraParte4.Priority = 0;
+
+        camaraParte5A.Priority = 0;
+        camaraParte5B.Priority = 0;
+        camaraParte5C.Priority = 0;
+
+        camaraPrincipal.Priority = 0;
+
+        if (camaraActiva != null)
+        {
+            camaraActiva.Priority = 100;
+        }
     }
 }
