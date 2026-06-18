@@ -287,46 +287,6 @@ public class ControlProgresionF4 : MonoBehaviour
 
     void Start()
     {
-        if (cerrito != null)
-        {
-            cerrito.SetActive(false);
-        }
-
-        if (iglesiaRecoleccion != null)
-        {
-            iglesiaRecoleccion.SetActive(false);
-        }
-
-        if (parqueJocotenango != null)
-        {
-            parqueJocotenango.SetActive(false);
-        }
-
-        if (acueducto != null)
-        {
-            acueducto.SetActive(false);
-        }
-
-        if (iglesiaSantoDomingo != null)
-        {
-            iglesiaSantoDomingo.SetActive(false);
-        }
-
-        if (municipalidad != null)
-        {
-            municipalidad.SetActive(false);
-        }
-
-        if (torreReformador != null)
-        {
-            torreReformador.SetActive(false);
-        }
-
-        if (pEspana != null)
-        {
-            pEspana.SetActive(false);
-        }
-
         StartCoroutine(
             IntroInicialF4()
         );
