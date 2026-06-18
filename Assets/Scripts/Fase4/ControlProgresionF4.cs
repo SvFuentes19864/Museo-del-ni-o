@@ -17,6 +17,10 @@ public class ControlProgresionF4 : MonoBehaviour
     public GameObject torreReformador;
     public GameObject pEspana;
 
+    [Header("Narración Inicial")]
+    public AudioSource introF4;
+    public AudioSource finalF4;
+
     public void MostrarIglesiaRecoleccion()
     {
         if (iglesiaRecoleccion != null)
@@ -124,6 +128,13 @@ public class ControlProgresionF4 : MonoBehaviour
         );
     }
 
+    public void ReproducirFinalF4()
+    {
+        StartCoroutine(
+            NarracionFinalF4()
+        );
+    }
+
     //SEPARADOR
 
     IEnumerator EsperarYMostrarIglesiaRecoleccion()
@@ -189,6 +200,39 @@ public class ControlProgresionF4 : MonoBehaviour
         MostrarPEspana();
     }
 
+    IEnumerator IntroInicialF4()
+    {
+        if (introF4 != null)
+        {
+            introF4.Play();
+
+            yield return new WaitForSeconds(
+                introF4.clip.length
+            );
+        }
+
+        if (cerrito != null)
+        {
+            cerrito.SetActive(true);
+        }
+    }
+
+    IEnumerator NarracionFinalF4()
+    {
+        if (finalF4 != null)
+        {
+            finalF4.Play();
+
+            yield return new WaitForSeconds(
+                finalF4.clip.length
+            );
+        }
+
+        Debug.Log(
+            "Narración final F4 terminada."
+        );
+    }
+
     //SEPARADOR
 
     [Header("Tiempos")]
@@ -198,7 +242,7 @@ public class ControlProgresionF4 : MonoBehaviour
     {
         if (cerrito != null)
         {
-            cerrito.SetActive(true);
+            cerrito.SetActive(false);
         }
 
         if (iglesiaRecoleccion != null)
@@ -235,5 +279,9 @@ public class ControlProgresionF4 : MonoBehaviour
         {
             pEspana.SetActive(false);
         }
+
+        StartCoroutine(
+            IntroInicialF4()
+        );
     }
 }
