@@ -44,6 +44,9 @@ public class SpawnF4_1 : MonoBehaviour
     public float tiempoSpawnVehiculos = 0.1f;
     public float tiempoSpawnObjetosUrbanos = 0.1f;
 
+    [Header("Progresión")]
+    public ControlProgresionF4 controlProgresionF4;
+
     void Start()
     {
         // EDIFICIOS PRINCIPALES
@@ -270,6 +273,11 @@ public class SpawnF4_1 : MonoBehaviour
                     tiempoSpawnObjetosUrbanos
                 )
             );
+        }
+
+        if (controlProgresionF4 != null)
+        {
+            controlProgresionF4.MostrarIglesiaRecoleccionConDelay();
         }
     }
 

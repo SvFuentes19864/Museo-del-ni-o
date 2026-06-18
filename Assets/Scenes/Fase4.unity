@@ -9727,6 +9727,7 @@ MonoBehaviour:
   tiempoSpawnNPCs: 0.1
   tiempoSpawnVehiculos: 0.1
   tiempoSpawnObjetos: 0.1
+  controlProgresionF4: {fileID: 1783160940}
 --- !u!1 &214926706
 GameObject:
   m_ObjectHideFlags: 0
@@ -13882,7 +13883,7 @@ MonoBehaviour:
   audioVehiculos: {fileID: 0}
   audioObjetosUrbanos: {fileID: 0}
   tiempoSpawnEdificios: 0.5
-  tiempoSpawnCuadras: 0.3
+  tiempoSpawnCuadras: 0.2
   tiempoSpawnNPCs: 0.1
   tiempoSpawnVehiculos: 0.1
   tiempoSpawnObjetos: 0.1
@@ -21024,10 +21025,11 @@ MonoBehaviour:
   audioVehiculos: {fileID: 0}
   audioObjetosUrbanos: {fileID: 0}
   tiempoSpawnEdificios: 0.8
-  tiempoSpawnCuadras: 0.3
+  tiempoSpawnCuadras: 0.2
   tiempoSpawnNPCs: 0.1
   tiempoSpawnVehiculos: 0.1
   tiempoSpawnObjetos: 0.1
+  controlProgresionF4: {fileID: 1783160940}
 --- !u!4 &428750229
 Transform:
   m_ObjectHideFlags: 0
@@ -41372,6 +41374,7 @@ MonoBehaviour:
   tiempoSpawnNPCs: 0.1
   tiempoSpawnVehiculos: 0.1
   tiempoSpawnObjetosUrbanos: 0.1
+  controlProgresionF4: {fileID: 1783160940}
 --- !u!1 &805465153
 GameObject:
   m_ObjectHideFlags: 0
@@ -52836,10 +52839,11 @@ MonoBehaviour:
   audioVehiculos: {fileID: 0}
   audioObjetosUrbanos: {fileID: 0}
   tiempoSpawnEdificios: 0.5
-  tiempoSpawnCuadras: 0.3
+  tiempoSpawnCuadras: 0.2
   tiempoSpawnNPCs: 0.1
   tiempoSpawnVehiculos: 0.1
   tiempoSpawnObjetos: 0.1
+  controlProgresionF4: {fileID: 1783160940}
 --- !u!4 &1058077607
 Transform:
   m_ObjectHideFlags: 0
@@ -62405,6 +62409,7 @@ MonoBehaviour:
   tiempoSpawnNPCs: 0.1
   tiempoSpawnVehiculos: 0.1
   tiempoSpawnObjetos: 0.1
+  controlProgresionF4: {fileID: 1783160940}
 --- !u!1 &1245207305
 GameObject:
   m_ObjectHideFlags: 0
@@ -68897,10 +68902,11 @@ MonoBehaviour:
   audioVehiculos: {fileID: 0}
   audioObjetosUrbanos: {fileID: 0}
   tiempoSpawnEdificios: 0.5
-  tiempoSpawnCuadras: 0.3
+  tiempoSpawnCuadras: 0.2
   tiempoSpawnNPCs: 0.1
   tiempoSpawnVehiculos: 0.1
   tiempoSpawnObjetos: 0.1
+  controlProgresionF4: {fileID: 1783160940}
 --- !u!4 &1360639458
 Transform:
   m_ObjectHideFlags: 0
@@ -69113,7 +69119,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1362468277
 Transform:
   m_ObjectHideFlags: 0
@@ -69123,7 +69129,7 @@ Transform:
   m_GameObject: {fileID: 1362468276}
   serializedVersion: 2
   m_LocalRotation: {x: 1, y: 0, z: -0, w: 0.00000031391647}
-  m_LocalPosition: {x: 0.63118154, y: 9.2770405, z: 1.1026664}
+  m_LocalPosition: {x: 0.808, y: 9.286, z: 1.44}
   m_LocalScale: {x: 0.54979944, y: 0.5497995, z: 0.5497995}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -80954,15 +80960,16 @@ MonoBehaviour:
   objetosUrbanos: []
   audioCiudad: {fileID: 0}
   audioEdificios: {fileID: 0}
-  audioCuadras: {fileID: 0}
+  audioCuadras: {fileID: 681311337}
   audioNPCs: {fileID: 0}
   audioVehiculos: {fileID: 0}
   audioObjetosUrbanos: {fileID: 0}
   tiempoSpawnEdificios: 0.5
-  tiempoSpawnCuadras: 0.3
+  tiempoSpawnCuadras: 0.2
   tiempoSpawnNPCs: 0.1
   tiempoSpawnVehiculos: 0.1
   tiempoSpawnObjetos: 0.1
+  controlProgresionF4: {fileID: 1783160940}
 --- !u!4 &1578091568
 Transform:
   m_ObjectHideFlags: 0
@@ -91016,6 +91023,59 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1780814773}
   m_Mesh: {fileID: 499819283988783077, guid: 56cdc81fe8610e146b9e4ad400ea387e, type: 3}
+--- !u!1 &1783160939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1783160941}
+  - component: {fileID: 1783160940}
+  m_Layer: 0
+  m_Name: ControlFase4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1783160940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783160939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11ab95aad6606d44baa7e0daebe1fe1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ControlProgresionF4
+  cerrito: {fileID: 288691191}
+  iglesiaRecoleccion: {fileID: 1420273010}
+  parqueJocotenango: {fileID: 2118602314}
+  acueducto: {fileID: 561677274}
+  iglesiaSantoDomingo: {fileID: 594257982}
+  municipalidad: {fileID: 880016260}
+  torreReformador: {fileID: 598294687}
+  pEspana: {fileID: 2146015521}
+  tiempoEntrePartes: 1
+--- !u!4 &1783160941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783160939}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.23706, y: 0.0622, z: 0.256}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1783595621
 GameObject:
   m_ObjectHideFlags: 0
@@ -107637,7 +107697,7 @@ Transform:
   m_GameObject: {fileID: 2118602314}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0.639, y: 0.064, z: -0.638}
+  m_LocalPosition: {x: -0.65, y: 0.02, z: -0.571}
   m_LocalScale: {x: 14.508471, y: 13.180247, z: 0.38168266}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -110256,6 +110316,7 @@ SceneRoots:
   - {fileID: 2073666917}
   - {fileID: 730735711}
   - {fileID: 615146691}
+  - {fileID: 1783160941}
   - {fileID: 1891134741}
   - {fileID: 2080110729}
   - {fileID: 679765684}

@@ -38,6 +38,9 @@ public class SpawnF4_4 : MonoBehaviour
     public float tiempoSpawnVehiculos = 0.1f;
     public float tiempoSpawnObjetos = 0.1f;
 
+    [Header("Progresión")]
+    public ControlProgresionF4 controlProgresionF4;
+
     void Start()
     {
         PrepararObjetos(edificiosPrincipales, out escalasEdificios);
@@ -126,6 +129,11 @@ public class SpawnF4_4 : MonoBehaviour
                 tiempoSpawnObjetos
             )
         );
+
+        if (controlProgresionF4 != null)
+        {
+            controlProgresionF4.MostrarMunicipalidadConDelay();
+        }
     }
 
     IEnumerator SpawnGrupo(

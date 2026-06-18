@@ -38,6 +38,9 @@ public class SpawnF4_5_B : MonoBehaviour
     public float tiempoSpawnVehiculos = 0.1f;
     public float tiempoSpawnObjetos = 0.1f;
 
+    [Header("Progresión")]
+    public ControlProgresionF4 controlProgresionF4;
+
     void Start()
     {
         PrepararObjetos(edificiosPrincipales, out escalasEdificios);
@@ -75,6 +78,11 @@ public class SpawnF4_5_B : MonoBehaviour
         yield return StartCoroutine(SpawnGrupo(npcs, escalasNPCs, audioNPCs, tiempoSpawnNPCs));
         yield return StartCoroutine(SpawnGrupo(vehiculos, escalasVehiculos, audioVehiculos, tiempoSpawnVehiculos));
         yield return StartCoroutine(SpawnGrupo(objetosUrbanos, escalasObjetos, audioObjetosUrbanos, tiempoSpawnObjetos));
+
+        if (controlProgresionF4 != null)
+        {
+            controlProgresionF4.MostrarPEspanaConDelay();
+        }
     }
 
     IEnumerator SpawnGrupo(GameObject[] objetos, Vector3[] escalas, AudioSource audio, float duracion)
