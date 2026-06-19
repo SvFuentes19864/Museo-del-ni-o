@@ -1298,7 +1298,7 @@ MonoBehaviour:
   duracionCinematica: 6
   fadeImage: {fileID: 895066500}
   tiempoAntesDelFade: 1.3
-  siguienteEscena: Intro
+  siguienteEscena: Fase4
 --- !u!1 &178831123
 GameObject:
   m_ObjectHideFlags: 0
