@@ -263,7 +263,6 @@ public class ControlProgresionF4 : MonoBehaviour
 
     IEnumerator NarracionFinalF4()
     {
-        
         ActivarCamara(camaraPrincipal);
 
         if (finalF4 != null)
@@ -271,7 +270,14 @@ public class ControlProgresionF4 : MonoBehaviour
             finalF4.Play();
 
             yield return new WaitForSeconds(
-                finalF4.clip.length
+                delayAntesRecorridoFinal
+            );
+
+            ActivarCamara(camaraCart);
+
+            yield return new WaitForSeconds(
+                finalF4.clip.length -
+                delayAntesRecorridoFinal
             );
         }
 
@@ -285,8 +291,53 @@ public class ControlProgresionF4 : MonoBehaviour
     [Header("Tiempos")]
     public float tiempoEntrePartes = 3f;
 
+    [Header("Cinemática Final")]
+    public float delayAntesRecorridoFinal = 3f;
+
+    public CinemachineCamera camaraCart;
+
     void Start()
     {
+        if (cerrito != null)
+        {
+            cerrito.SetActive(false);
+        }
+
+        if (iglesiaRecoleccion != null)
+        {
+            iglesiaRecoleccion.SetActive(false);
+        }
+
+        if (parqueJocotenango != null)
+        {
+            parqueJocotenango.SetActive(false);
+        }
+
+        if (acueducto != null)
+        {
+            acueducto.SetActive(false);
+        }
+
+        if (iglesiaSantoDomingo != null)
+        {
+            iglesiaSantoDomingo.SetActive(false);
+        }
+
+        if (municipalidad != null)
+        {
+            municipalidad.SetActive(false);
+        }
+
+        if (torreReformador != null)
+        {
+            torreReformador.SetActive(false);
+        }
+
+        if (pEspana != null)
+        {
+            pEspana.SetActive(false);
+        }
+
         StartCoroutine(
             IntroInicialF4()
         );
@@ -310,6 +361,8 @@ public class ControlProgresionF4 : MonoBehaviour
         camaraParte5C.Priority = 0;
 
         camaraPrincipal.Priority = 0;
+
+        camaraCart.Priority = 0;
 
         if (camaraActiva != null)
         {

@@ -1,9 +1,39 @@
 fileFormatVersion: 2
-guid: b8253d244424f0a4c8187ab37b4f24ba
+guid: 58afb852c30a9c048a97bd2e38cee828
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CarPaint
+    second: {fileID: 2100000, guid: 4becbbc75a0bf2a469c4e612b8e21756, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FrontLights
+    second: {fileID: 2100000, guid: ef9cc04155c390640b307694c9dd7fe8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plastic
+    second: {fileID: 2100000, guid: 4e28bbec85ef42248bb3fec40182c538, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RearLights
+    second: {fileID: 2100000, guid: 7279a9d027c07cf4aa3aec35c2352af7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rims
+    second: {fileID: 2100000, guid: 62c82ddf0cf2ca149a8ca7ec08659aca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Window
+    second: {fileID: 2100000, guid: d477e33cb45bcaf4aab09a2abaf221e2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
