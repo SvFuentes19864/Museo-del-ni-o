@@ -35432,7 +35432,7 @@ Transform:
   m_GameObject: {fileID: 288691191}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5000001, y: -0.49999994, z: -0.5, w: -0.50000006}
-  m_LocalPosition: {x: 0.567, y: 0.25, z: 0.089}
+  m_LocalPosition: {x: 0.254, y: 0.25, z: -0.086}
   m_LocalScale: {x: 4.428106, y: 5.6867795, z: 0.41283116}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -167722,7 +167722,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
     Enabled: 1
-    m_Value: 11
+    m_Value: 5
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -171116,7 +171116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
     Enabled: 1
-    m_Value: 10
+    m_Value: 5
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -243804,7 +243804,7 @@ MonoBehaviour:
   camaraParte5A: {fileID: 780899810}
   camaraParte5B: {fileID: 1618979750}
   camaraParte5C: {fileID: 1244727141}
-  tiempoEntrePartes: 1
+  tiempoEntrePartes: 2
   delayAntesRecorridoFinal: 4
   camaraCart: {fileID: 1728500023}
 --- !u!4 &1783160941
@@ -286599,7 +286599,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 47.3
+  field of view: 40.4
   orthographic: 0
   orthographic size: 2
   m_Depth: -1
@@ -286625,8 +286625,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073666914}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.3636466, y: 0.18044496, z: -0.07342399, w: -0.9109389}
-  m_LocalPosition: {x: 2.487, y: 1.132, z: -0.9089999}
+  m_LocalRotation: {x: 0.046334382, y: 0.9425675, z: -0.29607692, w: 0.1475066}
+  m_LocalPosition: {x: -1.793, y: 3.372, z: 4.5810003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
