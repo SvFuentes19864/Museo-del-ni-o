@@ -2064,7 +2064,7 @@
     "m_ObjectId": "6eaf739b5484477a975010ace12ae760",
     "m_Title": "Directional Dissolve",
     "m_Position": {
-        "x": -2757.599853515625,
+        "x": -2757.60009765625,
         "y": 414.39996337890627
     }
 }
@@ -2075,7 +2075,7 @@
     "m_ObjectId": "6ee47cdbc06644e68fa9511dbf92084a",
     "m_Title": "Edge Color",
     "m_Position": {
-        "x": -1444.0,
+        "x": -1443.999755859375,
         "y": 81.59991455078125
     }
 }
