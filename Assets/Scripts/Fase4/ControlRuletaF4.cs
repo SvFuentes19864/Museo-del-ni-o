@@ -22,6 +22,13 @@ public class ControlRuletaF4 : MonoBehaviour
 
     public float tiempoEntreSaltos = 0.15f;
 
+    [Header("Movimiento Final")]
+    public float duracionMovimientoFinal = 1f;
+
+    [Header("Audio")]
+    public AudioSource audioPop;
+    public AudioSource audioGanador;
+
     void Start()
     {
         Debug.Log("ControlRuletaF4 iniciado");
@@ -40,6 +47,19 @@ public class ControlRuletaF4 : MonoBehaviour
     {
         Debug.Log("Iniciando ruleta");
         StartCoroutine(Ruleta());
+    }
+
+    public void ConfigurarRuleta(
+        GameObject nuevoObjeto,
+        Transform nuevoInicioDrag,
+        CinemachineCamera nuevaCamara
+    )
+    {
+        objetoActual = nuevoObjeto;
+
+        puntoInicioDrag = nuevoInicioDrag;
+
+        camaraDestino = nuevaCamara;
     }
 
     IEnumerator Ruleta()
@@ -82,6 +102,11 @@ public class ControlRuletaF4 : MonoBehaviour
             objetoActual.transform.position =
                 puntosRuleta[indice].position;
 
+            if (audioPop != null)
+            {
+                audioPop.Play();
+            }
+
             Debug.Log(
                 "Saltando a: " +
                 puntosRuleta[indice].name
@@ -95,9 +120,60 @@ public class ControlRuletaF4 : MonoBehaviour
         objetoActual.transform.position =
             puntosRuleta[ganador].position;
 
+        if (audioGanador != null)
+        {
+            audioGanador.Play();
+        }
+
         Debug.Log(
             "Ganador: " +
             puntosRuleta[ganador].name
         );
+
+        yield return new WaitForSeconds(1f);
+
+        if (camaraDestino != null)
+        {
+            camaraDestino.Priority = 100;
+        }
+
+        if (puntoInicioDrag != null)
+        {
+            yield return StartCoroutine(
+                MoverSuavemente(
+                    puntoInicioDrag.position
+                )
+            );
+        }
+    }
+
+    IEnumerator MoverSuavemente(
+        Vector3 destino
+    )
+    {
+        Vector3 posicionInicial =
+            objetoActual.transform.position;
+
+        float tiempo = 0f;
+
+        while (
+            tiempo < duracionMovimientoFinal
+        )
+        {
+            tiempo += Time.deltaTime;
+
+            objetoActual.transform.position =
+                Vector3.Lerp(
+                    posicionInicial,
+                    destino,
+                    tiempo /
+                    duracionMovimientoFinal
+                );
+
+            yield return null;
+        }
+
+        objetoActual.transform.position =
+            destino;
     }
 }

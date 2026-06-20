@@ -38,6 +38,8 @@ public class ControlProgresionF4 : MonoBehaviour
     public CinemachineCamera camaraParte5B;
     public CinemachineCamera camaraParte5C;
 
+    public CinemachineCamera camaraZoomOut;
+
     public void MostrarIglesiaRecoleccion()
     {
 
@@ -181,7 +183,23 @@ public class ControlProgresionF4 : MonoBehaviour
             tiempoEntrePartes
         );
 
-        MostrarIglesiaRecoleccion();
+        ActivarCamara(camaraZoomOut);
+
+        if (
+            controlRuletaF4 != null &&
+            iglesiaRecoleccion != null
+        )
+        {
+            iglesiaRecoleccion.SetActive(true);
+
+            controlRuletaF4.ConfigurarRuleta(
+                iglesiaRecoleccion,
+                inicioDragIglesiaRecoleccion,
+                camaraParte2A
+            );
+
+            controlRuletaF4.IniciarRuleta();
+        }
     }
 
     IEnumerator EsperarYMostrarParqueJocotenango()
@@ -190,7 +208,23 @@ public class ControlProgresionF4 : MonoBehaviour
             tiempoEntrePartes
         );
 
-        MostrarParqueJocotenango();
+        ActivarCamara(camaraZoomOut);
+
+        if (
+            controlRuletaF4 != null &&
+            parqueJocotenango != null
+        )
+        {
+            parqueJocotenango.SetActive(true);
+
+            controlRuletaF4.ConfigurarRuleta(
+                parqueJocotenango,
+                inicioDragParqueJocotenango,
+                camaraParte2B
+            );
+
+            controlRuletaF4.IniciarRuleta();
+        }
     }
 
     IEnumerator EsperarYMostrarAcueducto()
@@ -199,7 +233,23 @@ public class ControlProgresionF4 : MonoBehaviour
             tiempoEntrePartes
         );
 
-        MostrarAcueducto();
+        ActivarCamara(camaraZoomOut);
+
+        if (
+            controlRuletaF4 != null &&
+            acueducto != null
+        )
+        {
+            acueducto.SetActive(true);
+
+            controlRuletaF4.ConfigurarRuleta(
+                acueducto,
+                inicioDragAcueducto,
+                camaraParte3
+            );
+
+            controlRuletaF4.IniciarRuleta();
+        }
     }
 
     IEnumerator EsperarYMostrarIglesiaSantoDomingo()
@@ -208,7 +258,23 @@ public class ControlProgresionF4 : MonoBehaviour
             tiempoEntrePartes
         );
 
-        MostrarIglesiaSantoDomingo();
+        ActivarCamara(camaraZoomOut);
+
+        if (
+            controlRuletaF4 != null &&
+            iglesiaSantoDomingo != null
+        )
+        {
+            iglesiaSantoDomingo.SetActive(true);
+
+            controlRuletaF4.ConfigurarRuleta(
+                iglesiaSantoDomingo,
+                inicioDragIglesiaSantoDomingo,
+                camaraParte4
+            );
+
+            controlRuletaF4.IniciarRuleta();
+        }
     }
 
     IEnumerator EsperarYMostrarMunicipalidad()
@@ -217,7 +283,23 @@ public class ControlProgresionF4 : MonoBehaviour
             tiempoEntrePartes
         );
 
-        MostrarMunicipalidad();
+        ActivarCamara(camaraZoomOut);
+
+        if (
+            controlRuletaF4 != null &&
+            municipalidad != null
+        )
+        {
+            municipalidad.SetActive(true);
+
+            controlRuletaF4.ConfigurarRuleta(
+                municipalidad,
+                inicioDragMunicipalidad,
+                camaraParte5A
+            );
+
+            controlRuletaF4.IniciarRuleta();
+        }
     }
 
     IEnumerator EsperarYMostrarTorreReformador()
@@ -226,7 +308,23 @@ public class ControlProgresionF4 : MonoBehaviour
             tiempoEntrePartes
         );
 
-        MostrarTorreReformador();
+        ActivarCamara(camaraZoomOut);
+
+        if (
+            controlRuletaF4 != null &&
+            torreReformador != null
+        )
+        {
+            torreReformador.SetActive(true);
+
+            controlRuletaF4.ConfigurarRuleta(
+                torreReformador,
+                inicioDragTorreReformador,
+                camaraParte5B
+            );
+
+            controlRuletaF4.IniciarRuleta();
+        }
     }
 
     IEnumerator EsperarYMostrarPEspana()
@@ -235,12 +333,27 @@ public class ControlProgresionF4 : MonoBehaviour
             tiempoEntrePartes
         );
 
-        MostrarPEspana();
+        ActivarCamara(camaraZoomOut);
+
+        if (
+            controlRuletaF4 != null &&
+            pEspana != null
+        )
+        {
+            pEspana.SetActive(true);
+
+            controlRuletaF4.ConfigurarRuleta(
+                pEspana,
+                inicioDragPEspana,
+                camaraParte5C
+            );
+
+            controlRuletaF4.IniciarRuleta();
+        }
     }
 
     IEnumerator IntroInicialF4()
     {
-
         ActivarCamara(camaraPrincipal);
 
         if (introF4 != null)
@@ -252,13 +365,19 @@ public class ControlProgresionF4 : MonoBehaviour
             );
         }
 
+        ActivarCamara(camaraZoomOut);
+
         if (cerrito != null)
         {
             cerrito.SetActive(true);
         }
 
-        ActivarCamara(camaraParte1);
+        yield return new WaitForSeconds(1f);
 
+        if (controlRuletaF4 != null)
+        {
+            controlRuletaF4.IniciarRuleta();
+        }
     }
 
     IEnumerator NarracionFinalF4()
@@ -293,6 +412,18 @@ public class ControlProgresionF4 : MonoBehaviour
 
     [Header("Cinemática Final")]
     public float delayAntesRecorridoFinal = 3f;
+
+    [Header("Ruleta Inicial")]
+    public ControlRuletaF4 controlRuletaF4;
+    [Header("Puntos Inicio Drag")]
+    public Transform inicioDragCerrito;
+    public Transform inicioDragIglesiaRecoleccion;
+    public Transform inicioDragParqueJocotenango;
+    public Transform inicioDragAcueducto;
+    public Transform inicioDragIglesiaSantoDomingo;
+    public Transform inicioDragMunicipalidad;
+    public Transform inicioDragTorreReformador;
+    public Transform inicioDragPEspana;
 
     public CinemachineCamera camaraCart;
 
@@ -361,6 +492,8 @@ public class ControlProgresionF4 : MonoBehaviour
         camaraParte5C.Priority = 0;
 
         camaraPrincipal.Priority = 0;
+
+        camaraZoomOut.Priority = 0;
 
         camaraCart.Priority = 0;
 
