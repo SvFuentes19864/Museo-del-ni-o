@@ -1,9 +1,16 @@
 using UnityEngine;
 using System.Collections;
 using Unity.Cinemachine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ControlProgresionF4 : MonoBehaviour
 {
+
+    [Header("Fade")]
+    public Image fadeImage;
+    public float duracionFadeIn = 1f;
+
     [Header("Encajables")]
     public GameObject cerrito;
 
@@ -398,11 +405,73 @@ public class ControlProgresionF4 : MonoBehaviour
                 finalF4.clip.length -
                 delayAntesRecorridoFinal
             );
+
+            yield return StartCoroutine(
+                FadeOut()
+            );
+
+            SceneManager.LoadScene("Intro");
         }
 
         Debug.Log(
             "Narración final F4 terminada."
         );
+    }
+
+    IEnumerator FadeIn()
+    {
+        Color color = fadeImage.color;
+
+        color.a = 1f;
+        fadeImage.color = color;
+
+        float tiempo = 0f;
+
+        while (tiempo < duracionFadeIn)
+        {
+            tiempo += Time.deltaTime;
+
+            color.a = Mathf.Lerp(
+                1f,
+                0f,
+                tiempo / duracionFadeIn
+            );
+
+            fadeImage.color = color;
+
+            yield return null;
+        }
+
+        color.a = 0f;
+        fadeImage.color = color;
+    }
+
+    IEnumerator FadeOut()
+    {
+        Color color = fadeImage.color;
+
+        color.a = 0f;
+        fadeImage.color = color;
+
+        float tiempo = 0f;
+
+        while (tiempo < duracionFadeIn)
+        {
+            tiempo += Time.deltaTime;
+
+            color.a = Mathf.Lerp(
+                0f,
+                1f,
+                tiempo / duracionFadeIn
+            );
+
+            fadeImage.color = color;
+
+            yield return null;
+        }
+
+        color.a = 1f;
+        fadeImage.color = color;
     }
 
     //SEPARADOR
@@ -429,6 +498,11 @@ public class ControlProgresionF4 : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(FadeIn());
+        StartCoroutine(
+            IntroInicialF4()
+        );
+
         if (cerrito != null)
         {
             cerrito.SetActive(false);
@@ -468,10 +542,6 @@ public class ControlProgresionF4 : MonoBehaviour
         {
             pEspana.SetActive(false);
         }
-
-        StartCoroutine(
-            IntroInicialF4()
-        );
     }
 
     void ActivarCamara(

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Unity.Cinemachine;
 
 public class Fase1IntroManager : MonoBehaviour
 {
@@ -14,10 +15,16 @@ public class Fase1IntroManager : MonoBehaviour
     [Header("Ruleta")]
     public SelectorArco selectorArco;
 
+    [Header("Cámaras")]
+    public CinemachineCamera cmIntro;
+    public CinemachineCamera cmPrincipal;
+
     private MeshRenderer[] renderersArco;
 
     IEnumerator Start()
     {
+        ActivarCamara(cmIntro);
+
         // Ocultar pirámide ANTES del fade
         if (selectorArco != null)
         {
@@ -38,25 +45,40 @@ public class Fase1IntroManager : MonoBehaviour
             fadeImage.color = color;
         }
 
-        // Fade In
+        // Iniciar narración inmediatamente
+        if (narrador != null)
+        {
+            narrador.Play();
+        }
+
+        // Fade In en paralelo
         if (fadeImage != null)
         {
-            yield return StartCoroutine(
+            StartCoroutine(
                 FadeIn()
             );
         }
 
-        // Narración
+        yield return new WaitForSeconds(0.1f);
+
+        ActivarCamara(cmPrincipal);
+
+        // Esperar a que termine el fade
+        yield return new WaitForSeconds(
+            duracionFadeIn
+        );
+
+        // Esperar un poco más y mostrar pirámide
+        yield return new WaitForSeconds(1f);
+
+        // Esperar a que termine la narración
         if (narrador != null)
         {
-            narrador.Play();
-
             yield return new WaitForSeconds(
-                narrador.clip.length
+                narrador.clip.length - 1.5f
             );
         }
 
-        // Mostrar pirámide
         if (renderersArco != null)
         {
             foreach (MeshRenderer r in renderersArco)
@@ -96,5 +118,25 @@ public class Fase1IntroManager : MonoBehaviour
 
         color.a = 0f;
         fadeImage.color = color;
+    }
+
+    void ActivarCamara(
+        CinemachineCamera camaraActiva
+    )
+    {
+        if (cmIntro != null)
+        {
+            cmIntro.Priority = 0;
+        }
+
+        if (cmPrincipal != null)
+        {
+            cmPrincipal.Priority = 0;
+        }
+
+        if (camaraActiva != null)
+        {
+            camaraActiva.Priority = 100;
+        }
     }
 }

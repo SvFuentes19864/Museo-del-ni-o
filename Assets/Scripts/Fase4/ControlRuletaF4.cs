@@ -34,15 +34,6 @@ public class ControlRuletaF4 : MonoBehaviour
         Debug.Log("ControlRuletaF4 iniciado");
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Debug.Log("Tecla R detectada");
-            IniciarRuleta();
-        }
-    }
-
     public void IniciarRuleta()
     {
         Debug.Log("Iniciando ruleta");
@@ -64,6 +55,11 @@ public class ControlRuletaF4 : MonoBehaviour
 
     IEnumerator Ruleta()
     {
+        Debug.Log(
+        "COROUTINE RULETA -> " +
+        objetoActual.name
+    );
+
         Debug.Log("Coroutine Ruleta iniciada");
 
         if (

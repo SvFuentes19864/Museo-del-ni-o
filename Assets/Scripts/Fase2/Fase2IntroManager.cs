@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Unity.Cinemachine;
 
 public class Fase2IntroManager : MonoBehaviour
 {
@@ -17,8 +18,14 @@ public class Fase2IntroManager : MonoBehaviour
     [Header("Ruleta")]
     public SelectorArco selectorPiezas;
 
+    [Header("Cámaras")]
+    public CinemachineCamera cmIntro;
+    public CinemachineCamera cmPrincipal;
+
     IEnumerator Start()
     {
+        ActivarCamara(cmIntro);
+
         // Ocultar iglesia
         if (iglesia != null)
         {
@@ -33,21 +40,36 @@ public class Fase2IntroManager : MonoBehaviour
             fadeImage.color = color;
         }
 
-        // Fade In
+        // Iniciar narración inmediatamente
+        if (narrador != null)
+        {
+            narrador.Play();
+        }
+
+        // Fade In en paralelo
         if (fadeImage != null)
         {
-            yield return StartCoroutine(
+            StartCoroutine(
                 FadeIn()
             );
         }
 
-        // Narración
+        // Cambio de cámara casi inmediato
+        yield return new WaitForSeconds(0.1f);
+
+        ActivarCamara(cmPrincipal);
+
+        // Esperar a que termine el fade
+        yield return new WaitForSeconds(
+            duracionFadeIn
+        );
+
+        // Esperar a que termine la narración
         if (narrador != null)
         {
-            narrador.Play();
-
             yield return new WaitForSeconds(
-                narrador.clip.length
+                narrador.clip.length -
+                duracionFadeIn
             );
         }
 
@@ -88,5 +110,25 @@ public class Fase2IntroManager : MonoBehaviour
 
         color.a = 0f;
         fadeImage.color = color;
+    }
+
+    void ActivarCamara(
+        CinemachineCamera camaraActiva
+    )
+    {
+        if (cmIntro != null)
+        {
+            cmIntro.Priority = 0;
+        }
+
+        if (cmPrincipal != null)
+        {
+            cmPrincipal.Priority = 0;
+        }
+
+        if (camaraActiva != null)
+        {
+            camaraActiva.Priority = 100;
+        }
     }
 }

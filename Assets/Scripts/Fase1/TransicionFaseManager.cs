@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Unity.Cinemachine;
 
 public class TransicionFaseManager : MonoBehaviour
 {
@@ -14,8 +15,11 @@ public class TransicionFaseManager : MonoBehaviour
     [Header("Tiempo para iniciar cinemática")]
     public float tiempoAntesDeVuelo = 18f;
 
-    [Header("Cinemachine")]
+    [Header("Cámaras")]
     public GameObject dollyCart;
+
+    public CinemachineCamera cmPrincipal;
+    public CinemachineCamera cmDolly;
 
     [Header("Duración de la cinemática")]
     public float duracionCinematica = 5f;
@@ -56,6 +60,8 @@ public class TransicionFaseManager : MonoBehaviour
         {
             dollyCart.SetActive(true);
         }
+
+        ActivarCamara(cmDolly);
 
         // Esperar hasta el momento de iniciar fade
         yield return new WaitForSeconds(
@@ -104,5 +110,25 @@ public class TransicionFaseManager : MonoBehaviour
 
         color.a = 1f;
         fadeImage.color = color;
+    }
+
+    void ActivarCamara(
+        CinemachineCamera camaraActiva
+    )
+    {
+        if (cmPrincipal != null)
+        {
+            cmPrincipal.Priority = 0;
+        }
+
+        if (cmDolly != null)
+        {
+            cmDolly.Priority = 0;
+        }
+
+        if (camaraActiva != null)
+        {
+            camaraActiva.Priority = 100;
+        }
     }
 }
