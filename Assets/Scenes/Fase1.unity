@@ -2059,6 +2059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06db828b2ec6df547a9f85deaca11b8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggable
+  gameManager: {fileID: 0}
   yaColocado: 0
   zonaCorrecta: {fileID: 33275456}
   distanciaSnap: 3
@@ -10377,7 +10378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
     Enabled: 1
-    m_Value: 30
+    m_Value: 20
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -10415,7 +10416,7 @@ Transform:
   m_GameObject: {fileID: 708540382}
   serializedVersion: 2
   m_LocalRotation: {x: 0.110007435, y: 0.88882565, z: -0.3048522, w: 0.32396382}
-  m_LocalPosition: {x: -10.61, y: 11.28, z: 11.18}
+  m_LocalPosition: {x: -10.36, y: 11.28, z: 11.39}
   m_LocalScale: {x: 0.7625011, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26754,8 +26755,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.110007435, y: 0.88882565, z: -0.3048522, w: 0.32396382}
-  m_LocalPosition: {x: -10.61, y: 11.28, z: 11.18}
+  m_LocalRotation: {x: 0.09648794, y: 0.90069515, z: -0.26775756, w: 0.32824424}
+  m_LocalPosition: {x: -40.32, y: 40.69, z: 45.7}
   m_LocalScale: {x: 0.7625, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -55265,6 +55266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06db828b2ec6df547a9f85deaca11b8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggable
+  gameManager: {fileID: 774813800}
   yaColocado: 0
   zonaCorrecta: {fileID: 33275456}
   distanciaSnap: 3
@@ -55700,7 +55702,7 @@ Transform:
   m_GameObject: {fileID: 1644231427}
   serializedVersion: 2
   m_LocalRotation: {x: 0.09648794, y: 0.9006951, z: -0.26775756, w: 0.3282442}
-  m_LocalPosition: {x: -23.61, y: 23.79, z: 25.85}
+  m_LocalPosition: {x: -40.32, y: 40.69, z: 45.7}
   m_LocalScale: {x: 0.7625011, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56139,6 +56141,7 @@ MonoBehaviour:
   selectorArco: {fileID: 2120340858}
   cmIntro: {fileID: 1644231428}
   cmPrincipal: {fileID: 708540383}
+  tiempoAntesFinalNarracion: 1.5
 --- !u!4 &1716740701
 Transform:
   m_ObjectHideFlags: 0

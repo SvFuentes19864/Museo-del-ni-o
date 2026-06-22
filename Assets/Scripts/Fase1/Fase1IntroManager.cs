@@ -19,6 +19,10 @@ public class Fase1IntroManager : MonoBehaviour
     public CinemachineCamera cmIntro;
     public CinemachineCamera cmPrincipal;
 
+    [Header("Narración")]
+    [Tooltip("Cuántos segundos antes de terminar la narración aparece la pirámide e inicia la ruleta")]
+    public float tiempoAntesFinalNarracion = 1.5f;
+
     private MeshRenderer[] renderersArco;
 
     IEnumerator Start()
@@ -54,9 +58,7 @@ public class Fase1IntroManager : MonoBehaviour
         // Fade In en paralelo
         if (fadeImage != null)
         {
-            StartCoroutine(
-                FadeIn()
-            );
+            StartCoroutine(FadeIn());
         }
 
         yield return new WaitForSeconds(0.1f);
@@ -68,17 +70,22 @@ public class Fase1IntroManager : MonoBehaviour
             duracionFadeIn
         );
 
-        // Esperar un poco más y mostrar pirámide
-        yield return new WaitForSeconds(1f);
-
-        // Esperar a que termine la narración
+        // Esperar hasta cerca del final de la narración
         if (narrador != null)
         {
-            yield return new WaitForSeconds(
-                narrador.clip.length - 1.5f
-            );
+            float tiempoEspera =
+                narrador.clip.length -
+                tiempoAntesFinalNarracion;
+
+            if (tiempoEspera > 0)
+            {
+                yield return new WaitForSeconds(
+                    tiempoEspera
+                );
+            }
         }
 
+        // Mostrar pirámide
         if (renderersArco != null)
         {
             foreach (MeshRenderer r in renderersArco)

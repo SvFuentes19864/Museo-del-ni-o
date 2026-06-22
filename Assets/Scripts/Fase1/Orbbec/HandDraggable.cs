@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class HandDraggable : MonoBehaviour
 {
+    [Header("GameManager")]
+    public GameManager gameManager;
+
     [Header("Colocación")]
     public bool yaColocado = false;
 
@@ -11,17 +14,34 @@ public class HandDraggable : MonoBehaviour
     [Header("Distancia de snap")]
     public float distanciaSnap = 3f;
 
-    // NUEVO: El objeto ahora revisa su propia posición automáticamente
+    private Vector3 offsetCentro;
+
+    void Start()
+    {
+        Renderer rendererPrincipal =
+            GetComponent<Renderer>();
+
+        if (rendererPrincipal != null)
+        {
+            Bounds bounds =
+                rendererPrincipal.bounds;
+
+            offsetCentro = new Vector3(
+                transform.position.x - bounds.center.x,
+                0,
+                transform.position.z - bounds.center.z
+            );
+        }
+    }
+
     void Update()
     {
-        // Si ya se colocó en su lugar, ignoramos el resto del código
         if (yaColocado)
             return;
 
-        // Si aún no está colocado, verificamos constantemente si está cerca
         if (PuedeColocarse())
         {
-            Colocar(); // Se engancha solo
+            Colocar();
         }
     }
 
@@ -30,10 +50,11 @@ public class HandDraggable : MonoBehaviour
         if (zonaCorrecta == null)
             return false;
 
-        float distancia = Vector3.Distance(
-            transform.position,
-            zonaCorrecta.position
-        );
+        float distancia =
+            Vector3.Distance(
+                transform.position,
+                zonaCorrecta.position
+            );
 
         return distancia <= distanciaSnap;
     }
@@ -43,13 +64,28 @@ public class HandDraggable : MonoBehaviour
         if (zonaCorrecta == null)
             return;
 
-        // Hace el snap matemático, manteniendo su propia altura en Y
-        transform.position = new Vector3(
-            zonaCorrecta.position.x,
-            transform.position.y,
-            zonaCorrecta.position.z
-        );
+        transform.position =
+            new Vector3(
+                zonaCorrecta.position.x,
+                transform.position.y,
+                zonaCorrecta.position.z
+            ) + offsetCentro;
 
         yaColocado = true;
+
+        if (gameManager != null)
+        {
+            gameManager.RegistrarColocacion();
+        }
+
+        SpawnPiramides spawner =
+            FindFirstObjectByType<SpawnPiramides>();
+
+        if (spawner != null)
+        {
+            spawner.ActivarPiramides();
+        }
+
+        Debug.Log("¡Colocación correcta!");
     }
 }
