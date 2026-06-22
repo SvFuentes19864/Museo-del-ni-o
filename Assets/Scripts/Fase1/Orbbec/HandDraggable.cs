@@ -86,6 +86,14 @@ public class HandDraggable : MonoBehaviour
             spawner.ActivarPiramides();
         }
 
+        GameObject orbbec =
+            GameObject.Find("Orbbec");
+
+        if (orbbec != null)
+        {
+            orbbec.SetActive(false);
+        }
+
         Debug.Log("¡Colocación correcta!");
     }
 }
