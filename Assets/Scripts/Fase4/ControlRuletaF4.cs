@@ -4,6 +4,9 @@ using Unity.Cinemachine;
 
 public class ControlRuletaF4 : MonoBehaviour
 {
+    [Header("Orbbec")]
+    public OrbbecUnity.OrbbecDevice orbbecDevice;
+
     [Header("Puntos de Ruleta")]
     public Transform[] puntosRuleta;
 
@@ -15,6 +18,9 @@ public class ControlRuletaF4 : MonoBehaviour
 
     [Header("Cámara")]
     public CinemachineCamera camaraDestino;
+
+    [Header("Hand Tracking F4")]
+    public HandTrackerF4 handTrackerF4;
 
     [Header("Ruleta")]
     public int saltosMinimos = 8;
@@ -47,20 +53,28 @@ public class ControlRuletaF4 : MonoBehaviour
     )
     {
         objetoActual = nuevoObjeto;
-
         puntoInicioDrag = nuevoInicioDrag;
-
         camaraDestino = nuevaCamara;
+    }
+
+    IEnumerator EncenderOrbbec()
+    {
+        yield return new WaitForSeconds(1f);
+
+        if (orbbecDevice != null)
+        {
+            orbbecDevice.enabled = true;
+
+            Debug.Log("ORBBEC F4 ACTIVADO");
+        }
     }
 
     IEnumerator Ruleta()
     {
         Debug.Log(
-        "COROUTINE RULETA -> " +
-        objetoActual.name
-    );
-
-        Debug.Log("Coroutine Ruleta iniciada");
+            "COROUTINE RULETA -> " +
+            objetoActual.name
+        );
 
         if (
             objetoActual == null ||
@@ -102,11 +116,6 @@ public class ControlRuletaF4 : MonoBehaviour
             {
                 audioPop.Play();
             }
-
-            Debug.Log(
-                "Saltando a: " +
-                puntosRuleta[indice].name
-            );
 
             yield return new WaitForSeconds(
                 tiempoEntreSaltos
@@ -171,5 +180,25 @@ public class ControlRuletaF4 : MonoBehaviour
 
         objetoActual.transform.position =
             destino;
+
+        if (
+            handTrackerF4 != null &&
+            objetoActual != null
+        )
+        {
+            handTrackerF4.CambiarObjetoF4(
+                objetoActual.transform
+            );
+
+            Debug.Log(
+                "Objeto asignado al HandTrackerF4: " +
+                objetoActual.name
+            );
+        }
+
+        // AQUÍ ES DONDE DEBE ACTIVARSE
+        StartCoroutine(
+            EncenderOrbbec()
+        );
     }
 }
