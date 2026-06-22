@@ -22,6 +22,10 @@ public class Fase2IntroManager : MonoBehaviour
     public CinemachineCamera cmIntro;
     public CinemachineCamera cmPrincipal;
 
+    [Header("Narración")]
+    [Tooltip("Cuántos segundos antes de terminar la narración aparece la iglesia e inicia la ruleta")]
+    public float tiempoAntesFinalNarracion = 1.5f;
+
     IEnumerator Start()
     {
         ActivarCamara(cmIntro);
@@ -49,9 +53,7 @@ public class Fase2IntroManager : MonoBehaviour
         // Fade In en paralelo
         if (fadeImage != null)
         {
-            StartCoroutine(
-                FadeIn()
-            );
+            StartCoroutine(FadeIn());
         }
 
         // Cambio de cámara casi inmediato
@@ -64,13 +66,19 @@ public class Fase2IntroManager : MonoBehaviour
             duracionFadeIn
         );
 
-        // Esperar a que termine la narración
+        // Esperar hasta cerca del final de la narración
         if (narrador != null)
         {
-            yield return new WaitForSeconds(
+            float tiempoEspera =
                 narrador.clip.length -
-                duracionFadeIn
-            );
+                tiempoAntesFinalNarracion;
+
+            if (tiempoEspera > 0)
+            {
+                yield return new WaitForSeconds(
+                    tiempoEspera
+                );
+            }
         }
 
         // Mostrar iglesia

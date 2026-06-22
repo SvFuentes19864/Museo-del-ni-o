@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HandDraggable : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class HandDraggable : MonoBehaviour
 
     [Header("Distancia de snap")]
     public float distanciaSnap = 3f;
+
+    [Header("Evento al colocar")]
+    public UnityEvent onPlaced;
 
     private Vector3 offsetCentro;
 
@@ -78,12 +82,9 @@ public class HandDraggable : MonoBehaviour
             gameManager.RegistrarColocacion();
         }
 
-        SpawnPiramides spawner =
-            FindFirstObjectByType<SpawnPiramides>();
-
-        if (spawner != null)
+        if (onPlaced != null)
         {
-            spawner.ActivarPiramides();
+            onPlaced.Invoke();
         }
 
         GameObject orbbec =

@@ -1938,7 +1938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &132933041
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2063,6 +2063,9 @@ MonoBehaviour:
   yaColocado: 0
   zonaCorrecta: {fileID: 33275456}
   distanciaSnap: 3
+  onPlaced:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &136060451 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7840708012227944050, guid: 1396b918aa7578343940b92875862e22, type: 3}
@@ -55270,6 +55273,21 @@ MonoBehaviour:
   yaColocado: 0
   zonaCorrecta: {fileID: 33275456}
   distanciaSnap: 3
+  onPlaced:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1791093043}
+        m_TargetAssemblyTypeName: SpawnPiramides, Assembly-CSharp
+        m_MethodName: ActivarPiramides
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1550515850
 PrefabInstance:
   m_ObjectHideFlags: 0
