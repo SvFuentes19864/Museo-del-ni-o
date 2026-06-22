@@ -26754,8 +26754,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09648794, y: 0.90069515, z: -0.26775756, w: 0.32824424}
-  m_LocalPosition: {x: -23.61, y: 23.79, z: 25.85}
+  m_LocalRotation: {x: 0.110007435, y: 0.88882565, z: -0.3048522, w: 0.32396382}
+  m_LocalPosition: {x: -10.61, y: 11.28, z: 11.18}
   m_LocalScale: {x: 0.7625, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26893,7 +26893,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c346b94f75e28840860d7c4a5cb3309, type: 3}
   m_Name: 
@@ -49293,9 +49293,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434635782}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.09648794, y: 0.90069515, z: -0.26775756, w: 0.32824424}
+  m_LocalPosition: {x: 0, y: 0, z: -33.814224}
+  m_LocalScale: {x: 0.2046289, y: 0.2046289, z: 0.2046289}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1656346327}
@@ -49303,9 +49303,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 33.058384, y: -31.703869}
+  m_SizeDelta: {x: 722, y: 481.00006}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1434635784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49345,7 +49345,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1434635786
 Canvas:
   m_ObjectHideFlags: 0
@@ -49355,7 +49355,7 @@ Canvas:
   m_GameObject: {fileID: 1434635782}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 963194227}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -49363,7 +49363,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
@@ -55741,7 +55741,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -4, y: -4}
-  m_SizeDelta: {x: 20, y: 20}
+  m_SizeDelta: {x: 3, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1656346328
 MonoBehaviour:
@@ -59148,12 +59148,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTracker
   frameSource: {fileID: 963194233}
-  handSphere: {fileID: 1548137140}
-  offsetVisual3D: {x: 0, y: 0, z: 0}
-  orbe2D: {fileID: 1656346327}
-  canvasPrincipal: {fileID: 1434635786}
+  handSphere: {fileID: 132933044}
+  orbe2D: {fileID: 0}
+  canvasPrincipal: {fileID: 0}
   saltoPixeles: 4
   margenProfundidad: 100
+  escalaX: 4
+  escalaY: 3
   velocidadSuavizado: 10
   handPositionNormalized: {x: 0, y: 0}
   handDepth: 0
