@@ -18,6 +18,12 @@ public class HandDraggableF4 : MonoBehaviour
     [Header("Evento al colocar")]
     public UnityEvent onPlacedF4;
 
+    [Header("Última pieza")]
+    public bool esUltimaPiezaF4 = false;
+
+    [Header("Cursor F4")]
+    public GameObject cursorF4;
+
     private Vector3 offsetCentroF4;
 
     void Start()
@@ -74,6 +80,14 @@ public class HandDraggableF4 : MonoBehaviour
         if (onPlacedF4 != null)
         {
             onPlacedF4.Invoke();
+        }
+
+        if (esUltimaPiezaF4)
+        {
+            if (cursorF4 != null)
+            {
+                cursorF4.SetActive(false);
+            }
         }
 
         Debug.Log("¡Colocación correcta F4!");

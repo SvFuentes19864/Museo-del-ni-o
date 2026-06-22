@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 public class HandTrackerF4 : MonoBehaviour
 {
+
+    [Header("Calibración")]
+    public float umbralPresionado = 105f;
+
     [Header("Orbbec")]
     public OrbbecPipelineFrameSource frameSource;
 
@@ -204,8 +208,7 @@ public class HandTrackerF4 : MonoBehaviour
         handDepthF4 =
             promedioDepth;
 
-        handPressedF4 =
-            handDepthF4 < 105;
+        handPressedF4 = handDepthF4 < umbralPresionado;
 
         HandDraggableF4 draggable =
             null;

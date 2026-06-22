@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 public class HandTracker : MonoBehaviour
 {
+
+    [Header("Calibración")]
+    public float umbralPresionado = 105f;
+
     [Header("Orbbec")]
     public OrbbecPipelineFrameSource frameSource;
 
@@ -102,7 +106,7 @@ public class HandTracker : MonoBehaviour
         // Posición normalizada de la mano
         handPositionNormalized = new Vector2(promedioX / width, promedioY / height);
         handDepth = promedioDepth;
-        handPressed = handDepth < 105;
+        handPressed = handDepth < umbralPresionado;
 
         // ---------------------------------------------------------
         // LÓGICA DE COLOCACIÓN (INTEGRACIÓN)

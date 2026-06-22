@@ -36471,6 +36471,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  esUltimaPiezaF4: 0
+  cursorF4: {fileID: 0}
 --- !u!1 &290450083
 GameObject:
   m_ObjectHideFlags: 0
@@ -76514,6 +76516,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  esUltimaPiezaF4: 0
+  cursorF4: {fileID: 0}
 --- !u!1 &562726230
 GameObject:
   m_ObjectHideFlags: 0
@@ -80487,14 +80491,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggableF4
   gameManager: {fileID: 615146690}
   yaColocadoF4: 0
-  zonaCorrectaF4: {fileID: 211634913}
+  zonaCorrectaF4: {fileID: 1303891756}
   distanciaSnapF4: 3
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1245119637}
-        m_TargetAssemblyTypeName: SpawnF4_2_A, Assembly-CSharp
-        m_MethodName: ActivarParte2A
+      - m_Target: {fileID: 1058077606}
+        m_TargetAssemblyTypeName: SpawnF4_4, Assembly-CSharp
+        m_MethodName: ActivarParte4
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -80504,6 +80508,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  esUltimaPiezaF4: 0
+  cursorF4: {fileID: 0}
 --- !u!1 &594541998
 GameObject:
   m_ObjectHideFlags: 0
@@ -81192,6 +81198,7 @@ GameObject:
   - component: {fileID: 598294689}
   - component: {fileID: 598294691}
   - component: {fileID: 598294692}
+  - component: {fileID: 598294693}
   m_Layer: 0
   m_Name: TorreReformador
   m_TagString: Untagged
@@ -81300,7 +81307,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 598294687}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e233d6e8ec7b054089a3a006e978d53, type: 3}
   m_Name: 
@@ -81309,6 +81316,39 @@ MonoBehaviour:
   spawnF4_5_B: {fileID: 1578091567}
   zonaCorrecta: {fileID: 116269522}
   outlineObject: {fileID: 0}
+--- !u!114 &598294693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598294687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb23590c85887b4b8de5eaf2bbf6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandDraggableF4
+  gameManager: {fileID: 615146690}
+  yaColocadoF4: 0
+  zonaCorrectaF4: {fileID: 116269522}
+  distanciaSnapF4: 3
+  onPlacedF4:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1578091567}
+        m_TargetAssemblyTypeName: SpawnF4_5_B, Assembly-CSharp
+        m_MethodName: ActivarParte5B
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  esUltimaPiezaF4: 0
+  cursorF4: {fileID: 0}
 --- !u!1 &598850764
 GameObject:
   m_ObjectHideFlags: 0
@@ -121471,6 +121511,7 @@ GameObject:
   - component: {fileID: 880016262}
   - component: {fileID: 880016264}
   - component: {fileID: 880016265}
+  - component: {fileID: 880016266}
   m_Layer: 0
   m_Name: Municipalidad
   m_TagString: Untagged
@@ -121563,7 +121604,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880016260}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 650ba2c86c350864f8a1d37b8349f8a5, type: 3}
   m_Name: 
@@ -121593,6 +121634,39 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.08314079, y: 0.037725076, z: 0.9548502}
   m_Center: {x: -0.020854807, y: -0.000000003010037, z: 0.36972052}
+--- !u!114 &880016266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880016260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb23590c85887b4b8de5eaf2bbf6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandDraggableF4
+  gameManager: {fileID: 615146690}
+  yaColocadoF4: 0
+  zonaCorrectaF4: {fileID: 1356902322}
+  distanciaSnapF4: 3
+  onPlacedF4:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1360639457}
+        m_TargetAssemblyTypeName: SpawnF4_5_A, Assembly-CSharp
+        m_MethodName: ActivarParte5A
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  esUltimaPiezaF4: 0
+  cursorF4: {fileID: 0}
 --- !u!1 &880039466
 GameObject:
   m_ObjectHideFlags: 0
@@ -155357,6 +155431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89a89a452f91cbc40ac4bb7c5cfbf960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTrackerF4
+  umbralPresionado: 105
   frameSource: {fileID: 2073666923}
   objetoActualF4: {fileID: 288691192}
   offsetVisual3DF4: {x: 0, y: 0, z: 0}
@@ -180713,12 +180788,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1303891755}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0.8565166, y: 0.21, z: -0.1454}
-  m_LocalScale: {x: 14.692333, y: 13.443456, z: 0.37481198}
+  m_LocalRotation: {x: -0.7067801, y: 0.0027146633, z: 0.003988456, w: 0.70741695}
+  m_LocalPosition: {x: -0.8584169, y: 0.2601113, z: -0.13627088}
+  m_LocalScale: {x: 14.692333, y: 13.443453, z: 0.37481192}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1402046888}
+  m_Father: {fileID: 1857739573}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1304270616
 GameObject:
@@ -195771,7 +195846,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1303891756}
   - {fileID: 2092562954}
   - {fileID: 1018201299}
   - {fileID: 1757919494}
@@ -198504,6 +198578,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  esUltimaPiezaF4: 0
+  cursorF4: {fileID: 0}
 --- !u!1 &1420989370
 GameObject:
   m_ObjectHideFlags: 0
@@ -263940,6 +264016,7 @@ Transform:
   m_Children:
   - {fileID: 1225398245}
   - {fileID: 594257983}
+  - {fileID: 1303891756}
   - {fileID: 1374543027}
   - {fileID: 1075399013}
   m_Father: {fileID: 0}
@@ -301848,6 +301925,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  esUltimaPiezaF4: 0
+  cursorF4: {fileID: 0}
 --- !u!1 &2119293653
 GameObject:
   m_ObjectHideFlags: 0
@@ -306320,6 +306399,7 @@ GameObject:
   - component: {fileID: 2146015523}
   - component: {fileID: 2146015525}
   - component: {fileID: 2146015526}
+  - component: {fileID: 2146015527}
   m_Layer: 0
   m_Name: "PEspa\xF1a"
   m_TagString: Untagged
@@ -306418,7 +306498,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2146015521}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b3b9f71fe6ac67408698130aa515e3f, type: 3}
   m_Name: 
@@ -306448,6 +306528,39 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.23657131, y: 0.097842924, z: 0.3164837}
   m_Center: {x: -0.021019226, y: 0.03773296, z: 0.039680522}
+--- !u!114 &2146015527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146015521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb23590c85887b4b8de5eaf2bbf6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandDraggableF4
+  gameManager: {fileID: 615146690}
+  yaColocadoF4: 0
+  zonaCorrectaF4: {fileID: 156370158}
+  distanciaSnapF4: 3
+  onPlacedF4:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 297487618}
+        m_TargetAssemblyTypeName: SpawnF4_5_C, Assembly-CSharp
+        m_MethodName: ActivarParte5C
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  esUltimaPiezaF4: 1
+  cursorF4: {fileID: 259856916}
 --- !u!1 &2146344948
 GameObject:
   m_ObjectHideFlags: 0
