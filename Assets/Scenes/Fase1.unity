@@ -26754,8 +26754,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09648794, y: 0.90069515, z: -0.26775756, w: 0.32824424}
-  m_LocalPosition: {x: -23.61, y: 23.79, z: 25.85}
+  m_LocalRotation: {x: 0.110007435, y: 0.88882565, z: -0.3048522, w: 0.32396382}
+  m_LocalPosition: {x: -10.61, y: 11.28, z: 11.18}
   m_LocalScale: {x: 0.7625, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26864,7 +26864,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93fdffdbfaf3c644b8dab28c99557bcc, type: 3}
   m_Name: 
@@ -59578,6 +59578,7 @@ MonoBehaviour:
   audioRuleta: {fileID: 1770916854}
   audioGanador: {fileID: 462572950}
   offsetVisual: {x: 0, y: 0, z: 0}
+  orbbecDevice: {fileID: 963194232}
 --- !u!1 &2122276243 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6c543aad5b2d7ff46a7a24b859be26e8, type: 3}

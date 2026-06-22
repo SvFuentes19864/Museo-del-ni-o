@@ -22,6 +22,7 @@ public class SelectorArco : MonoBehaviour
 
     [Header("Offset Visual")]
     public Vector3 offsetVisual;
+    public OrbbecUnity.OrbbecDevice orbbecDevice;
 
     private int ultimoGanador = -1;
     private int ultimoIndiceMostrado = -1;
@@ -52,6 +53,18 @@ public class SelectorArco : MonoBehaviour
     public void IniciarRuleta()
     {
         StartCoroutine(Ruleta());
+    }
+
+    IEnumerator EncenderOrbbec()
+    {
+        yield return new WaitForSeconds(1f);
+
+        if (orbbecDevice != null)
+        {
+            orbbecDevice.enabled = true;
+
+            Debug.Log("ORBBEC ACTIVADO");
+        }
     }
 
     IEnumerator Ruleta()
@@ -170,6 +183,10 @@ public class SelectorArco : MonoBehaviour
         Debug.Log(
             "Jugador seleccionado: " +
             (ganador + 1)
+        );
+
+        StartCoroutine(
+            EncenderOrbbec()
         );
     }
 
