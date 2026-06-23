@@ -108,6 +108,8 @@ public class HandTracker : MonoBehaviour
         handDepth = promedioDepth;
         handPressed = handDepth < umbralPresionado;
 
+        
+
         // ---------------------------------------------------------
         // LÓGICA DE COLOCACIÓN (INTEGRACIÓN)
         // ---------------------------------------------------------

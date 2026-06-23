@@ -26679,6 +26679,11 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194232}
+  - component: {fileID: 963194231}
+  - component: {fileID: 963194234}
+  - component: {fileID: 963194233}
+  - component: {fileID: 963194235}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -26836,6 +26841,80 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec4df68c89a0fb041812a49f22718488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orbbecDevice: {fileID: 963194232}
+  orbbecProfiles:
+  - {fileID: 11400000, guid: 80f8b0d586bdeb64f88123b8dc1254ad, type: 2}
+  - {fileID: 11400000, guid: 8a809eeadc1a1924ca64fa6e2360d255, type: 2}
+  - {fileID: 11400000, guid: ea6a7a0a105000445ab4822ca176c2ea, type: 2}
+  onPipelineInit:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &963194232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93fdffdbfaf3c644b8dab28c99557bcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OrbbecUnity.OrbbecDevice
+  deviceIndex: 0
+  onDeviceFound:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &963194233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b0bc4a9127d824418e8ebadc55086b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OrbbecUnity.OrbbecPipelineFrameSource
+  pipeline: {fileID: 963194231}
+--- !u!114 &963194234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c346b94f75e28840860d7c4a5cb3309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoStartPipeline
+  pipeline: {fileID: 963194231}
+--- !u!114 &963194235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a714bf1e8027f684198cc920bc3bceb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExitScene
 --- !u!1 &963257085
 GameObject:
   m_ObjectHideFlags: 0
@@ -28284,78 +28363,6 @@ Transform:
   - {fileID: 1380642001}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -112.755, z: 0}
---- !u!1 &1075152404
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1075152407}
-  - component: {fileID: 1075152406}
-  - component: {fileID: 1075152405}
-  m_Layer: 5
-  m_Name: RawImage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1075152405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1075152404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Texture: {fileID: 2800000, guid: ed4bd6ef48c534c43a9326fc1de4c3bd, type: 3}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
---- !u!222 &1075152406
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1075152404}
-  m_CullTransparentMesh: 1
---- !u!224 &1075152407
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1075152404}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1231207079}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -348, y: -215.5}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1089159982 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2624733913356763270, guid: 9c356fab2bb9716429c8769fd0241fb7, type: 3}
@@ -33886,7 +33893,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1467836511}
-  - {fileID: 1075152407}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -43815,7 +43821,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1330445315}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90aee7a9ae066ad4d9f7a908ced4ed03, type: 3}
   m_Name: 
@@ -59163,7 +59169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTracker
   umbralPresionado: 30000
-  frameSource: {fileID: 0}
+  frameSource: {fileID: 963194233}
   handSphere: {fileID: 1548137140}
   offsetVisual3D: {x: 0, y: 0, z: 0}
   orbe2D: {fileID: 1656346327}
@@ -59594,7 +59600,7 @@ MonoBehaviour:
   audioRuleta: {fileID: 1770916854}
   audioGanador: {fileID: 462572950}
   offsetVisual: {x: 0, y: 0, z: 0}
-  orbbecDevice: {fileID: 0}
+  orbbecDevice: {fileID: 963194232}
 --- !u!1 &2122276243 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6c543aad5b2d7ff46a7a24b859be26e8, type: 3}
