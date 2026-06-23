@@ -1,0 +1,6 @@
+[23:02:44] ==== inicio ====
+[23:02:44] iniciando mediapipe...
+[23:02:44] mediapipe FALLÓ: The path does not exist: C:\Users\Museo de los Niños\Documents\GitHub\Museo-del-ni-o\Assets\StreamingAssets\tracker_unity\_internal\mediapipe/modules/hand_landmark/hand_landmark_tracking_cpu.binarypb
+[23:05:29] ==== inicio ====
+[23:05:29] iniciando mediapipe...
+[23:05:29] mediapipe FALLÓ: The path does not exist: C:\Users\Museo de los Niños\Documents\GitHub\Museo-del-ni-o\Assets\StreamingAssets\tracker_unity\_internal\mediapipe/modules/hand_landmark/hand_landmark_tracking_cpu.binarypb
