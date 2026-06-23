@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Diagnostics;
@@ -15,9 +16,9 @@ public class HandTracker : MonoBehaviour
     [Tooltip("Ruta al script main.py. Vacío = usa StreamingAssets/tracker_unity.py")]
     public string pythonScriptPath = @"C:\Opencv\main.py";
 
-    [Header("Objeto 3D a mover")]
-    public Transform handSphere;
-    [Tooltip("Usa esto si el cubo necesita un pequeño empujón en X o Z para verse centrado debajo del cursor")]
+    [Header("Objetos 3D a mover")]
+    public List<Transform> handSpheres = new();
+    [Tooltip("Usa esto si los objetos necesitan un pequeño empujón en X o Z para verse centrados debajo del cursor")]
     public Vector3 offsetVisual3D = Vector3.zero;
 
     [Header("Interacción 2D (Canvas)")]
@@ -33,6 +34,9 @@ public class HandTracker : MonoBehaviour
 
     private float alturaFijaY;
     private bool  lastHandPressed;
+
+    // static: sobrevive a desactivaciones/recargas de escena dentro de la misma sesión
+    private static Process s_trackerProcess;
 
     private Process   trackerProcess;
     private UdpClient udpClient;
@@ -53,8 +57,8 @@ public class HandTracker : MonoBehaviour
 
     void Start()
     {
-        if (handSphere != null)
-            alturaFijaY = handSphere.position.y;
+        if (handSpheres.Count > 0 && handSpheres[0] != null)
+            alturaFijaY = handSpheres[0].position.y;
 
         LaunchTracker();
         StartUdpListener();
@@ -62,6 +66,14 @@ public class HandTracker : MonoBehaviour
 
     void LaunchTracker()
     {
+        // Si ya hay un proceso activo (de esta u otra instancia), reutilizarlo
+        if (s_trackerProcess != null && !s_trackerProcess.HasExited)
+        {
+            trackerProcess = s_trackerProcess;
+            UnityEngine.Debug.Log("[HandTracker] Tracker ya en ejecución, reutilizando proceso existente.");
+            return;
+        }
+
         string exePath = Path.Combine(Application.streamingAssetsPath, "tracker_unity", "tracker_unity.exe");
 
         string fileName, arguments, workDir;
@@ -97,7 +109,8 @@ public class HandTracker : MonoBehaviour
 
         try
         {
-            trackerProcess = Process.Start(psi);
+            trackerProcess   = Process.Start(psi);
+            s_trackerProcess = trackerProcess;   // guardar referencia estática
             UnityEngine.Debug.Log("[HandTracker] Tracker iniciado.");
         }
         catch (Exception e)
@@ -160,12 +173,15 @@ public class HandTracker : MonoBehaviour
         }
 
         // Lógica de soltar objeto al dejar de presionar
-        HandDraggable draggable = handSphere?.GetComponent<HandDraggable>();
-
         if (lastHandPressed && !handPressed)
         {
-            if (draggable != null && !draggable.yaColocado && draggable.PuedeColocarse())
-                draggable.Colocar();
+            foreach (Transform hs in handSpheres)
+            {
+                if (hs == null) continue;
+                HandDraggable draggable = hs.GetComponent<HandDraggable>();
+                if (draggable != null && !draggable.yaColocado && draggable.PuedeColocarse())
+                    draggable.Colocar();
+            }
         }
 
         lastHandPressed = handPressed;
@@ -193,31 +209,50 @@ public class HandTracker : MonoBehaviour
             );
         }
 
-        // Objeto 3D sigue al cursor — solo si no está ya colocado
-        if (handSphere != null && Camera.main != null && orbe2D != null)
+        // Cada objeto 3D sigue al cursor mientras no esté colocado
+        if (Camera.main != null && orbe2D != null)
         {
-            if (draggable == null || !draggable.yaColocado)
-            {
-                Plane planoPiso      = new Plane(Vector3.up, new Vector3(0, alturaFijaY, 0));
-                Ray   rayoDesdeCamara = Camera.main.ScreenPointToRay(orbe2D.position);
+            Plane planoPiso       = new Plane(Vector3.up, new Vector3(0, alturaFijaY, 0));
+            Ray   rayoDesdeCamara = Camera.main.ScreenPointToRay(orbe2D.position);
 
-                if (planoPiso.Raycast(rayoDesdeCamara, out float distancia))
-                    handSphere.position = rayoDesdeCamara.GetPoint(distancia) + offsetVisual3D;
+            if (planoPiso.Raycast(rayoDesdeCamara, out float distancia))
+            {
+                Vector3 destino = rayoDesdeCamara.GetPoint(distancia) + offsetVisual3D;
+                foreach (Transform hs in handSpheres)
+                {
+                    if (hs == null) continue;
+                    HandDraggable draggable = hs.GetComponent<HandDraggable>();
+                    if (draggable == null || !draggable.yaColocado)
+                        hs.position = destino;
+                }
             }
         }
     }
 
+    void OnDestroy()
+    {
+        // Libera el socket UDP al cambiar de escena o destruir el objeto,
+        // pero NO mata Python (s_trackerProcess) porque puede reutilizarse.
+        StopUdpListener();
+    }
+
     void OnApplicationQuit()
     {
-        running = false;
+        StopUdpListener();
 
-        try { udpClient?.Close(); }   catch { }
-        try { udpThread?.Join(300); } catch { }
-
-        if (trackerProcess != null && !trackerProcess.HasExited)
+        if (s_trackerProcess != null && !s_trackerProcess.HasExited)
         {
-            trackerProcess.Kill();
-            trackerProcess.Dispose();
+            s_trackerProcess.Kill();
+            s_trackerProcess.Dispose();
+            s_trackerProcess = null;
         }
+        trackerProcess = null;
+    }
+
+    void StopUdpListener()
+    {
+        running = false;
+        try { udpClient?.Close(); udpClient = null; } catch { }
+        try { udpThread?.Join(300); udpThread = null; }  catch { }
     }
 }

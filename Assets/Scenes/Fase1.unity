@@ -2046,7 +2046,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandDragController
   handTracker: {fileID: 2075719566}
   cam: {fileID: 963194227}
-  distanciaSeleccion: 1.5
+  orbe2D: {fileID: 0}
+  objetosMoviles: []
+  radioDeteccionPantalla: 100
 --- !u!114 &132933046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2061,6 +2063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggable
   gameManager: {fileID: 0}
   yaColocado: 0
+  tiempoDesbloqueo: 20
   zonaCorrecta: {fileID: 33275456}
   distanciaSnap: 3
   onPlaced:
@@ -43749,7 +43752,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandDragController
   handTracker: {fileID: 2075719566}
   cam: {fileID: 963194227}
-  distanciaSeleccion: 1.5
+  orbe2D: {fileID: 0}
+  objetosMoviles: []
+  radioDeteccionPantalla: 100
 --- !u!1 &1336188912 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8427090163283225316, guid: 9c356fab2bb9716429c8769fd0241fb7, type: 3}
@@ -55177,7 +55182,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandDragController
   handTracker: {fileID: 2075719566}
   cam: {fileID: 963194227}
-  distanciaSeleccion: 1.5
+  orbe2D: {fileID: 0}
+  objetosMoviles: []
+  radioDeteccionPantalla: 100
 --- !u!114 &1548137148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55192,6 +55199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggable
   gameManager: {fileID: 774813800}
   yaColocado: 1
+  tiempoDesbloqueo: 20
   zonaCorrecta: {fileID: 33275456}
   distanciaSnap: 3
   onPlaced:
@@ -55681,7 +55689,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4, y: -4}
+  m_AnchoredPosition: {x: -300, y: 200}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1656346328
@@ -59089,12 +59097,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa774ff6e36d59c4fae9641536c6da67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTracker
-  pythonExecutable: python
-  handSphere: {fileID: 1548137140}
+  pythonExecutable: C:\Opencv\.venv\Scripts\python.exe
+  pythonScriptPath: C:\Opencv\main.py
+  handSpheres:
+  - {fileID: 1548137140}
   offsetVisual3D: {x: 0, y: 0, z: 0}
   orbe2D: {fileID: 1656346327}
   canvasPrincipal: {fileID: 1434635786}
-  velocidadSuavizado: 10
+  velocidadSuavizado: 15
   handPositionNormalized: {x: 0, y: 0}
   handDepth: 0
   handPressed: 0
