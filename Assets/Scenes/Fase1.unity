@@ -3701,7 +3701,7 @@ GameObject:
   m_Component:
   - component: {fileID: 421899454}
   m_Layer: 0
-  m_Name: Orbbec
+  m_Name: Orbbec1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28284,78 +28284,6 @@ Transform:
   - {fileID: 1380642001}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -112.755, z: 0}
---- !u!1 &1075152404
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1075152407}
-  - component: {fileID: 1075152406}
-  - component: {fileID: 1075152405}
-  m_Layer: 5
-  m_Name: RawImage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1075152405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1075152404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Texture: {fileID: 2800000, guid: ed4bd6ef48c534c43a9326fc1de4c3bd, type: 3}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
---- !u!222 &1075152406
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1075152404}
-  m_CullTransparentMesh: 1
---- !u!224 &1075152407
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1075152404}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1231207079}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -348, y: -215.5}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1089159982 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2624733913356763270, guid: 9c356fab2bb9716429c8769fd0241fb7, type: 3}
@@ -33886,7 +33814,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1467836511}
-  - {fileID: 1075152407}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -55264,7 +55191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggable
   gameManager: {fileID: 774813800}
-  yaColocado: 0
+  yaColocado: 1
   zonaCorrecta: {fileID: 33275456}
   distanciaSnap: 3
   onPlaced:
@@ -58745,7 +58672,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2045536019}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8023473f7fb0134c84db77c5597dfa8, type: 3}
   m_Name: 
@@ -59162,14 +59089,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa774ff6e36d59c4fae9641536c6da67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTracker
-  umbralPresionado: 30000
-  frameSource: {fileID: 0}
+  pythonExecutable: python
   handSphere: {fileID: 1548137140}
   offsetVisual3D: {x: 0, y: 0, z: 0}
   orbe2D: {fileID: 1656346327}
   canvasPrincipal: {fileID: 1434635786}
-  saltoPixeles: 4
-  margenProfundidad: 100
   velocidadSuavizado: 10
   handPositionNormalized: {x: 0, y: 0}
   handDepth: 0

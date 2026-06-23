@@ -1,15 +1,19 @@
 using UnityEngine;
-using OrbbecUnity;
-using UnityEngine.UI;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
 
 public class HandTracker : MonoBehaviour
 {
-
-    [Header("Calibración")]
-    public float umbralPresionado = 105f;
-
-    [Header("Orbbec")]
-    public OrbbecPipelineFrameSource frameSource;
+    [Header("Python Tracker")]
+    [Tooltip("Python del venv, ej: C:\\Opencv\\.venv\\Scripts\\python.exe")]
+    public string pythonExecutable = @"C:\Opencv\.venv\Scripts\python.exe";
+    [Tooltip("Ruta al script main.py. Vacío = usa StreamingAssets/tracker_unity.py")]
+    public string pythonScriptPath = @"C:\Opencv\main.py";
 
     [Header("Objeto 3D a mover")]
     public Transform handSphere;
@@ -20,124 +24,154 @@ public class HandTracker : MonoBehaviour
     public RectTransform orbe2D;
     public Canvas canvasPrincipal;
 
-    [Header("Detección")]
-    public int saltoPixeles = 4;
-    public ushort margenProfundidad = 100;
-
     [Header("Suavizado")]
     public float velocidadSuavizado = 30f;
 
-    [HideInInspector]
-    public Vector2 handPositionNormalized;
-    [HideInInspector]
-    public float handDepth;
-    [HideInInspector]
-    public bool handPressed;
+    [HideInInspector] public Vector2 handPositionNormalized;
+    [HideInInspector] public float   handDepth;
+    [HideInInspector] public bool    handPressed;
 
-    // Altura fija para bloquear el eje Y
     private float alturaFijaY;
-    
-    // Variable para detectar el momento en que se "suelta" el objeto
-    private bool lastHandPressed = false;
+    private bool  lastHandPressed;
+
+    private Process   trackerProcess;
+    private UdpClient udpClient;
+    private Thread    udpThread;
+    private volatile bool running;
+    private string pendingJson;
+    private readonly object lockObj = new();
+
+    private const int UDP_PORT = 7654;
+
+    [Serializable]
+    private class TrackingData
+    {
+        public float x;
+        public float y;
+        public bool  pressed;
+    }
 
     void Start()
     {
         if (handSphere != null)
-        {
             alturaFijaY = handSphere.position.y;
+
+        LaunchTracker();
+        StartUdpListener();
+    }
+
+    void LaunchTracker()
+    {
+        string exePath = Path.Combine(Application.streamingAssetsPath, "tracker_unity", "tracker_unity.exe");
+
+        string fileName, arguments, workDir;
+
+        // Si pythonScriptPath está definido, forzar modo script (ignora el exe)
+        bool usarScript = !string.IsNullOrEmpty(pythonScriptPath);
+
+        if (!usarScript && File.Exists(exePath))
+        {
+            fileName  = exePath;
+            arguments = "";
+            workDir   = Path.GetDirectoryName(exePath);
         }
+        else
+        {
+            string script = usarScript
+                ? pythonScriptPath
+                : Path.Combine(Application.streamingAssetsPath, "tracker_unity.py");
+
+            fileName  = pythonExecutable;
+            arguments = $"\"{script}\"";
+            workDir   = Path.GetDirectoryName(script);
+        }
+
+        var psi = new ProcessStartInfo
+        {
+            CreateNoWindow   = true,
+            UseShellExecute  = false,
+            FileName         = fileName,
+            Arguments        = arguments,
+            WorkingDirectory = workDir,
+        };
+
+        try
+        {
+            trackerProcess = Process.Start(psi);
+            UnityEngine.Debug.Log("[HandTracker] Tracker iniciado.");
+        }
+        catch (Exception e)
+        {
+            UnityEngine.Debug.LogError($"[HandTracker] No se pudo iniciar el tracker: {e.Message}");
+        }
+    }
+
+    void StartUdpListener()
+    {
+        running   = true;
+        udpClient = new UdpClient(UDP_PORT);
+
+        udpThread = new Thread(() =>
+        {
+            IPEndPoint ep = new(IPAddress.Any, 0);
+            while (running)
+            {
+                try
+                {
+                    byte[] data = udpClient.Receive(ref ep);
+                    string json = Encoding.UTF8.GetString(data);
+                    lock (lockObj) { pendingJson = json; }
+                }
+                catch { }
+            }
+        }) { IsBackground = true };
+        udpThread.Start();
     }
 
     void Update()
     {
-        if (frameSource == null) return;
-        var depthFrame = frameSource.GetDepthFrame();
-        if (depthFrame == null || depthFrame.data == null) return;
-
-        int width = depthFrame.width;
-        int height = depthFrame.height;
-        ushort profundidadMinima = ushort.MaxValue;
-
-        // Buscar profundidad mínima
-        for (int y = 0; y < height; y += saltoPixeles)
+        // Leer dato más reciente del hilo UDP
+        string json = null;
+        lock (lockObj)
         {
-            for (int x = 0; x < width; x += saltoPixeles)
-            {
-                int index = (y * width + x) * 2;
-                if (index + 1 >= depthFrame.data.Length) continue;
+            json        = pendingJson;
+            pendingJson = null;
+        }
 
-                ushort depth = System.BitConverter.ToUInt16(depthFrame.data, index);
-                if (depth == 0) continue;
-                if (depth < profundidadMinima) profundidadMinima = depth;
+        if (json != null)
+        {
+            try
+            {
+                var data               = JsonUtility.FromJson<TrackingData>(json);
+                handPositionNormalized = new Vector2(data.x, data.y);
+                handPressed            = data.pressed;
+                UnityEngine.Debug.Log($"[HandTracker] x={data.x:F3} y={data.y:F3} pressed={data.pressed}");
+            }
+            catch (Exception e)
+            {
+                UnityEngine.Debug.LogError($"[HandTracker] Error parseando JSON '{json}': {e.Message}");
             }
         }
-
-        if (profundidadMinima == ushort.MaxValue) return;
-
-        ushort profundidadMaxima = (ushort)(profundidadMinima + margenProfundidad);
-        long sumaX = 0, sumaY = 0, sumaDepth = 0;
-        int contador = 0;
-
-        // Calcular centro
-        for (int y = 0; y < height; y += saltoPixeles)
+        else
         {
-            for (int x = 0; x < width; x += saltoPixeles)
-            {
-                int index = (y * width + x) * 2;
-                if (index + 1 >= depthFrame.data.Length) continue;
-
-                ushort depth = System.BitConverter.ToUInt16(depthFrame.data, index);
-                if (depth == 0) continue;
-
-                if (depth >= profundidadMinima && depth <= profundidadMaxima)
-                {
-                    sumaX += x; sumaY += y; sumaDepth += depth;
-                    contador++;
-                }
-            }
+            // Solo loguea cada 120 frames para no saturar la consola
+            if (Time.frameCount % 120 == 0)
+                UnityEngine.Debug.LogWarning("[HandTracker] Sin datos UDP recibidos.");
         }
 
-        if (contador == 0) return;
+        // Lógica de soltar objeto al dejar de presionar
+        HandDraggable draggable = handSphere?.GetComponent<HandDraggable>();
 
-        float promedioX = (float)sumaX / contador;
-        float promedioY = (float)sumaY / contador;
-        float promedioDepth = (float)sumaDepth / contador;
-
-        // Posición normalizada de la mano
-        handPositionNormalized = new Vector2(promedioX / width, promedioY / height);
-        handDepth = promedioDepth;
-        handPressed = handDepth < umbralPresionado;
-
-        
-
-        // ---------------------------------------------------------
-        // LÓGICA DE COLOCACIÓN (INTEGRACIÓN)
-        // ---------------------------------------------------------
-        HandDraggable draggable = null;
-        if (handSphere != null)
-        {
-            draggable = handSphere.GetComponent<HandDraggable>();
-        }
-
-        // Si en el frame anterior estaba presionado y ahora no, significa que SOLTAMOS (Drop)
         if (lastHandPressed && !handPressed)
         {
-            if (draggable != null && !draggable.yaColocado)
-            {
-                if (draggable.PuedeColocarse())
-                {
-                    draggable.Colocar();
-                }
-            }
+            if (draggable != null && !draggable.yaColocado && draggable.PuedeColocarse())
+                draggable.Colocar();
         }
 
-        // Actualizamos el estado para el siguiente frame
         lastHandPressed = handPressed;
 
-        // ---------------------------------------------------------
-        // 1. LÓGICA 2D: Mover Cursor de Canvas
-        // ---------------------------------------------------------
-        Vector3 posicionPantallaRaw = new Vector3(
+        // Cursor 2D en Canvas — siempre sigue la mano
+        Vector3 posicionPantalla = new Vector3(
             handPositionNormalized.x * Screen.width,
             (1f - handPositionNormalized.y) * Screen.height,
             0f
@@ -145,43 +179,45 @@ public class HandTracker : MonoBehaviour
 
         if (orbe2D != null && canvasPrincipal != null)
         {
-            Vector2 posicionLocalCanvas;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 canvasPrincipal.transform as RectTransform,
-                posicionPantallaRaw,
+                posicionPantalla,
                 canvasPrincipal.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
-                out posicionLocalCanvas
+                out Vector2 posicionLocalCanvas
             );
 
-            // Mueve el cursor 2D si estamos presionando
-            if (handPressed)
-            {
-                orbe2D.localPosition = Vector2.Lerp(
-                    orbe2D.localPosition,
-                    posicionLocalCanvas,
-                    velocidadSuavizado * Time.deltaTime
-                );
-            }
+            orbe2D.localPosition = Vector2.Lerp(
+                orbe2D.localPosition,
+                posicionLocalCanvas,
+                velocidadSuavizado * Time.deltaTime
+            );
         }
 
-        // ---------------------------------------------------------
-        // 2. LÓGICA 3D: Hacer match y bloquear si ya se colocó
-        // ---------------------------------------------------------
+        // Objeto 3D sigue al cursor — solo si no está ya colocado
         if (handSphere != null && Camera.main != null && orbe2D != null)
         {
-            // Verificamos que NO esté colocado antes de seguir moviéndolo
             if (draggable == null || !draggable.yaColocado)
             {
-                Vector3 posicionVisualUI = orbe2D.position;
-                Plane planoPiso = new Plane(Vector3.up, new Vector3(0, alturaFijaY, 0));
-                Ray rayoDesdeCamara = Camera.main.ScreenPointToRay(posicionVisualUI);
+                Plane planoPiso      = new Plane(Vector3.up, new Vector3(0, alturaFijaY, 0));
+                Ray   rayoDesdeCamara = Camera.main.ScreenPointToRay(orbe2D.position);
 
-                if (planoPiso.Raycast(rayoDesdeCamara, out float distanciaImpacto))
-                {
-                    Vector3 puntoObjetivo3D = rayoDesdeCamara.GetPoint(distanciaImpacto) + offsetVisual3D;
-                    handSphere.position = puntoObjetivo3D;
-                }
+                if (planoPiso.Raycast(rayoDesdeCamara, out float distancia))
+                    handSphere.position = rayoDesdeCamara.GetPoint(distancia) + offsetVisual3D;
             }
+        }
+    }
+
+    void OnApplicationQuit()
+    {
+        running = false;
+
+        try { udpClient?.Close(); }   catch { }
+        try { udpThread?.Join(300); } catch { }
+
+        if (trackerProcess != null && !trackerProcess.HasExited)
+        {
+            trackerProcess.Kill();
+            trackerProcess.Dispose();
         }
     }
 }
