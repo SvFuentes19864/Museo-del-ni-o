@@ -5,6 +5,9 @@ using System.Collections;
 
 public class IntroManager : MonoBehaviour
 {
+    [Header("Mundo")]
+    public InfiniteRotateY planeta;
+
     [Header("Referencias")]
     public Camera camara;
     public AudioSource narracion;
@@ -32,8 +35,20 @@ public class IntroManager : MonoBehaviour
     [Header("Escena")]
     public string escenaFase1 = "Fase1";
 
-    IEnumerator Start()
+    public void IniciarIntro()
     {
+        StartCoroutine(
+            IntroCoroutine()
+        );
+    }
+
+    IEnumerator IntroCoroutine()
+    {
+        if (planeta != null)
+        {
+            planeta.enabled = true;
+        }
+
         // Posición inicial
         camara.transform.position =
             puntoInicial.position;
@@ -42,6 +57,12 @@ public class IntroManager : MonoBehaviour
             puntoInicial.rotation;
 
         yield return null;
+
+        // Iniciar ambiente cuando empieza el juego
+        if (audioAmbiente != null)
+        {
+            audioAmbiente.Play();
+        }
 
         if (narracion != null)
         {
