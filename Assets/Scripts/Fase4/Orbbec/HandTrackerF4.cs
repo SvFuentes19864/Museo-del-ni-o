@@ -29,6 +29,23 @@ public class HandTrackerF4 : MonoBehaviour
 
     public Canvas canvasPrincipalF4;
 
+    public Color[] handColorsF4 =
+    {
+        Color.cyan,
+        Color.yellow,
+        Color.green,
+        Color.magenta,
+        Color.red,
+        Color.blue,
+        Color.white,
+        new Color(1f,0.5f,0f),
+        new Color(0.5f,1f,1f),
+        new Color(1f,0.5f,1f)
+    };
+
+    private readonly Dictionary<int, RectTransform>
+        activeOrbesF4 = new();
+
     [Header("Suavizado")]
     public float velocidadSuavizadoF4 = 30f;
 
@@ -38,8 +55,6 @@ public class HandTrackerF4 : MonoBehaviour
     private float alturaFijaYF4;
 
     private bool lastHandPressedF4;
-
-    private RectTransform orbeF4;
 
     private static Process s_trackerProcess;
 
@@ -86,21 +101,6 @@ public class HandTrackerF4 : MonoBehaviour
 
     void Start()
     {
-        if (
-            orbe2DPrefabF4 != null &&
-            canvasPrincipalF4 != null
-        )
-        {
-            GameObject go =
-                Instantiate(
-                    orbe2DPrefabF4,
-                    canvasPrincipalF4.transform
-                );
-
-            orbeF4 =
-                go.GetComponent<RectTransform>();
-        }
-
         LaunchTracker();
         StartUdpListener();
     }
@@ -257,13 +257,118 @@ public class HandTrackerF4 : MonoBehaviour
 
             if (
                 data != null &&
-                data.hands != null &&
-                data.hands.Length > 0
+                data.hands != null
             )
             {
-                AplicarManoF4(
-                    data.hands[0]
+                AplicarManosF4(
+                    data.hands
                 );
+            }
+        }
+    }
+
+    void AplicarManosF4(
+        HandData[] hands
+    )
+    {
+        HashSet<int> vistas =
+            new HashSet<int>();
+
+        foreach (var hand in hands)
+        {
+            vistas.Add(hand.id);
+
+            if (
+                !activeOrbesF4.TryGetValue(
+                    hand.id,
+                    out RectTransform orbe
+                )
+            )
+            {
+                GameObject go =
+                    Instantiate(
+                        orbe2DPrefabF4,
+                        canvasPrincipalF4.transform
+                    );
+
+                orbe =
+                    go.GetComponent<RectTransform>();
+
+                Image img =
+                    go.GetComponent<Image>();
+
+                if (
+                    img != null &&
+                    handColorsF4.Length > 0
+                )
+                {
+                    img.color =
+                        handColorsF4[
+                            hand.id %
+                            handColorsF4.Length
+                        ];
+                }
+
+                activeOrbesF4.Add(
+                    hand.id,
+                    orbe
+                );
+            }
+
+            Vector3 screenPos =
+                new Vector3(
+                    hand.x * Screen.width,
+                    (1f - hand.y) * Screen.height,
+                    0f
+                );
+
+            RectTransformUtility
+                .ScreenPointToLocalPointInRectangle(
+                    canvasPrincipalF4.transform
+                        as RectTransform,
+                    screenPos,
+                    null,
+                    out Vector2 localPos
+                );
+
+            orbe.localPosition =
+                Vector2.Lerp(
+                    orbe.localPosition,
+                    localPos,
+                    velocidadSuavizadoF4 *
+                    Time.deltaTime
+                );
+        }
+
+        List<int> borrar =
+            new List<int>();
+
+        foreach (
+            var kvp
+            in activeOrbesF4
+        )
+        {
+            if (!vistas.Contains(kvp.Key))
+            {
+                Destroy(
+                    kvp.Value.gameObject
+                );
+
+                borrar.Add(kvp.Key);
+            }
+        }
+
+        foreach (int id in borrar)
+        {
+            activeOrbesF4.Remove(id);
+        }
+
+        foreach (var hand in hands)
+        {
+            if (hand.id == 0)
+            {
+                AplicarManoF4(hand);
+                break;
             }
         }
     }
@@ -299,11 +404,16 @@ public class HandTrackerF4 : MonoBehaviour
                 out Vector2 localPos
             );
 
-        if (orbeF4 != null)
+        if (
+            activeOrbesF4.TryGetValue(
+                hand.id,
+                out RectTransform orbe
+            )
+        )
         {
-            orbeF4.localPosition =
+            orbe.localPosition =
                 Vector2.Lerp(
-                    orbeF4.localPosition,
+                    orbe.localPosition,
                     localPos,
                     velocidadSuavizadoF4 *
                     Time.deltaTime
@@ -348,7 +458,10 @@ public class HandTrackerF4 : MonoBehaviour
         if (
             objetoActualF4 != null &&
             Camera.main != null &&
-            orbeF4 != null
+            activeOrbesF4.TryGetValue(
+                0,
+                out RectTransform cursorPrincipal
+            )
         )
         {
             if (
@@ -369,7 +482,7 @@ public class HandTrackerF4 : MonoBehaviour
                 Ray ray =
                     Camera.main
                         .ScreenPointToRay(
-                            orbeF4.position
+                            cursorPrincipal.position
                         );
 
                 if (

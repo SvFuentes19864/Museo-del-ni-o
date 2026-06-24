@@ -55,6 +55,11 @@ public class ControlRuletaF4 : MonoBehaviour
         objetoActual = nuevoObjeto;
         puntoInicioDrag = nuevoInicioDrag;
         camaraDestino = nuevaCamara;
+
+        Debug.Log(
+            "ConfigurarRuleta -> " +
+            nuevoObjeto.name
+        );
     }
 
     IEnumerator EncenderOrbbec()
@@ -66,6 +71,12 @@ public class ControlRuletaF4 : MonoBehaviour
             orbbecDevice.enabled = true;
 
             Debug.Log("ORBBEC F4 ACTIVADO");
+        }
+        else
+        {
+            Debug.LogError(
+                "orbbecDevice es NULL"
+            );
         }
     }
 
@@ -139,15 +150,37 @@ public class ControlRuletaF4 : MonoBehaviour
 
         if (camaraDestino != null)
         {
+            Debug.Log(
+                "Activando cámara: " +
+                camaraDestino.name
+            );
+
             camaraDestino.Priority = 100;
+        }
+        else
+        {
+            Debug.LogError(
+                "camaraDestino es NULL"
+            );
         }
 
         if (puntoInicioDrag != null)
         {
+            Debug.Log(
+                "VOY A MOVER A INICIO DRAG -> " +
+                puntoInicioDrag.name
+            );
+
             yield return StartCoroutine(
                 MoverSuavemente(
                     puntoInicioDrag.position
                 )
+            );
+        }
+        else
+        {
+            Debug.LogError(
+                "puntoInicioDrag es NULL"
             );
         }
     }
@@ -156,6 +189,10 @@ public class ControlRuletaF4 : MonoBehaviour
         Vector3 destino
     )
     {
+        Debug.Log(
+            "ENTRE A MOVER SUAVEMENTE"
+        );
+
         Vector3 posicionInicial =
             objetoActual.transform.position;
 
@@ -181,6 +218,10 @@ public class ControlRuletaF4 : MonoBehaviour
         objetoActual.transform.position =
             destino;
 
+        Debug.Log(
+            "TERMINE MOVER SUAVEMENTE"
+        );
+
         if (
             handTrackerF4 != null &&
             objetoActual != null
@@ -195,8 +236,13 @@ public class ControlRuletaF4 : MonoBehaviour
                 objetoActual.name
             );
         }
+        else
+        {
+            Debug.LogError(
+                "handTrackerF4 o objetoActual son NULL"
+            );
+        }
 
-        // AQUÍ ES DONDE DEBE ACTIVARSE
         StartCoroutine(
             EncenderOrbbec()
         );
