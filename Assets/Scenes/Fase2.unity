@@ -27711,10 +27711,10 @@ MonoBehaviour:
         z: 2.7574656
       Rotation:
         value:
-          x: -0.028165802
-          y: 0.89875627
-          z: -0.32232475
-          w: 0.29588935
+          x: -0.028165793
+          y: 0.8987563
+          z: -0.32232478
+          w: 0.2958894
     - Position:
         x: 9.099999
         y: -9.31
@@ -27872,7 +27872,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -300, y: 200}
+  m_AnchoredPosition: {x: -396, y: 200}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1113947683
@@ -39511,7 +39511,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508154641}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90aee7a9ae066ad4d9f7a908ced4ed03, type: 3}
   m_Name: 
@@ -39535,9 +39535,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggable
   gameManager: {fileID: 774813800}
   yaColocado: 1
-  tiempoDesbloqueo: 20
+  tiempoDesbloqueo: 5
   zonaCorrecta: {fileID: 33275456}
-  distanciaSnap: 3
+  distanciaSnap: 1.5
   onPlaced:
     m_PersistentCalls:
       m_Calls:

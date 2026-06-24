@@ -13990,6 +13990,17 @@ MonoBehaviour:
   offsetVisual3DF4: {x: 0, y: 0, z: 0}
   orbe2DPrefabF4: {fileID: 846113988}
   canvasPrincipalF4: {fileID: 1359965357}
+  handColorsF4:
+  - {r: 0, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0.5, b: 0, a: 1}
+  - {r: 0.5, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0.5, b: 1, a: 1}
   velocidadSuavizadoF4: 30
   handPressedF4: 0
 --- !u!1 &108778869
@@ -36382,7 +36393,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 0
   zonaCorrectaF4: {fileID: 1612393158}
-  distanciaSnapF4: 3
+  distanciaSnapF4: 0.5
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
@@ -76476,7 +76487,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 0
   zonaCorrectaF4: {fileID: 218571214}
-  distanciaSnapF4: 3
+  distanciaSnapF4: 0.5
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
@@ -80468,7 +80479,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 0
   zonaCorrectaF4: {fileID: 1303891756}
-  distanciaSnapF4: 3
+  distanciaSnapF4: 0.5
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
@@ -81307,7 +81318,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 0
   zonaCorrectaF4: {fileID: 116269522}
-  distanciaSnapF4: 3
+  distanciaSnapF4: 0.5
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
@@ -121700,7 +121711,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 0
   zonaCorrectaF4: {fileID: 1356902322}
-  distanciaSnapF4: 3
+  distanciaSnapF4: 0.5
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
@@ -198557,7 +198568,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 0
   zonaCorrectaF4: {fileID: 211634913}
-  distanciaSnapF4: 3
+  distanciaSnapF4: 0.5
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
@@ -301811,7 +301822,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 0
   zonaCorrectaF4: {fileID: 1351270003}
-  distanciaSnapF4: 3
+  distanciaSnapF4: 0.5
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
@@ -306445,7 +306456,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 0
   zonaCorrectaF4: {fileID: 156370158}
-  distanciaSnapF4: 3
+  distanciaSnapF4: 0.5
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:

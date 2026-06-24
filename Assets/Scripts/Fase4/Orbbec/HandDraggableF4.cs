@@ -55,13 +55,35 @@ public class HandDraggableF4 : MonoBehaviour
                 zonaCorrectaF4.position
             );
 
+        UnityEngine.Debug.Log(
+            gameObject.name +
+            " -> Distancia al snap: " +
+            distancia
+        );
+
         return distancia <= distanciaSnapF4;
     }
 
     public void ColocarF4()
     {
+        UnityEngine.Debug.Log(
+            "COLOCAR F4 EJECUTADO -> " +
+            gameObject.name
+        );
+
         if (zonaCorrectaF4 == null)
             return;
+
+        float distancia =
+            Vector3.Distance(
+                transform.position,
+                zonaCorrectaF4.position
+            );
+
+        UnityEngine.Debug.Log(
+            "Distancia al momento de colocar: " +
+            distancia
+        );
 
         transform.position =
             new Vector3(
@@ -90,6 +112,8 @@ public class HandDraggableF4 : MonoBehaviour
             }
         }
 
-        Debug.Log("¡Colocación correcta F4!");
+        UnityEngine.Debug.Log(
+            "¡Colocación correcta F4!"
+        );
     }
 }
