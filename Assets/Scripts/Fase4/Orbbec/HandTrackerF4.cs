@@ -377,8 +377,15 @@ public class HandTrackerF4 : MonoBehaviour
         HandData hand
     )
     {
-        handPressedF4 =
+        bool nuevoPressed =
             hand.pressed;
+
+        UnityEngine.Debug.Log(
+            "Mano " +
+            hand.id +
+            " pressed=" +
+            nuevoPressed
+        );
 
         Vector3 screenPos =
             new Vector3(
@@ -432,9 +439,49 @@ public class HandTrackerF4 : MonoBehaviour
         }
 
         if (
+            hand.id == 0 &&
             lastHandPressedF4 &&
-            !handPressedF4
+            !nuevoPressed
         )
+        {
+            UnityEngine.Debug.Log(
+                "INTENTANDO SNAP F4"
+            );
+
+            if (
+                draggable != null &&
+                !draggable.yaColocadoF4
+            )
+            {
+                if (
+                    draggable
+                        .PuedeColocarseF4()
+                )
+                {
+                    UnityEngine.Debug.Log(
+                        "SNAP EJECUTADO F4"
+                    );
+
+                    draggable
+                        .ColocarF4();
+                }
+                else
+                {
+                    UnityEngine.Debug.Log(
+                        "NO ESTA EN RANGO DE SNAP"
+                    );
+                }
+            }
+        }
+
+        if (hand.id == 0)
+        {
+            lastHandPressedF4 =
+                nuevoPressed;
+
+            handPressedF4 =
+                nuevoPressed;
+        }
         {
             if (
                 draggable != null &&
