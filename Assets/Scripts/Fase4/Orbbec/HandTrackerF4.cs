@@ -1,45 +1,75 @@
 using UnityEngine;
-using OrbbecUnity;
 using UnityEngine.UI;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
 
 public class HandTrackerF4 : MonoBehaviour
 {
+    [Header("Python Tracker")]
+    public string pythonExecutable =
+        @"C:\Opencv\.venv\Scripts\python.exe";
 
-    [Header("Calibración")]
-    public float umbralPresionado = 105f;
-
-    [Header("Orbbec")]
-    public OrbbecPipelineFrameSource frameSource;
+    public string pythonScriptPath =
+        @"C:\Opencv\main.py";
 
     [Header("Objeto actual F4")]
     public Transform objetoActualF4;
 
-    [Tooltip("Offset visual para centrar el objeto")]
-    public Vector3 offsetVisual3DF4 = Vector3.zero;
+    public Vector3 offsetVisual3DF4 =
+        Vector3.zero;
 
-    [Header("Interacción 2D (Canvas)")]
-    public RectTransform orbe2DF4;
+    [Header("Cursor")]
+    public GameObject orbe2DPrefabF4;
+
     public Canvas canvasPrincipalF4;
-
-    [Header("Detección")]
-    public int saltoPixelesF4 = 4;
-    public ushort margenProfundidadF4 = 100;
 
     [Header("Suavizado")]
     public float velocidadSuavizadoF4 = 30f;
-
-    [HideInInspector]
-    public Vector2 handPositionNormalizedF4;
-
-    [HideInInspector]
-    public float handDepthF4;
 
     [HideInInspector]
     public bool handPressedF4;
 
     private float alturaFijaYF4;
 
-    private bool lastHandPressedF4 = false;
+    private bool lastHandPressedF4;
+
+    private RectTransform orbeF4;
+
+    private static Process s_trackerProcess;
+
+    private Process trackerProcess;
+    private UdpClient udpClient;
+    private Thread udpThread;
+
+    private volatile bool running;
+
+    private string pendingJson;
+
+    private readonly object lockObj =
+        new object();
+
+    private const int UDP_PORT = 7654;
+
+    [Serializable]
+    private class HandData
+    {
+        public int id;
+        public float x;
+        public float y;
+        public bool pressed;
+    }
+
+    [Serializable]
+    private class TrackingData
+    {
+        public HandData[] hands;
+    }
 
     public void CambiarObjetoF4(
         Transform nuevoObjeto
@@ -56,159 +86,229 @@ public class HandTrackerF4 : MonoBehaviour
 
     void Start()
     {
-        if (objetoActualF4 != null)
+        if (
+            orbe2DPrefabF4 != null &&
+            canvasPrincipalF4 != null
+        )
         {
-            alturaFijaYF4 =
-                objetoActualF4.position.y;
+            GameObject go =
+                Instantiate(
+                    orbe2DPrefabF4,
+                    canvasPrincipalF4.transform
+                );
+
+            orbeF4 =
+                go.GetComponent<RectTransform>();
         }
+
+        LaunchTracker();
+        StartUdpListener();
+    }
+
+    void LaunchTracker()
+    {
+        if (
+            s_trackerProcess != null &&
+            !s_trackerProcess.HasExited
+        )
+        {
+            trackerProcess =
+                s_trackerProcess;
+
+            return;
+        }
+
+        string exePath =
+            Path.Combine(
+                Application.streamingAssetsPath,
+                "tracker_unity",
+                "tracker_unity.exe"
+            );
+
+        string fileName;
+        string arguments;
+        string workDir;
+
+        bool usarScript =
+            !string.IsNullOrEmpty(
+                pythonScriptPath
+            );
+
+        if (
+            !usarScript &&
+            File.Exists(exePath)
+        )
+        {
+            fileName = exePath;
+            arguments = "";
+            workDir =
+                Path.GetDirectoryName(
+                    exePath
+                );
+        }
+        else
+        {
+            string script =
+                pythonScriptPath;
+
+            fileName =
+                pythonExecutable;
+
+            arguments =
+                $"\"{script}\"";
+
+            workDir =
+                Path.GetDirectoryName(
+                    script
+                );
+        }
+
+        var psi =
+            new ProcessStartInfo
+            {
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                FileName = fileName,
+                Arguments = arguments,
+                WorkingDirectory = workDir
+            };
+
+        try
+        {
+            trackerProcess =
+                Process.Start(psi);
+
+            s_trackerProcess =
+                trackerProcess;
+        }
+        catch (Exception e)
+        {
+            UnityEngine.Debug.LogError(
+                e.Message
+            );
+        }
+    }
+
+    void StartUdpListener()
+    {
+        running = true;
+
+        udpClient =
+            new UdpClient(
+                UDP_PORT
+            );
+
+        udpThread =
+            new Thread(() =>
+            {
+                IPEndPoint ep =
+                    new(
+                        IPAddress.Any,
+                        0
+                    );
+
+                while (running)
+                {
+                    try
+                    {
+                        byte[] data =
+                            udpClient.Receive(
+                                ref ep
+                            );
+
+                        string json =
+                            Encoding.UTF8
+                                .GetString(
+                                    data
+                                );
+
+                        lock (lockObj)
+                        {
+                            pendingJson =
+                                json;
+                        }
+                    }
+                    catch { }
+                }
+            });
+
+        udpThread.IsBackground =
+            true;
+
+        udpThread.Start();
     }
 
     void Update()
     {
-        if (frameSource == null)
-            return;
+        string json = null;
 
-        var depthFrame =
-            frameSource.GetDepthFrame();
-
-        if (
-            depthFrame == null ||
-            depthFrame.data == null
-        )
-            return;
-
-        int width = depthFrame.width;
-        int height = depthFrame.height;
-
-        ushort profundidadMinima =
-            ushort.MaxValue;
-
-        for (
-            int y = 0;
-            y < height;
-            y += saltoPixelesF4
-        )
+        lock (lockObj)
         {
-            for (
-                int x = 0;
-                x < width;
-                x += saltoPixelesF4
-            )
-            {
-                int index =
-                    (y * width + x) * 2;
-
-                if (
-                    index + 1 >=
-                    depthFrame.data.Length
-                )
-                    continue;
-
-                ushort depth =
-                    System.BitConverter
-                        .ToUInt16(
-                            depthFrame.data,
-                            index
-                        );
-
-                if (depth == 0)
-                    continue;
-
-                if (
-                    depth <
-                    profundidadMinima
-                )
-                {
-                    profundidadMinima =
-                        depth;
-                }
-            }
+            json = pendingJson;
+            pendingJson = null;
         }
 
-        if (
-            profundidadMinima ==
-            ushort.MaxValue
-        )
-            return;
-
-        ushort profundidadMaxima =
-            (ushort)(
-                profundidadMinima +
-                margenProfundidadF4
-            );
-
-        long sumaX = 0;
-        long sumaY = 0;
-        long sumaDepth = 0;
-
-        int contador = 0;
-
-        for (
-            int y = 0;
-            y < height;
-            y += saltoPixelesF4
-        )
+        if (json != null)
         {
-            for (
-                int x = 0;
-                x < width;
-                x += saltoPixelesF4
+            var data =
+                JsonUtility
+                    .FromJson
+                    <TrackingData>(json);
+
+            if (
+                data != null &&
+                data.hands != null &&
+                data.hands.Length > 0
             )
             {
-                int index =
-                    (y * width + x) * 2;
-
-                if (
-                    index + 1 >=
-                    depthFrame.data.Length
-                )
-                    continue;
-
-                ushort depth =
-                    System.BitConverter
-                        .ToUInt16(
-                            depthFrame.data,
-                            index
-                        );
-
-                if (depth == 0)
-                    continue;
-
-                if (
-                    depth >= profundidadMinima &&
-                    depth <= profundidadMaxima
-                )
-                {
-                    sumaX += x;
-                    sumaY += y;
-                    sumaDepth += depth;
-                    contador++;
-                }
+                AplicarManoF4(
+                    data.hands[0]
+                );
             }
         }
+    }
 
-        if (contador == 0)
-            return;
+    void AplicarManoF4(
+        HandData hand
+    )
+    {
+        handPressedF4 =
+            hand.pressed;
 
-        float promedioX =
-            (float)sumaX / contador;
+        Vector3 screenPos =
+            new Vector3(
+                hand.x *
+                Screen.width,
 
-        float promedioY =
-            (float)sumaY / contador;
+                (1f - hand.y) *
+                Screen.height,
 
-        float promedioDepth =
-            (float)sumaDepth / contador;
-
-        handPositionNormalizedF4 =
-            new Vector2(
-                promedioX / width,
-                promedioY / height
+                0f
             );
 
-        handDepthF4 =
-            promedioDepth;
+        RectTransformUtility
+            .ScreenPointToLocalPointInRectangle(
+                canvasPrincipalF4
+                    .transform
+                    as RectTransform,
 
-        handPressedF4 = handDepthF4 < umbralPresionado;
+                screenPos,
+
+                null,
+
+                out Vector2 localPos
+            );
+
+        if (orbeF4 != null)
+        {
+            orbeF4.localPosition =
+                Vector2.Lerp(
+                    orbeF4.localPosition,
+                    localPos,
+                    velocidadSuavizadoF4 *
+                    Time.deltaTime
+                );
+        }
 
         HandDraggableF4 draggable =
             null;
@@ -236,7 +336,8 @@ public class HandTrackerF4 : MonoBehaviour
                         .PuedeColocarseF4()
                 )
                 {
-                    draggable.ColocarF4();
+                    draggable
+                        .ColocarF4();
                 }
             }
         }
@@ -244,59 +345,10 @@ public class HandTrackerF4 : MonoBehaviour
         lastHandPressedF4 =
             handPressedF4;
 
-        Vector3 posicionPantallaRaw =
-            new Vector3(
-                handPositionNormalizedF4.x *
-                Screen.width,
-
-                (1f -
-                 handPositionNormalizedF4.y)
-                * Screen.height,
-
-                0f
-            );
-
-        if (
-            orbe2DF4 != null &&
-            canvasPrincipalF4 != null
-        )
-        {
-            Vector2 posicionLocalCanvas;
-
-            RectTransformUtility
-                .ScreenPointToLocalPointInRectangle(
-                    canvasPrincipalF4
-                        .transform
-                        as RectTransform,
-
-                    posicionPantallaRaw,
-
-                    canvasPrincipalF4
-                        .renderMode ==
-                    RenderMode
-                        .ScreenSpaceOverlay
-                            ? null
-                            : Camera.main,
-
-                    out posicionLocalCanvas
-                );
-
-            if (handPressedF4)
-            {
-                orbe2DF4.localPosition =
-                    Vector2.Lerp(
-                        orbe2DF4.localPosition,
-                        posicionLocalCanvas,
-                        velocidadSuavizadoF4 *
-                        Time.deltaTime
-                    );
-            }
-        }
-
         if (
             objetoActualF4 != null &&
             Camera.main != null &&
-            orbe2DF4 != null
+            orbeF4 != null
         )
         {
             if (
@@ -304,10 +356,7 @@ public class HandTrackerF4 : MonoBehaviour
                 !draggable.yaColocadoF4
             )
             {
-                Vector3 posicionVisualUI =
-                    orbe2DF4.position;
-
-                Plane planoPiso =
+                Plane plane =
                     new Plane(
                         Vector3.up,
                         new Vector3(
@@ -317,30 +366,37 @@ public class HandTrackerF4 : MonoBehaviour
                         )
                     );
 
-                Ray rayoDesdeCamara =
+                Ray ray =
                     Camera.main
                         .ScreenPointToRay(
-                            posicionVisualUI
+                            orbeF4.position
                         );
 
                 if (
-                    planoPiso.Raycast(
-                        rayoDesdeCamara,
-                        out float distanciaImpacto
+                    plane.Raycast(
+                        ray,
+                        out float dist
                     )
                 )
                 {
-                    Vector3 puntoObjetivo3D =
-                        rayoDesdeCamara
-                            .GetPoint(
-                                distanciaImpacto
-                            )
-                        + offsetVisual3DF4;
-
                     objetoActualF4.position =
-                        puntoObjetivo3D;
+                        ray.GetPoint(
+                            dist
+                        ) +
+                        offsetVisual3DF4;
                 }
             }
         }
+    }
+
+    void OnDestroy()
+    {
+        running = false;
+
+        try
+        {
+            udpClient?.Close();
+        }
+        catch { }
     }
 }
