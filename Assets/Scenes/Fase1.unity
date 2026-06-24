@@ -59097,8 +59097,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa774ff6e36d59c4fae9641536c6da67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTracker
-  pythonExecutable: C:\Opencv\.venv\Scripts\python.exe
-  pythonScriptPath: C:\Opencv\main.py
+  pythonExecutable: C:\Users\alane\Downloads\Opencv\Opencv\.venv\Scripts\python.exe
+  pythonScriptPath: C:\Users\alane\Downloads\Opencv\Opencv\main.py
   handSpheres:
   - {fileID: 1548137140}
   offsetVisual3D: {x: 0, y: 0, z: 0}

@@ -13969,14 +13969,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa774ff6e36d59c4fae9641536c6da67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTracker
-  pythonExecutable: C:\Opencv\.venv\Scripts\python.exe
-  pythonScriptPath: C:\Opencv\main.py
+  pythonExecutable: C:\Users\alane\Downloads\Opencv\Opencv\.venv\Scripts\python.exe
+  pythonScriptPath: C:\Users\alane\Downloads\Opencv\Opencv\main.py
   handSpheres:
-  - {fileID: 0}
+  - {fileID: 288691192}
+  - {fileID: 1420273011}
+  - {fileID: 2118602315}
+  - {fileID: 561677275}
+  - {fileID: 594257983}
+  - {fileID: 880016261}
+  - {fileID: 598294688}
+  - {fileID: 661422234}
   offsetVisual3D: {x: 0, y: 0, z: 0}
   orbe2D: {fileID: 846113989}
   canvasPrincipal: {fileID: 1359965357}
-  velocidadSuavizado: 0.5
+  velocidadSuavizado: 15
   handPositionNormalized: {x: 0, y: 0}
   handDepth: 0
   handPressed: 0
@@ -36238,6 +36245,7 @@ GameObject:
   - component: {fileID: 288691195}
   - component: {fileID: 288691196}
   - component: {fileID: 288691197}
+  - component: {fileID: 288691198}
   m_Layer: 0
   m_Name: Cerrito
   m_TagString: Untagged
@@ -36377,7 +36385,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 288691191}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5bb23590c85887b4b8de5eaf2bbf6b5f, type: 3}
   m_Name: 
@@ -36403,6 +36411,26 @@ MonoBehaviour:
         m_CallState: 2
   esUltimaPiezaF4: 0
   cursorF4: {fileID: 0}
+--- !u!114 &288691198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288691191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06db828b2ec6df547a9f85deaca11b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandDraggable
+  gameManager: {fileID: 615146690}
+  yaColocado: 0
+  tiempoDesbloqueo: 8
+  zonaCorrecta: {fileID: 1612393158}
+  distanciaSnap: 1
+  onPlaced:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &290450083
 GameObject:
   m_ObjectHideFlags: 0
@@ -198565,7 +198593,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1420273010}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3915def292de5f489954573e4bc8ce1, type: 3}
   m_Name: 
@@ -198602,7 +198630,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1420273010}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5bb23590c85887b4b8de5eaf2bbf6b5f, type: 3}
   m_Name: 
@@ -306739,6 +306767,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 2073666917}
   - {fileID: 730735711}
+  - {fileID: 679765684}
   - {fileID: 615146691}
   - {fileID: 1617877656}
   - {fileID: 1783160941}
@@ -306746,7 +306775,6 @@ SceneRoots:
   - {fileID: 1488443349}
   - {fileID: 1891134741}
   - {fileID: 2080110729}
-  - {fileID: 679765684}
   - {fileID: 800545255}
   - {fileID: 863530228}
   - {fileID: 116752139}

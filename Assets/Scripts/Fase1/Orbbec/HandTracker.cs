@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -22,8 +24,9 @@ public class HandTracker : MonoBehaviour
     public Vector3 offsetVisual3D = Vector3.zero;
 
     [Header("Interacción 2D (Canvas)")]
-    public RectTransform orbe2D;
+    public GameObject orbe2DPrefab;
     public Canvas canvasPrincipal;
+    public Color[] handColors = { Color.cyan, Color.yellow, Color.green, Color.magenta, Color.red, Color.blue };
 
     [Header("Suavizado")]
     public float velocidadSuavizado = 30f;
@@ -35,7 +38,8 @@ public class HandTracker : MonoBehaviour
     private float alturaFijaY;
     private bool  lastHandPressed;
 
-    // static: sobrevive a desactivaciones/recargas de escena dentro de la misma sesión
+    private readonly Dictionary<int, RectTransform> activeOrbes = new();
+
     private static Process s_trackerProcess;
 
     private Process   trackerProcess;
@@ -48,11 +52,18 @@ public class HandTracker : MonoBehaviour
     private const int UDP_PORT = 7654;
 
     [Serializable]
-    private class TrackingData
+    private class HandData
     {
+        public int   id;
         public float x;
         public float y;
         public bool  pressed;
+    }
+
+    [Serializable]
+    private class TrackingData
+    {
+        public HandData[] hands;
     }
 
     void Start()
@@ -143,97 +154,100 @@ public class HandTracker : MonoBehaviour
 
     void Update()
     {
-        // Leer dato más reciente del hilo UDP
         string json = null;
-        lock (lockObj)
-        {
-            json        = pendingJson;
-            pendingJson = null;
-        }
+        lock (lockObj) { json = pendingJson; pendingJson = null; }
 
         if (json != null)
         {
             try
             {
-                var data               = JsonUtility.FromJson<TrackingData>(json);
-                handPositionNormalized = new Vector2(data.x, data.y);
-                handPressed            = data.pressed;
-                UnityEngine.Debug.Log($"[HandTracker] x={data.x:F3} y={data.y:F3} pressed={data.pressed}");
+                var data = JsonUtility.FromJson<TrackingData>(json);
+                ApplyHandData(data.hands ?? Array.Empty<HandData>());
             }
             catch (Exception e)
             {
                 UnityEngine.Debug.LogError($"[HandTracker] Error parseando JSON '{json}': {e.Message}");
             }
         }
-        else
-        {
-            // Solo loguea cada 120 frames para no saturar la consola
-            if (Time.frameCount % 120 == 0)
-                UnityEngine.Debug.LogWarning("[HandTracker] Sin datos UDP recibidos.");
-        }
 
-        // Lógica de soltar objeto al dejar de presionar
         if (lastHandPressed && !handPressed)
         {
             foreach (Transform hs in handSpheres)
             {
                 if (hs == null) continue;
-                HandDraggable draggable = hs.GetComponent<HandDraggable>();
-                if (draggable != null && !draggable.yaColocado && draggable.PuedeColocarse())
-                    draggable.Colocar();
+                HandDraggable d = hs.GetComponent<HandDraggable>();
+                if (d != null && !d.yaColocado && d.PuedeColocarse())
+                    d.Colocar();
             }
         }
-
         lastHandPressed = handPressed;
+    }
 
-        // Cursor 2D en Canvas — siempre sigue la mano
-        Vector3 posicionPantalla = new Vector3(
-            handPositionNormalized.x * Screen.width,
-            (1f - handPositionNormalized.y) * Screen.height,
-            0f
-        );
+    void ApplyHandData(HandData[] hands)
+    {
+        var seen = new HashSet<int>();
 
-        if (orbe2D != null && canvasPrincipal != null)
+        foreach (var hand in hands)
         {
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasPrincipal.transform as RectTransform,
-                posicionPantalla,
-                canvasPrincipal.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
-                out Vector2 posicionLocalCanvas
-            );
+            seen.Add(hand.id);
 
-            orbe2D.localPosition = Vector2.Lerp(
-                orbe2D.localPosition,
-                posicionLocalCanvas,
-                velocidadSuavizado * Time.deltaTime
-            );
-        }
-
-        // Cada objeto 3D sigue al cursor mientras no esté colocado
-        if (Camera.main != null && orbe2D != null)
-        {
-            Plane planoPiso       = new Plane(Vector3.up, new Vector3(0, alturaFijaY, 0));
-            Ray   rayoDesdeCamara = Camera.main.ScreenPointToRay(orbe2D.position);
-
-            if (planoPiso.Raycast(rayoDesdeCamara, out float distancia))
+            if (!activeOrbes.TryGetValue(hand.id, out RectTransform orbe))
             {
-                Vector3 destino = rayoDesdeCamara.GetPoint(distancia) + offsetVisual3D;
-                foreach (Transform hs in handSpheres)
+                if (orbe2DPrefab == null || canvasPrincipal == null) continue;
+                var go = Instantiate(orbe2DPrefab, canvasPrincipal.transform);
+                orbe = go.GetComponent<RectTransform>();
+                var img = go.GetComponentInChildren<Image>();
+                if (img != null && handColors.Length > 0)
+                    img.color = handColors[hand.id % handColors.Length];
+                activeOrbes[hand.id] = orbe;
+            }
+
+            // mover orbe en canvas
+            Vector3 screenPos = new Vector3(hand.x * Screen.width, (1f - hand.y) * Screen.height, 0f);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvasPrincipal.transform as RectTransform, screenPos,
+                canvasPrincipal.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
+                out Vector2 localPos);
+            orbe.localPosition = Vector2.Lerp(orbe.localPosition, localPos, velocidadSuavizado * Time.deltaTime);
+
+            // mover esfera 3D correspondiente (sphere[id] → hand[id])
+            if (Camera.main != null && hand.id < handSpheres.Count && handSpheres[hand.id] != null)
+            {
+                Plane plane = new Plane(Vector3.up, new Vector3(0, alturaFijaY, 0));
+                Ray   ray   = Camera.main.ScreenPointToRay(orbe.position);
+                if (plane.Raycast(ray, out float dist))
                 {
-                    if (hs == null) continue;
-                    HandDraggable draggable = hs.GetComponent<HandDraggable>();
-                    if (draggable == null || !draggable.yaColocado)
-                        hs.position = destino;
+                    Vector3 dest = ray.GetPoint(dist) + offsetVisual3D;
+                    Transform hs = handSpheres[hand.id];
+                    HandDraggable d = hs.GetComponent<HandDraggable>();
+                    if (d == null || !d.yaColocado) hs.position = dest;
                 }
             }
+
+            // estado público (primera mano, compat con HandDraggable)
+            if (hand.id == 0)
+            {
+                handPositionNormalized = new Vector2(hand.x, hand.y);
+                handPressed = hand.pressed;
+            }
         }
+
+        // destruir orbes de manos que desaparecieron
+        foreach (int key in activeOrbes.Keys.Except(seen).ToList())
+        {
+            Destroy(activeOrbes[key].gameObject);
+            activeOrbes.Remove(key);
+        }
+
+        if (hands.Length == 0) handPressed = false;
     }
 
     void OnDestroy()
     {
-        // Libera el socket UDP al cambiar de escena o destruir el objeto,
-        // pero NO mata Python (s_trackerProcess) porque puede reutilizarse.
         StopUdpListener();
+        foreach (var orbe in activeOrbes.Values)
+            if (orbe != null) Destroy(orbe.gameObject);
+        activeOrbes.Clear();
     }
 
     void OnApplicationQuit()
