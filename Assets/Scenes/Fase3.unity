@@ -27322,26 +27322,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa774ff6e36d59c4fae9641536c6da67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTracker
-  pythonExecutable: C:\Users\alane\Downloads\Opencv\Opencv\.venv\Scripts\python.exe
-  pythonScriptPath: C:\Users\alane\Downloads\Opencv\Opencv\main.py
+  pythonExecutable: C:\juegos-nino\Opencv-nino\.venv\Scripts\python.exe
+  pythonScriptPath: C:\juegos-nino\Opencv-nino\main.py
   handSpheres:
   - {fileID: 1083467625}
   offsetVisual3D: {x: 0, y: 0, z: 0}
   orbe2DPrefab: {fileID: 1241122040}
   canvasPrincipal: {fileID: 220568736}
   handColors:
-  - {r: 0, g: 1, b: 1, a: 1}
-  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  - {r: 0, g: 1, b: 0, a: 1}
-  - {r: 1, g: 0, b: 1, a: 1}
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
-  - {r: 1, g: 0, b: 0.31676638, a: 1}
-  - {r: 0.34862414, g: 0.7509433, b: 0.24228546, a: 1}
-  - {r: 0.78113204, g: 0.05747944, b: 0.5539564, a: 1}
-  - {r: 0.14739048, g: 0.61226773, b: 0.6150943, a: 1}
-  velocidadSuavizado: 15
-  radioDeReclamacion: 2
+  - {r: 0, g: 1, b: 1, a: 0.22352941}
+  - {r: 1, g: 0.92156863, b: 0.015686275, a: 0.2}
+  - {r: 0, g: 1, b: 0, a: 0.19215687}
+  - {r: 1, g: 0, b: 1, a: 0.1764706}
+  - {r: 1, g: 0, b: 0, a: 0.2}
+  - {r: 0, g: 0, b: 1, a: 0.22352941}
+  - {r: 1, g: 0, b: 0.31676638, a: 0.22352941}
+  - {r: 0.34862414, g: 0.7509433, b: 0.24228546, a: 0.25490198}
+  - {r: 0.78113204, g: 0.05747944, b: 0.5539564, a: 0.24313726}
+  - {r: 0.14739048, g: 0.61226773, b: 0.6150943, a: 0.2}
+  radioDeReclamacion: 3
   tiempoParaReclamar: 1
   handPositionNormalized: {x: 0, y: 0}
   handDepth: 0
@@ -35837,7 +35836,7 @@ MonoBehaviour:
   yaColocado: 1
   tiempoDesbloqueo: 10
   zonaCorrecta: {fileID: 33275456}
-  distanciaSnap: 2
+  distanciaSnap: 3
   onPlaced:
     m_PersistentCalls:
       m_Calls:
@@ -51386,8 +51385,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -449, y: 200}
-  m_SizeDelta: {x: 20, y: 20}
+  m_AnchoredPosition: {x: -1000, y: -1000}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1241122042
 MonoBehaviour:

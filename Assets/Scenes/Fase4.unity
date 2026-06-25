@@ -13984,25 +13984,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89a89a452f91cbc40ac4bb7c5cfbf960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTrackerF4
-  pythonExecutable: C:\Users\alane\Downloads\Opencv\Opencv\.venv\Scripts\python.exe
-  pythonScriptPath: C:\Users\alane\Downloads\Opencv\Opencv\main.py
-  objetoActualF4: {fileID: 1488443349}
+  pythonExecutable: C:\juegos-nino\Opencv-nino\.venv\Scripts\python.exe
+  pythonScriptPath: C:\juegos-nino\Opencv-nino\main.py
+  alturaPlanoY: 0
   offsetVisual3DF4: {x: 0, y: 0, z: 0}
   orbe2DPrefabF4: {fileID: 846113988}
   canvasPrincipalF4: {fileID: 1359965357}
   handColorsF4:
-  - {r: 0, g: 1, b: 1, a: 1}
-  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  - {r: 0, g: 1, b: 0, a: 1}
-  - {r: 1, g: 0, b: 1, a: 1}
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
-  - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 1, g: 0.5, b: 0, a: 1}
-  - {r: 0.5, g: 1, b: 1, a: 1}
-  - {r: 1, g: 0.5, b: 1, a: 1}
-  velocidadSuavizadoF4: 30
-  handPressedF4: 0
+  - {r: 0, g: 1, b: 1, a: 0.20392157}
+  - {r: 1, g: 0.92156863, b: 0.015686275, a: 0.1882353}
+  - {r: 0, g: 1, b: 0, a: 0.2509804}
+  - {r: 1, g: 0, b: 1, a: 0.24313726}
+  - {r: 1, g: 0, b: 0, a: 0.2901961}
+  - {r: 0, g: 0, b: 1, a: 0.21176471}
+  - {r: 1, g: 1, b: 1, a: 0.21176471}
+  - {r: 1, g: 0.5, b: 0, a: 0.2}
+  - {r: 0.5, g: 1, b: 1, a: 0.24313726}
+  - {r: 1, g: 0.5, b: 1, a: 0.25490198}
 --- !u!1 &108778869
 GameObject:
   m_ObjectHideFlags: 0
@@ -36390,10 +36388,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb23590c85887b4b8de5eaf2bbf6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggableF4
+  handTracker: {fileID: 108346575}
   gameManager: {fileID: 615146690}
-  yaColocadoF4: 0
+  yaColocadoF4: 1
+  tiempoDesbloqueo: 8
+  radioReclamacion: 1
+  tiempoParaReclamar: 1
   zonaCorrectaF4: {fileID: 1612393158}
-  distanciaSnapF4: 0.5
+  distanciaSnapF4: 1
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
@@ -76484,10 +76486,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb23590c85887b4b8de5eaf2bbf6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggableF4
+  handTracker: {fileID: 108346575}
   gameManager: {fileID: 615146690}
-  yaColocadoF4: 0
+  yaColocadoF4: 1
+  tiempoDesbloqueo: 10
+  radioReclamacion: 2
+  tiempoParaReclamar: 1
   zonaCorrectaF4: {fileID: 218571214}
-  distanciaSnapF4: 0.5
+  distanciaSnapF4: 0.7
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
@@ -80476,10 +80482,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb23590c85887b4b8de5eaf2bbf6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggableF4
+  handTracker: {fileID: 108346575}
   gameManager: {fileID: 615146690}
-  yaColocadoF4: 0
+  yaColocadoF4: 1
+  tiempoDesbloqueo: 10
+  radioReclamacion: 3
+  tiempoParaReclamar: 1
   zonaCorrectaF4: {fileID: 1303891756}
-  distanciaSnapF4: 0.5
+  distanciaSnapF4: 0.7
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
@@ -81315,10 +81325,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb23590c85887b4b8de5eaf2bbf6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggableF4
+  handTracker: {fileID: 108346575}
   gameManager: {fileID: 615146690}
-  yaColocadoF4: 0
+  yaColocadoF4: 1
+  tiempoDesbloqueo: 10
+  radioReclamacion: 1
+  tiempoParaReclamar: 1
   zonaCorrectaF4: {fileID: 116269522}
-  distanciaSnapF4: 0.5
+  distanciaSnapF4: 1
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
@@ -117247,8 +117261,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -639, y: 200}
-  m_SizeDelta: {x: 20, y: 20}
+  m_AnchoredPosition: {x: -1000, y: -1000}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &846113990
 MonoBehaviour:
@@ -121708,10 +121722,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb23590c85887b4b8de5eaf2bbf6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggableF4
+  handTracker: {fileID: 108346575}
   gameManager: {fileID: 615146690}
-  yaColocadoF4: 0
+  yaColocadoF4: 1
+  tiempoDesbloqueo: 10
+  radioReclamacion: 2
+  tiempoParaReclamar: 1
   zonaCorrectaF4: {fileID: 1356902322}
-  distanciaSnapF4: 0.5
+  distanciaSnapF4: 0.7
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
@@ -189005,7 +189023,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
   m_UseReflectionProbes: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -198565,10 +198583,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb23590c85887b4b8de5eaf2bbf6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggableF4
+  handTracker: {fileID: 108346575}
   gameManager: {fileID: 615146690}
-  yaColocadoF4: 0
+  yaColocadoF4: 1
+  tiempoDesbloqueo: 10
+  radioReclamacion: 2
+  tiempoParaReclamar: 1
   zonaCorrectaF4: {fileID: 211634913}
-  distanciaSnapF4: 0.5
+  distanciaSnapF4: 0.7
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
@@ -301819,10 +301841,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb23590c85887b4b8de5eaf2bbf6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggableF4
+  handTracker: {fileID: 108346575}
   gameManager: {fileID: 615146690}
-  yaColocadoF4: 0
+  yaColocadoF4: 1
+  tiempoDesbloqueo: 10
+  radioReclamacion: 1
+  tiempoParaReclamar: 1
   zonaCorrectaF4: {fileID: 1351270003}
-  distanciaSnapF4: 0.5
+  distanciaSnapF4: 1
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:
@@ -306453,10 +306479,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb23590c85887b4b8de5eaf2bbf6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandDraggableF4
+  handTracker: {fileID: 108346575}
   gameManager: {fileID: 615146690}
   yaColocadoF4: 0
+  tiempoDesbloqueo: 10
+  radioReclamacion: 1
+  tiempoParaReclamar: 1
   zonaCorrectaF4: {fileID: 156370158}
-  distanciaSnapF4: 0.5
+  distanciaSnapF4: 1
   onPlacedF4:
     m_PersistentCalls:
       m_Calls:

@@ -12,91 +12,51 @@ using System.Threading;
 public class HandTrackerF4 : MonoBehaviour
 {
     [Header("Python Tracker")]
-    public string pythonExecutable =
-        @"C:\Opencv\.venv\Scripts\python.exe";
+    public string pythonExecutable = @"C:\Opencv\.venv\Scripts\python.exe";
+    public string pythonScriptPath = @"C:\Opencv\main.py";
 
-    public string pythonScriptPath =
-        @"C:\Opencv\main.py";
-
-    [Header("Objeto actual F4")]
-    public Transform objetoActualF4;
-
-    public Vector3 offsetVisual3DF4 =
-        Vector3.zero;
+    [Header("Plano 3D")]
+    [Tooltip("Altura Y del plano sobre el que se proyecta la mano")]
+    public float alturaPlanoY = 0f;
+    public Vector3 offsetVisual3DF4 = Vector3.zero;
 
     [Header("Cursor")]
     public GameObject orbe2DPrefabF4;
-
     public Canvas canvasPrincipalF4;
-
     public Color[] handColorsF4 =
     {
-        Color.cyan,
-        Color.yellow,
-        Color.green,
-        Color.magenta,
-        Color.red,
-        Color.blue,
-        Color.white,
-        new Color(1f,0.5f,0f),
-        new Color(0.5f,1f,1f),
-        new Color(1f,0.5f,1f)
+        Color.cyan, Color.yellow, Color.green, Color.magenta,
+        Color.red, Color.blue, Color.white,
+        new Color(1f, 0.5f, 0f), new Color(0.5f, 1f, 1f), new Color(1f, 0.5f, 1f)
     };
 
-    private readonly Dictionary<int, RectTransform>
-        activeOrbesF4 = new();
+    // Posición 3D, posición en viewport (0-1) y estado de press de TODAS las manos.
+    // HandDraggableF4 lee estos diccionarios para decidir cuál mano la controla.
+    [HideInInspector] public readonly Dictionary<int, Vector3> handWorldPositions    = new();
+    [HideInInspector] public readonly Dictionary<int, Vector2> handViewportPositions = new();
+    [HideInInspector] public readonly Dictionary<int, bool>    handPressedStates     = new();
 
-    [Header("Suavizado")]
-    public float velocidadSuavizadoF4 = 30f;
-
-    [HideInInspector]
-    public bool handPressedF4;
-
-    private float alturaFijaYF4;
-
-    private bool lastHandPressedF4;
+    private readonly Dictionary<int, RectTransform> activeOrbesF4 = new();
 
     private static Process s_trackerProcess;
-
     private Process trackerProcess;
     private UdpClient udpClient;
     private Thread udpThread;
-
     private volatile bool running;
-
     private string pendingJson;
-
-    private readonly object lockObj =
-        new object();
+    private readonly object lockObj = new();
 
     private const int UDP_PORT = 7654;
 
-    [Serializable]
-    private class HandData
-    {
-        public int id;
-        public float x;
-        public float y;
-        public bool pressed;
-    }
+    [Serializable] private class HandData { public int id; public float x; public float y; public bool pressed; }
+    [Serializable] private class TrackingData { public HandData[] hands; }
 
-    [Serializable]
-    private class TrackingData
+    // Llamado por ControlRuletaF4 al asignar un nuevo objeto activo.
+    // Solo actualiza la altura del plano de proyección.
+    public void CambiarObjetoF4(Transform nuevoObjeto)
     {
-        public HandData[] hands;
-    }
-
-    public void CambiarObjetoF4(
-        Transform nuevoObjeto
-    )
-    {
-        objetoActualF4 = nuevoObjeto;
-
-        if (objetoActualF4 != null)
-        {
-            alturaFijaYF4 =
-                objetoActualF4.position.y;
-        }
+        if (nuevoObjeto != null)
+            alturaPlanoY = nuevoObjeto.position.y;
     }
 
     void Start()
@@ -107,456 +67,139 @@ public class HandTrackerF4 : MonoBehaviour
 
     void LaunchTracker()
     {
-        if (
-            s_trackerProcess != null &&
-            !s_trackerProcess.HasExited
-        )
+        if (s_trackerProcess != null && !s_trackerProcess.HasExited)
         {
-            trackerProcess =
-                s_trackerProcess;
-
+            trackerProcess = s_trackerProcess;
             return;
         }
 
-        string exePath =
-            Path.Combine(
-                Application.streamingAssetsPath,
-                "tracker_unity",
-                "tracker_unity.exe"
-            );
+        string exePath = Path.Combine(Application.streamingAssetsPath, "tracker_unity", "tracker_unity.exe");
+        bool usarScript = !string.IsNullOrEmpty(pythonScriptPath);
 
-        string fileName;
-        string arguments;
-        string workDir;
-
-        bool usarScript =
-            !string.IsNullOrEmpty(
-                pythonScriptPath
-            );
-
-        if (
-            !usarScript &&
-            File.Exists(exePath)
-        )
+        string fileName, arguments, workDir;
+        if (!usarScript && File.Exists(exePath))
         {
-            fileName = exePath;
-            arguments = "";
-            workDir =
-                Path.GetDirectoryName(
-                    exePath
-                );
+            fileName = exePath; arguments = ""; workDir = Path.GetDirectoryName(exePath);
         }
         else
         {
-            string script =
-                pythonScriptPath;
-
-            fileName =
-                pythonExecutable;
-
-            arguments =
-                $"\"{script}\"";
-
-            workDir =
-                Path.GetDirectoryName(
-                    script
-                );
+            string script = usarScript ? pythonScriptPath : Path.Combine(Application.streamingAssetsPath, "tracker_unity.py");
+            fileName = pythonExecutable; arguments = $"\"{script}\""; workDir = Path.GetDirectoryName(script);
         }
 
-        var psi =
-            new ProcessStartInfo
-            {
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                FileName = fileName,
-                Arguments = arguments,
-                WorkingDirectory = workDir
-            };
-
-        try
-        {
-            trackerProcess =
-                Process.Start(psi);
-
-            s_trackerProcess =
-                trackerProcess;
-        }
-        catch (Exception e)
-        {
-            UnityEngine.Debug.LogError(
-                e.Message
-            );
-        }
+        var psi = new ProcessStartInfo { CreateNoWindow = true, UseShellExecute = false, FileName = fileName, Arguments = arguments, WorkingDirectory = workDir };
+        try { trackerProcess = Process.Start(psi); s_trackerProcess = trackerProcess; }
+        catch (Exception e) { UnityEngine.Debug.LogError($"[HandTrackerF4] No se pudo iniciar el tracker: {e.Message}"); }
     }
 
     void StartUdpListener()
     {
         running = true;
-
-        udpClient =
-            new UdpClient(
-                UDP_PORT
-            );
-
-        udpThread =
-            new Thread(() =>
+        udpClient = new UdpClient(UDP_PORT);
+        udpThread = new Thread(() =>
+        {
+            IPEndPoint ep = new(IPAddress.Any, 0);
+            while (running)
             {
-                IPEndPoint ep =
-                    new(
-                        IPAddress.Any,
-                        0
-                    );
-
-                while (running)
+                try
                 {
-                    try
-                    {
-                        byte[] data =
-                            udpClient.Receive(
-                                ref ep
-                            );
-
-                        string json =
-                            Encoding.UTF8
-                                .GetString(
-                                    data
-                                );
-
-                        lock (lockObj)
-                        {
-                            pendingJson =
-                                json;
-                        }
-                    }
-                    catch { }
+                    byte[] data = udpClient.Receive(ref ep);
+                    string json = Encoding.UTF8.GetString(data);
+                    lock (lockObj) { pendingJson = json; }
                 }
-            });
-
-        udpThread.IsBackground =
-            true;
-
+                catch { }
+            }
+        }) { IsBackground = true };
         udpThread.Start();
     }
 
     void Update()
     {
         string json = null;
-
-        lock (lockObj)
-        {
-            json = pendingJson;
-            pendingJson = null;
-        }
+        lock (lockObj) { json = pendingJson; pendingJson = null; }
 
         if (json != null)
         {
-            var data =
-                JsonUtility
-                    .FromJson
-                    <TrackingData>(json);
-
-            if (
-                data != null &&
-                data.hands != null
-            )
+            try
             {
-                AplicarManosF4(
-                    data.hands
-                );
+                var data = JsonUtility.FromJson<TrackingData>(json);
+                if (data?.hands != null) AplicarManosF4(data.hands);
+            }
+            catch (Exception e)
+            {
+                UnityEngine.Debug.LogError($"[HandTrackerF4] Error parseando JSON: {e.Message}");
             }
         }
     }
 
-    void AplicarManosF4(
-        HandData[] hands
-    )
+    void AplicarManosF4(HandData[] hands)
     {
-        HashSet<int> vistas =
-            new HashSet<int>();
+        var vistas = new HashSet<int>();
 
         foreach (var hand in hands)
         {
             vistas.Add(hand.id);
 
-            if (
-                !activeOrbesF4.TryGetValue(
-                    hand.id,
-                    out RectTransform orbe
-                )
-            )
+            bool isNew = !activeOrbesF4.TryGetValue(hand.id, out RectTransform orbe);
+            if (isNew)
             {
-                GameObject go =
-                    Instantiate(
-                        orbe2DPrefabF4,
-                        canvasPrincipalF4.transform
-                    );
-
-                orbe =
-                    go.GetComponent<RectTransform>();
-
-                Image img =
-                    go.GetComponent<Image>();
-
-                if (
-                    img != null &&
-                    handColorsF4.Length > 0
-                )
-                {
-                    img.color =
-                        handColorsF4[
-                            hand.id %
-                            handColorsF4.Length
-                        ];
-                }
-
-                activeOrbesF4.Add(
-                    hand.id,
-                    orbe
-                );
+                if (orbe2DPrefabF4 == null || canvasPrincipalF4 == null) continue;
+                var go = Instantiate(orbe2DPrefabF4, canvasPrincipalF4.transform);
+                orbe = go.GetComponent<RectTransform>();
+                var img = go.GetComponent<Image>();
+                if (img != null && handColorsF4.Length > 0)
+                    img.color = handColorsF4[hand.id % handColorsF4.Length];
+                activeOrbesF4[hand.id] = orbe;
             }
 
-            Vector3 screenPos =
-                new Vector3(
-                    hand.x * Screen.width,
-                    (1f - hand.y) * Screen.height,
-                    0f
-                );
+            Vector3 screenPos = new Vector3(hand.x * Screen.width, (1f - hand.y) * Screen.height, 0f);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvasPrincipalF4.transform as RectTransform, screenPos, null, out Vector2 localPos);
+            orbe.localPosition = localPos;
 
-            RectTransformUtility
-                .ScreenPointToLocalPointInRectangle(
-                    canvasPrincipalF4.transform
-                        as RectTransform,
-                    screenPos,
-                    null,
-                    out Vector2 localPos
-                );
-
-            orbe.localPosition =
-                Vector2.Lerp(
-                    orbe.localPosition,
-                    localPos,
-                    velocidadSuavizadoF4 *
-                    Time.deltaTime
-                );
-        }
-
-        List<int> borrar =
-            new List<int>();
-
-        foreach (
-            var kvp
-            in activeOrbesF4
-        )
-        {
-            if (!vistas.Contains(kvp.Key))
+            // calcular posición 3D y viewport para TODAS las manos y exponerlas
+            handPressedStates[hand.id]     = hand.pressed;
+            handViewportPositions[hand.id] = new Vector2(hand.x, 1f - hand.y); // Y invertida: tracker=top-down, viewport=bottom-up
+            if (Camera.main != null)
             {
-                Destroy(
-                    kvp.Value.gameObject
-                );
-
-                borrar.Add(kvp.Key);
+                Plane plane = new Plane(Vector3.up, new Vector3(0, alturaPlanoY, 0));
+                Ray ray = Camera.main.ScreenPointToRay(orbe.position);
+                if (plane.Raycast(ray, out float dist))
+                    handWorldPositions[hand.id] = ray.GetPoint(dist) + offsetVisual3DF4;
             }
         }
 
-        foreach (int id in borrar)
+        // limpiar manos que desaparecieron
+        foreach (int key in new List<int>(activeOrbesF4.Keys))
         {
-            activeOrbesF4.Remove(id);
-        }
-
-        foreach (var hand in hands)
-        {
-            if (hand.id == 0)
-            {
-                AplicarManoF4(hand);
-                break;
-            }
-        }
-    }
-
-    void AplicarManoF4(
-        HandData hand
-    )
-    {
-        bool nuevoPressed =
-            hand.pressed;
-
-        UnityEngine.Debug.Log(
-            "Mano " +
-            hand.id +
-            " pressed=" +
-            nuevoPressed
-        );
-
-        Vector3 screenPos =
-            new Vector3(
-                hand.x *
-                Screen.width,
-
-                (1f - hand.y) *
-                Screen.height,
-
-                0f
-            );
-
-        RectTransformUtility
-            .ScreenPointToLocalPointInRectangle(
-                canvasPrincipalF4
-                    .transform
-                    as RectTransform,
-
-                screenPos,
-
-                null,
-
-                out Vector2 localPos
-            );
-
-        if (
-            activeOrbesF4.TryGetValue(
-                hand.id,
-                out RectTransform orbe
-            )
-        )
-        {
-            orbe.localPosition =
-                Vector2.Lerp(
-                    orbe.localPosition,
-                    localPos,
-                    velocidadSuavizadoF4 *
-                    Time.deltaTime
-                );
-        }
-
-        HandDraggableF4 draggable =
-            null;
-
-        if (objetoActualF4 != null)
-        {
-            draggable =
-                objetoActualF4
-                    .GetComponent
-                    <HandDraggableF4>();
-        }
-
-        if (
-            hand.id == 0 &&
-            lastHandPressedF4 &&
-            !nuevoPressed
-        )
-        {
-            UnityEngine.Debug.Log(
-                "INTENTANDO SNAP F4"
-            );
-
-            if (
-                draggable != null &&
-                !draggable.yaColocadoF4
-            )
-            {
-                if (
-                    draggable
-                        .PuedeColocarseF4()
-                )
-                {
-                    UnityEngine.Debug.Log(
-                        "SNAP EJECUTADO F4"
-                    );
-
-                    draggable
-                        .ColocarF4();
-                }
-                else
-                {
-                    UnityEngine.Debug.Log(
-                        "NO ESTA EN RANGO DE SNAP"
-                    );
-                }
-            }
-        }
-
-        if (hand.id == 0)
-        {
-            lastHandPressedF4 =
-                nuevoPressed;
-
-            handPressedF4 =
-                nuevoPressed;
-        }
-        {
-            if (
-                draggable != null &&
-                !draggable.yaColocadoF4
-            )
-            {
-                if (
-                    draggable
-                        .PuedeColocarseF4()
-                )
-                {
-                    draggable
-                        .ColocarF4();
-                }
-            }
-        }
-
-        lastHandPressedF4 =
-            handPressedF4;
-
-        if (
-            objetoActualF4 != null &&
-            Camera.main != null &&
-            activeOrbesF4.TryGetValue(
-                0,
-                out RectTransform cursorPrincipal
-            )
-        )
-        {
-            if (
-                draggable == null ||
-                !draggable.yaColocadoF4
-            )
-            {
-                Plane plane =
-                    new Plane(
-                        Vector3.up,
-                        new Vector3(
-                            0,
-                            alturaFijaYF4,
-                            0
-                        )
-                    );
-
-                Ray ray =
-                    Camera.main
-                        .ScreenPointToRay(
-                            cursorPrincipal.position
-                        );
-
-                if (
-                    plane.Raycast(
-                        ray,
-                        out float dist
-                    )
-                )
-                {
-                    objetoActualF4.position =
-                        ray.GetPoint(
-                            dist
-                        ) +
-                        offsetVisual3DF4;
-                }
-            }
+            if (vistas.Contains(key)) continue;
+            Destroy(activeOrbesF4[key].gameObject);
+            activeOrbesF4.Remove(key);
+            handWorldPositions.Remove(key);
+            handViewportPositions.Remove(key);
+            handPressedStates.Remove(key);
         }
     }
 
     void OnDestroy()
     {
         running = false;
+        try { udpClient?.Close(); udpClient = null; } catch { }
+        try { udpThread?.Join(300); udpThread = null; } catch { }
+        foreach (var orbe in activeOrbesF4.Values)
+            if (orbe != null) Destroy(orbe.gameObject);
+        activeOrbesF4.Clear();
+    }
 
-        try
+    void OnApplicationQuit()
+    {
+        running = false;
+        try { udpClient?.Close(); } catch { }
+        if (s_trackerProcess != null && !s_trackerProcess.HasExited)
         {
-            udpClient?.Close();
+            s_trackerProcess.Kill();
+            s_trackerProcess.Dispose();
+            s_trackerProcess = null;
         }
-        catch { }
     }
 }

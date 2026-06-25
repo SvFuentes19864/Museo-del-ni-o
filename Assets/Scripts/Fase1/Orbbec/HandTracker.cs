@@ -29,14 +29,15 @@ public class HandTracker : MonoBehaviour
     public Canvas canvasPrincipal;
     public Color[] handColors = { Color.cyan, Color.yellow, Color.green, Color.magenta, Color.red, Color.blue };
 
-    [Header("Suavizado")]
-    public float velocidadSuavizado = 30f;
-
     [Header("Reclamación de objeto")]
     [Tooltip("Radio (metros) dentro del cual la mano puede reclamar un objeto")]
     public float radioDeReclamacion = 1f;
     [Tooltip("Segundos que la mano debe estar dentro del radio antes de poder mover el objeto")]
     public float tiempoParaReclamar = 1f;
+
+    [Header("Suavizado de movimiento")]
+    [Tooltip("Qué tan rápido el orbe/esfera alcanza la posición recibida. Mayor = más responsivo (sigue de cerca, casi sin delay), menor = más suave. 0 = directo, sin delay (confía en el suavizado de Python). Si sientes delay al arrastrar, súbelo o ponlo en 0")]
+    public float suavizadoVelocidad = 35f;
 
     [HideInInspector] public Vector2 handPositionNormalized;
     [HideInInspector] public float handDepth;
@@ -50,6 +51,8 @@ public class HandTracker : MonoBehaviour
     private readonly Dictionary<int, int>   hoverTarget    = new(); // hand.id → esfera bajo hover
     private readonly Dictionary<int, float> hoverTimer     = new(); // hand.id → segundos acumulados
     private readonly Dictionary<int, int>   missingFrames  = new(); // hand.id → frames consecutivos sin detectar
+    private readonly Dictionary<int, Vector2> orbeTarget   = new(); // hand.id → target localPos del orbe 2D
+    private readonly Dictionary<int, Vector3> sphereTarget = new(); // sphereIdx → target world pos de la esfera 3D
 
     [Header("Estabilidad de tracking")]
     [Tooltip("Frames consecutivos sin detectar la mano antes de considerarla desaparecida")]
@@ -189,6 +192,8 @@ public class HandTracker : MonoBehaviour
             }
         }
 
+        ApplySmoothing();
+
         if (lastHandPressed && !handPressed)
         {
             foreach (Transform hs in handSpheres)
@@ -223,19 +228,20 @@ public class HandTracker : MonoBehaviour
                 activeOrbes[hand.id] = orbe;
             }
 
-            // mover orbe en canvas
+            // mover orbe en canvas (se guarda el destino; la interpolación ocurre en ApplySmoothing)
             Vector3 screenPos = new Vector3(hand.x * Screen.width, (1f - hand.y) * Screen.height, 0f);
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 canvasPrincipal.transform as RectTransform, screenPos,
                 canvasPrincipal.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
                 out Vector2 localPos);
-            orbe.localPosition = isNew ? localPos : Vector2.Lerp(orbe.localPosition, localPos, velocidadSuavizado * Time.deltaTime);
+            orbeTarget[hand.id] = localPos;
+            if (isNew) orbe.localPosition = localPos; // primer frame sin interpolar (evita que "vuele" desde el origen)
 
             // mover esfera 3D — hover-to-claim: la mano debe quedarse cerca del objeto tiempoParaReclamar segundos
             if (Camera.main != null)
             {
                 Plane plane = new Plane(Vector3.up, new Vector3(0, alturaFijaY, 0));
-                Ray ray = Camera.main.ScreenPointToRay(orbe.position);
+                Ray ray = Camera.main.ScreenPointToRay(screenPos);
                 if (plane.Raycast(ray, out float dist3d))
                 {
                     Vector3 dest = ray.GetPoint(dist3d) + offsetVisual3D;
@@ -270,7 +276,7 @@ public class HandTracker : MonoBehaviour
                         Transform hs = handSpheres[sphereIdx];
                         if (ocultarEsferaAlPerder && hs.GetComponent<HandDraggable>() == null) hs.gameObject.SetActive(true);
                         HandDraggable d = hs.GetComponent<HandDraggable>();
-                        if (d == null || !d.yaColocado) hs.position = dest;
+                        if (d == null || !d.yaColocado) sphereTarget[sphereIdx] = dest;
                     }
                 }
             }
@@ -292,8 +298,10 @@ public class HandTracker : MonoBehaviour
             missingFrames.Remove(key);
             Destroy(activeOrbes[key].gameObject);
             activeOrbes.Remove(key);
+            orbeTarget.Remove(key);
             if (!handToSphere.TryGetValue(key, out int releasedSphere)) releasedSphere = key;
             handToSphere.Remove(key);
+            sphereTarget.Remove(releasedSphere);
             hoverTarget.Remove(key);
             hoverTimer.Remove(key);
             string sphereName = (releasedSphere < handSpheres.Count && handSpheres[releasedSphere] != null) ? handSpheres[releasedSphere].name : "ninguna";
@@ -310,6 +318,28 @@ public class HandTracker : MonoBehaviour
             missingFrames.Remove(key);
 
         if (hands.Length == 0) handPressed = false;
+    }
+
+    // Interpola cada frame el orbe 2D y la esfera 3D hacia el último destino recibido por UDP.
+    // Como Python envía a menor FPS que Unity, esto evita los "saltos" entre paquetes y hace
+    // que el movimiento se sienta fluido. El factor 1-exp(-k*dt) es independiente del framerate.
+    void ApplySmoothing()
+    {
+        float t = suavizadoVelocidad <= 0f ? 1f : 1f - Mathf.Exp(-suavizadoVelocidad * Time.deltaTime);
+
+        foreach (var kv in orbeTarget)
+            if (activeOrbes.TryGetValue(kv.Key, out RectTransform rt) && rt != null)
+                rt.localPosition = Vector2.Lerp(rt.localPosition, kv.Value, t);
+
+        foreach (var kv in sphereTarget)
+        {
+            int idx = kv.Key;
+            if (idx < 0 || idx >= handSpheres.Count || handSpheres[idx] == null) continue;
+            Transform hs = handSpheres[idx];
+            HandDraggable d = hs.GetComponent<HandDraggable>();
+            if (d != null && d.yaColocado) continue;
+            hs.position = Vector3.Lerp(hs.position, kv.Value, t);
+        }
     }
 
     void OnDrawGizmos()

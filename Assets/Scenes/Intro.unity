@@ -1614,8 +1614,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3d767a92d0d634a922bb03fd2194ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IntroHandTracker
-  pythonExecutable: C:\Users\SH4G\Documents\GitHub\Opencv-nino\.venv\Scripts\python.exe
-  pythonScriptPath: C:\Users\SH4G\Documents\GitHub\Opencv-nino\main.py
+  pythonExecutable: C:\juegos-nino\Opencv-nino\.venv\Scripts\python.exe
+  pythonScriptPath: C:\juegos-nino\Opencv-nino\main.py
   cantidadManosDetectadas: 0
 --- !u!4 &969229079
 Transform:
