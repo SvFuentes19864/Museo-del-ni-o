@@ -72,12 +72,7 @@ public class ControlRuletaF4 : MonoBehaviour
 
             Debug.Log("ORBBEC F4 ACTIVADO");
         }
-        else
-        {
-            Debug.LogError(
-                "orbbecDevice es NULL"
-            );
-        }
+        // ponytail: orbbecDevice is optional in this scene
     }
 
     IEnumerator Ruleta()

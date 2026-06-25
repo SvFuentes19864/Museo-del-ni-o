@@ -13984,9 +13984,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89a89a452f91cbc40ac4bb7c5cfbf960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTrackerF4
-  pythonExecutable: C:\Users\SH4G\Documents\GitHub\Opencv-nino\.venv\Scripts\python.exe
-  pythonScriptPath: C:\Users\SH4G\Documents\GitHub\Opencv-nino\main.py
-  objetoActualF4: {fileID: 0}
+  pythonExecutable: C:\Users\alane\Downloads\Opencv\Opencv\.venv\Scripts\python.exe
+  pythonScriptPath: C:\Users\alane\Downloads\Opencv\Opencv\main.py
+  objetoActualF4: {fileID: 1488443349}
   offsetVisual3DF4: {x: 0, y: 0, z: 0}
   orbe2DPrefabF4: {fileID: 846113988}
   canvasPrincipalF4: {fileID: 1359965357}

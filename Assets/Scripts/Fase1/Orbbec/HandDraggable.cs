@@ -94,7 +94,8 @@ public class HandDraggable : MonoBehaviour
                 zonaCorrecta.position.z
             ) + offsetCentro;
 
-        yaColocado = true;
+        yaColocado    = true;
+        this.enabled  = false; // bloqueado permanentemente, HandTracker ya no lo moverá
 
         if (gameManager != null)
         {
