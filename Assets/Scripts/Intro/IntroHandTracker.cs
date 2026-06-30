@@ -2,228 +2,214 @@ using UnityEngine;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
+/// <summary>
+/// Lanza el Tracking Server y recibe datos de manos por TCP (puerto 9000).
+///
+/// En EDITOR / desarrollo : usa pythonExecutable + pythonScriptPath del Inspector.
+/// En BUILD (.exe)        : busca StreamingAssets/TrackingServer/tracking_server.exe
+///                          (empaquetado con PyInstaller).
+///
+/// Protocolo: una línea JSON por frame →
+///   {"type":"frame","frame_id":N,"pointers":[{"id":1,"x":0.5,"y":0.3,"state":"move","side":"R"}]}
+/// </summary>
 public class IntroHandTracker : MonoBehaviour
 {
-    [Header("Python Tracker")]
+    [Header("Servidor Python")]
     public string pythonExecutable =
-        @"C:\Opencv\.venv\Scripts\python.exe";
-
+        @"C:\Users\alane\OneDrive\Escritorio\Tracking Server\.venv\Scripts\python.exe";
     public string pythonScriptPath =
-        @"C:\Opencv\main.py";
+        @"C:\Users\alane\OneDrive\Escritorio\Tracking Server\main.py";
 
-    [HideInInspector]
-    public int cantidadManosDetectadas = 0;
+    [Header("Conexión TCP")]
+    public string serverHost       = "127.0.0.1";
+    public int    serverPort       = 9000;
+    public float  reconnectDelaySec = 2f;
 
-    private static Process s_trackerProcess;
+    // Compatible con el script anterior
+    [HideInInspector] public int cantidadManosDetectadas = 0;
 
-    private Process trackerProcess;
-    private UdpClient udpClient;
-    private Thread udpThread;
+    // Eventos — suscribirse desde otros scripts
+    public event Action<PointerInfo> OnHandDown;
+    public event Action<PointerInfo> OnHandMove;
+    public event Action<PointerInfo> OnHandUp;
 
-    private volatile bool running;
+    // ── Tipos públicos ────────────────────────────────────────────────────────
 
-    private string pendingJson;
-
-    private readonly object lockObj =
-        new object();
-
-    private const int UDP_PORT = 7654;
-
-    [Serializable]
-    private class HandData
+    public class PointerInfo
     {
-        public int id;
-        public float x;
-        public float y;
-        public bool pressed;
+        public int    id;
+        public float  x;       // [0,1] espacio proyector, 0=izquierda
+        public float  y;       // [0,1] espacio proyector, 0=arriba
+        public string state;   // "down" | "move" | "up"
+        public string side;    // "L" | "R"
     }
 
-    [Serializable]
-    private class TrackingData
+    // ── Clases internas de deserialización ───────────────────────────────────
+
+    [Serializable] private class PointerData
     {
-        public HandData[] hands;
+        public int    id;
+        public float  x, y;
+        public string state;
+        public string side;
     }
+
+    [Serializable] private class FrameData
+    {
+        public string        type;
+        public int           frame_id;
+        public PointerData[] pointers;
+    }
+
+    // ── Proceso — static para sobrevivir cambios de escena ───────────────────
+
+    private static Process s_serverProcess;
+
+    // ── Estado TCP ───────────────────────────────────────────────────────────
+
+    private TcpClient    _client;
+    private Thread       _thread;
+    private volatile bool _running;
+    private FrameData    _pendingFrame;
+    private readonly object _lock = new();
+
+    // ── Unity lifecycle ──────────────────────────────────────────────────────
 
     void Start()
     {
-        LaunchTracker();
-        StartUdpListener();
-    }
+        LaunchServer();
 
-    void LaunchTracker()
-    {
-        if (
-            s_trackerProcess != null &&
-            !s_trackerProcess.HasExited
-        )
-        {
-            trackerProcess =
-                s_trackerProcess;
+        _running = true;
+        _thread  = new Thread(ReceiveLoop) { IsBackground = true };
+        _thread.Start();
 
-            return;
-        }
-
-        string exePath =
-            Path.Combine(
-                Application.streamingAssetsPath,
-                "tracker_unity",
-                "tracker_unity.exe"
-            );
-
-        string fileName;
-        string arguments;
-        string workDir;
-
-        bool usarScript =
-            !string.IsNullOrEmpty(
-                pythonScriptPath
-            );
-
-        if (
-            !usarScript &&
-            File.Exists(exePath)
-        )
-        {
-            fileName = exePath;
-            arguments = "";
-            workDir =
-                Path.GetDirectoryName(
-                    exePath
-                );
-        }
-        else
-        {
-            string script =
-                pythonScriptPath;
-
-            fileName =
-                pythonExecutable;
-
-            arguments =
-                $"\"{script}\"";
-
-            workDir =
-                Path.GetDirectoryName(
-                    script
-                );
-        }
-
-        var psi =
-            new ProcessStartInfo
-            {
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                FileName = fileName,
-                Arguments = arguments,
-                WorkingDirectory = workDir
-            };
-
-        try
-        {
-            trackerProcess =
-                Process.Start(psi);
-
-            s_trackerProcess =
-                trackerProcess;
-        }
-        catch (Exception e)
-        {
-            UnityEngine.Debug.LogError(
-                e.Message
-            );
-        }
-    }
-
-    void StartUdpListener()
-    {
-        running = true;
-
-        udpClient =
-            new UdpClient(
-                UDP_PORT
-            );
-
-        udpThread =
-            new Thread(() =>
-            {
-                IPEndPoint ep =
-                    new(
-                        IPAddress.Any,
-                        0
-                    );
-
-                while (running)
-                {
-                    try
-                    {
-                        byte[] data =
-                            udpClient.Receive(
-                                ref ep
-                            );
-
-                        string json =
-                            Encoding.UTF8
-                                .GetString(
-                                    data
-                                );
-
-                        lock (lockObj)
-                        {
-                            pendingJson =
-                                json;
-                        }
-                    }
-                    catch { }
-                }
-            });
-
-        udpThread.IsBackground =
-            true;
-
-        udpThread.Start();
+        Application.quitting += KillServer;
     }
 
     void Update()
     {
-        string json = null;
+        FrameData frame;
+        lock (_lock) { frame = _pendingFrame; _pendingFrame = null; }
+        if (frame?.pointers == null) return;
 
-        lock (lockObj)
+        int active = 0;
+        foreach (var p in frame.pointers)
         {
-            json = pendingJson;
-            pendingJson = null;
-        }
+            if (p.state != "up") active++;
 
-        if (json == null)
-            return;
+            var info = new PointerInfo
+                { id = p.id, x = p.x, y = p.y, state = p.state, side = p.side };
 
-        try
-        {
-            var data =
-                JsonUtility.FromJson
-                <TrackingData>(json);
-
-            cantidadManosDetectadas =
-                data?.hands?.Length ?? 0;
+            switch (p.state)
+            {
+                case "down": OnHandDown?.Invoke(info); break;
+                case "move": OnHandMove?.Invoke(info); break;
+                case "up":   OnHandUp?.Invoke(info);   break;
+            }
         }
-        catch
-        {
-            cantidadManosDetectadas = 0;
-        }
+        cantidadManosDetectadas = active;
     }
 
     void OnDestroy()
     {
-        running = false;
+        _running = false;
+        _client?.Close();
+    }
+
+    // ── Lanzamiento del servidor ─────────────────────────────────────────────
+
+    void LaunchServer()
+    {
+        if (s_serverProcess != null && !s_serverProcess.HasExited)
+        {
+            UnityEngine.Debug.Log("[HandTracker] Servidor ya en ejecución — reutilizando.");
+            return;
+        }
 
         try
         {
-            udpClient?.Close();
+            s_serverProcess = Process.Start(new ProcessStartInfo
+            {
+                FileName         = pythonExecutable,
+                Arguments        = $"\"{pythonScriptPath}\"",
+                WorkingDirectory = Path.GetDirectoryName(pythonScriptPath),
+                CreateNoWindow   = true,
+                UseShellExecute  = false,
+            });
+            UnityEngine.Debug.Log("[HandTracker] Servidor lanzado: " + pythonScriptPath);
+        }
+        catch (Exception e)
+        {
+            UnityEngine.Debug.LogError("[HandTracker] No se pudo lanzar el servidor: " + e.Message);
+        }
+    }
+
+    static void KillServer()
+    {
+        if (s_serverProcess == null || s_serverProcess.HasExited) return;
+        try
+        {
+            s_serverProcess.Kill();
+            s_serverProcess = null;
+            UnityEngine.Debug.Log("[HandTracker] Servidor detenido.");
         }
         catch { }
+    }
+
+    // ── Hilo de recepción TCP ────────────────────────────────────────────────
+
+    void ReceiveLoop()
+    {
+        while (_running)
+        {
+            try
+            {
+                _client = new TcpClient(serverHost, serverPort);
+                UnityEngine.Debug.Log("[HandTracker] Conectado al servidor.");
+
+                var stream = _client.GetStream();
+                var buffer = new byte[8192];
+                var sb     = new StringBuilder();
+
+                while (_running)
+                {
+                    int n = stream.Read(buffer, 0, buffer.Length);
+                    if (n == 0) break;
+
+                    sb.Append(Encoding.UTF8.GetString(buffer, 0, n));
+
+                    string raw;
+                    int idx;
+                    while ((idx = (raw = sb.ToString()).IndexOf('\n')) >= 0)
+                    {
+                        string line = raw[..idx].Trim();
+                        sb.Remove(0, idx + 1);
+                        if (line.Length == 0) continue;
+
+                        var frame = JsonUtility.FromJson<FrameData>(line);
+                        if (frame != null)
+                            lock (_lock) { _pendingFrame = frame; }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                if (_running)
+                    UnityEngine.Debug.LogWarning(
+                        $"[HandTracker] Desconectado — {e.Message}. Reintentando en {reconnectDelaySec}s…");
+            }
+            finally
+            {
+                _client?.Close();
+                _client = null;
+            }
+
+            if (_running)
+                Thread.Sleep((int)(reconnectDelaySec * 1000));
+        }
     }
 }

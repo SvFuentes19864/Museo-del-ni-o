@@ -6,90 +6,90 @@ public class IntroDetectorManos : MonoBehaviour
     [Header("Inicio")]
     public IntroManager introManager;
 
-    private bool juegoIniciado = false;
-
     [Header("Configuración")]
-    public int manosNecesarias = 2;
+    public int   manosNecesarias  = 2;
     public float tiempoParaIniciar = 3f;
+    [Tooltip("Distancia máxima (px canvas) entre avatar y silueta para contar como 'encima'")]
+    public float radioActivacion  = 80f;
 
-    private float timerInicio = 0f;
-
-    [Header("Tracker")]
-    public IntroHandTracker handTracker;
+    [Header("Tracker de avatares")]
+    public HandAvatarController avatarController;
 
     [Header("Siluetas")]
     public Image[] siluetas;
 
+    // ── Estado ────────────────────────────────────────────────────────────────
+
+    private bool  _juegoIniciado;
+    private float _timerInicio;
+
+    // ── Update ────────────────────────────────────────────────────────────────
+
     void Update()
     {
-        if (handTracker == null || juegoIniciado)
-            return;
+        if (avatarController == null || _juegoIniciado) return;
 
-        int manos =
-            handTracker.cantidadManosDetectadas;
+        int siluetasActivadas = ContarSiluetasOcupadas();
 
-        // Actualizar siluetas
-        for (int i = 0; i < siluetas.Length; i++)
+        // Feedback visual: silueta opaca si tiene un avatar encima
+        ActualizarSiluetas();
+
+        // Timer
+        if (siluetasActivadas >= manosNecesarias)
         {
-            if (siluetas[i] == null)
-                continue;
-
-            Color c =
-                siluetas[i].color;
-
-            c.a =
-                i < manos
-                ? 1f
-                : 0.2f;
-
-            siluetas[i].color = c;
-        }
-
-        // Contador de inicio
-        if (manos >= manosNecesarias)
-        {
-            timerInicio += Time.deltaTime;
-
-            float restante =
-                Mathf.Max(
-                    0f,
-                    tiempoParaIniciar - timerInicio
-                );
-
-            Debug.Log(
-                "Iniciando en: " +
-                restante.ToString("F1")
-            );
+            _timerInicio += Time.deltaTime;
         }
         else
         {
-            timerInicio = 0f;
+            _timerInicio = 0f;
         }
 
-        // Iniciar juego
-        if (
-            timerInicio >= tiempoParaIniciar &&
-            !juegoIniciado
-        )
+        // Iniciar
+        if (_timerInicio >= tiempoParaIniciar)
         {
-            juegoIniciado = true;
+            _juegoIniciado = true;
 
-            foreach (Image img in siluetas)
-            {
-                if (img != null)
-                {
-                    img.gameObject.SetActive(false);
-                }
-            }
+            foreach (var img in siluetas)
+                img?.gameObject.SetActive(false);
 
-            Debug.Log(
-                "INICIAR JUEGO"
-            );
+            introManager?.IniciarIntro();
+        }
+    }
 
-            if (introManager != null)
-            {
-                introManager.IniciarIntro();
-            }
+    // ── Helpers ───────────────────────────────────────────────────────────────
+
+    int ContarSiluetasOcupadas()
+    {
+        int count = 0;
+        foreach (var silueta in siluetas)
+        {
+            if (silueta == null) continue;
+            if (AvatarEncima(silueta.rectTransform)) count++;
+        }
+        return count;
+    }
+
+    bool AvatarEncima(RectTransform silueta)
+    {
+        foreach (var av in avatarController.avatares)
+        {
+            if (av == null || !av.gameObject.activeSelf) continue;
+            if (Vector3.Distance(silueta.position, av.position) <= radioActivacion)
+                return true;
+        }
+        return false;
+    }
+
+    void ActualizarSiluetas()
+    {
+        // Marcar individualmente cuál silueta tiene avatar encima
+        for (int i = 0; i < siluetas.Length; i++)
+        {
+            if (siluetas[i] == null) continue;
+            bool ocupada = AvatarEncima(siluetas[i].rectTransform);
+            Color c = siluetas[i].color;
+            c.a = ocupada ? 1f : 0.2f;
+            siluetas[i].color = c;
         }
     }
 }
