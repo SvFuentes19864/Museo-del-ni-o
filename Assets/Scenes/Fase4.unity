@@ -13984,8 +13984,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89a89a452f91cbc40ac4bb7c5cfbf960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTrackerF4
-  pythonExecutable: C:\Users\alane\OneDrive\Escritorio\Tracking Server\.venv\Scripts\python.exe
-  pythonScriptPath: C:\Users\alane\OneDrive\Escritorio\Tracking Server\main.py
+  pythonExecutable: C:\juegos-nino\Tracking-Server\.venv\Scripts\python.exe
+  pythonScriptPath: C:\juegos-nino\Tracking-Server\main.py
   serverHost: 127.0.0.1
   serverPort: 9000
   reconnectDelaySec: 2
