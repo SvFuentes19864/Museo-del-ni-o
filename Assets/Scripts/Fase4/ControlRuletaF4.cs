@@ -4,9 +4,6 @@ using Unity.Cinemachine;
 
 public class ControlRuletaF4 : MonoBehaviour
 {
-    [Header("Orbbec")]
-    public OrbbecUnity.OrbbecDevice orbbecDevice;
-
     [Header("Puntos de Ruleta")]
     public Transform[] puntosRuleta;
 
@@ -60,19 +57,6 @@ public class ControlRuletaF4 : MonoBehaviour
             "ConfigurarRuleta -> " +
             nuevoObjeto.name
         );
-    }
-
-    IEnumerator EncenderOrbbec()
-    {
-        yield return new WaitForSeconds(1f);
-
-        if (orbbecDevice != null)
-        {
-            orbbecDevice.enabled = true;
-
-            Debug.Log("ORBBEC F4 ACTIVADO");
-        }
-        // ponytail: orbbecDevice is optional in this scene
     }
 
     IEnumerator Ruleta()
@@ -217,29 +201,18 @@ public class ControlRuletaF4 : MonoBehaviour
             "TERMINE MOVER SUAVEMENTE"
         );
 
-        if (
-            handTrackerF4 != null &&
-            objetoActual != null
-        )
+        if (handTrackerF4 != null && objetoActual != null)
         {
-            handTrackerF4.CambiarObjetoF4(
-                objetoActual.transform
-            );
-
-            Debug.Log(
-                "Objeto asignado al HandTrackerF4: " +
-                objetoActual.name
-            );
+            handTrackerF4.CambiarObjetoF4(objetoActual.transform);
+            Debug.Log("Objeto asignado al HandTrackerF4: " + objetoActual.name);
         }
         else
         {
-            Debug.LogError(
-                "handTrackerF4 o objetoActual son NULL"
-            );
+            Debug.LogError("handTrackerF4 o objetoActual son NULL");
         }
 
-        StartCoroutine(
-            EncenderOrbbec()
-        );
+        // habilitar arrastre en el objeto activo
+        var draggable = objetoActual?.GetComponent<HandDraggableF4>();
+        draggable?.HabilitarArrastre();
     }
 }

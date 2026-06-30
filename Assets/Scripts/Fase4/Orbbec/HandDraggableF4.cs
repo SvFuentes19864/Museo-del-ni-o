@@ -12,21 +12,14 @@ public class HandDraggableF4 : MonoBehaviour
     [Header("Colocación")]
     public bool yaColocadoF4 = true;
 
-    [Header("Timer de desbloqueo")]
-    [Tooltip("Segundos hasta que el objeto se puede manipular.")]
-    public float tiempoDesbloqueo = 20f;
-
-    [Header("Reclamación por posición y tiempo")]
-    [Tooltip("Radio en espacio de pantalla (0-1). 0.1 = el orbe debe estar dentro del 10% del tamaño de pantalla desde el centro del objeto")]
-    public float radioReclamacion = 0.1f;
-    [Tooltip("Segundos que el orbe debe mantenerse dentro del radio antes de tomar control")]
+    [Header("Reclamación por collider y tiempo")]
+    [Tooltip("Segundos que la mano debe mantenerse dentro del BoxCollider antes de tomar control")]
     public float tiempoParaReclamar = 1f;
 
     [Header("Zona correcta")]
     public Transform zonaCorrectaF4;
+    public Vector3 offsetSnap = Vector3.zero;
 
-    [Header("Distancia de snap")]
-    public float distanciaSnapF4 = 3f;
 
     [Header("Evento al colocar")]
     public UnityEvent onPlacedF4;
@@ -37,86 +30,67 @@ public class HandDraggableF4 : MonoBehaviour
     [Header("Cursor F4")]
     public GameObject cursorF4;
 
-    private float timerDesbloqueo = 0f;
     private bool desbloqueado = false;
 
-    private int handIdReclamante = -1;  // ID de la mano que controla este objeto (-1 = libre)
-    private float hoverTimer = 0f;       // tiempo acumulado dentro del radio
-    private bool lastPressed = false;
+    public void HabilitarArrastre()
+    {
+        desbloqueado  = true;
+        yaColocadoF4  = false;
+    }
 
-    private Vector3 offsetCentroF4;
+    private int handIdReclamante = -1;
+    private float hoverTimer = 0f;
+
+    private BoxCollider _col;
 
     void Start()
     {
-        Renderer r = GetComponent<Renderer>();
-        if (r != null)
-        {
-            Bounds bounds = r.bounds;
-            offsetCentroF4 = new Vector3(
-                transform.position.x - bounds.center.x,
-                0,
-                transform.position.z - bounds.center.z
-            );
-        }
+        _col = GetComponent<BoxCollider>();
     }
 
     void Update()
     {
-        // fase 1: esperar desbloqueo por timer
-        if (!desbloqueado)
-        {
-            timerDesbloqueo += Time.deltaTime;
-            if (timerDesbloqueo >= tiempoDesbloqueo)
-            {
-                desbloqueado = true;
-                yaColocadoF4 = false;
-                Debug.Log($"[HandDraggableF4] {gameObject.name} desbloqueado.");
-            }
-            return;
-        }
-
-        if (yaColocadoF4 || handTracker == null) return;
+        if (!desbloqueado || yaColocadoF4 || handTracker == null) return;
 
         var positions = handTracker.handWorldPositions;
 
         if (handIdReclamante >= 0)
         {
-            // la mano reclamante desapareció → liberar
+            // mano desapareció (TCP "up")
             if (!positions.ContainsKey(handIdReclamante))
             {
-                Debug.Log($"[HandDraggableF4] Mano {handIdReclamante} desapareció — {gameObject.name} liberado.");
                 handIdReclamante = -1;
                 hoverTimer = 0f;
-                lastPressed = false;
                 return;
             }
 
-            // seguir la mano reclamante
+            // seguir la mano, centrando el BoxCollider en la posición de la mano
             Vector3 pos = positions[handIdReclamante];
-            transform.position = new Vector3(pos.x, transform.position.y, pos.z);
+            Vector3 colOffset = _col != null
+                ? transform.TransformPoint(_col.center) - transform.position
+                : Vector3.zero;
+            transform.position = new Vector3(pos.x - colOffset.x, transform.position.y, pos.z - colOffset.z);
 
-            // detectar soltar (press → release) → intentar snap
-            bool pressed = handTracker.handPressedStates.TryGetValue(handIdReclamante, out bool p) && p;
-            if (lastPressed && !pressed && PuedeColocarseF4())
-                ColocarF4();
-            lastPressed = pressed;
+            // snap inmediato al entrar en la zona
+            if (PuedeColocarseF4()) ColocarF4();
         }
         else
         {
-            // buscar la mano más cercana cuyo orbe esté sobre el objeto en pantalla
-            if (Camera.main == null) return;
+            // buscar la mano más cercana cuya posición 3D esté dentro del BoxCollider
+            var col = GetComponent<Collider>();
+            if (col == null) return;
 
-            Vector3 vp = Camera.main.WorldToViewportPoint(transform.position);
-            if (vp.z <= 0f) return; // objeto detrás de la cámara
-
-            var viewports = handTracker.handViewportPositions;
+            var worldPositions = handTracker.handWorldPositions;
             float minDist = float.MaxValue;
             int nearestId = -1;
 
-            foreach (var kvp in viewports)
+            foreach (var kvp in worldPositions)
             {
-                float d = Vector2.Distance(new Vector2(vp.x, vp.y), kvp.Value);
-                if (d < radioReclamacion && d < minDist) { minDist = d; nearestId = kvp.Key; }
+                // chequeo solo en XZ: el Y de la mano proyectada puede no coincidir con el collider
+                Vector3 posXZ = new Vector3(kvp.Value.x, col.bounds.center.y, kvp.Value.z);
+                if (!col.bounds.Contains(posXZ)) continue;
+                float d = Vector3.Distance(transform.position, kvp.Value);
+                if (d < minDist) { minDist = d; nearestId = kvp.Key; }
             }
 
             if (nearestId >= 0)
@@ -137,19 +111,28 @@ public class HandDraggableF4 : MonoBehaviour
 
     public bool PuedeColocarseF4()
     {
-        if (zonaCorrectaF4 == null || !desbloqueado) return false;
-        return Vector3.Distance(transform.position, zonaCorrectaF4.position) <= distanciaSnapF4;
+        if (zonaCorrectaF4 == null || !desbloqueado || _col == null) return false;
+        var zonaCol = zonaCorrectaF4.GetComponent<Collider>();
+        if (zonaCol == null) return false;
+        // comparar solo en XZ para evitar fallos por diferencia de Y
+        Bounds a = _col.bounds;
+        Bounds b = zonaCol.bounds;
+        return a.min.x <= b.max.x && a.max.x >= b.min.x &&
+               a.min.z <= b.max.z && a.max.z >= b.min.z;
     }
 
     public void ColocarF4()
     {
         if (zonaCorrectaF4 == null) return;
 
+        Vector3 colOffset = _col != null
+            ? transform.TransformPoint(_col.center) - transform.position
+            : Vector3.zero;
         transform.position = new Vector3(
-            zonaCorrectaF4.position.x,
+            zonaCorrectaF4.position.x - colOffset.x,
             transform.position.y,
-            zonaCorrectaF4.position.z
-        ) + offsetCentroF4;
+            zonaCorrectaF4.position.z - colOffset.z
+        ) + offsetSnap;
 
         yaColocadoF4 = true;
         this.enabled = false;
@@ -163,12 +146,4 @@ public class HandDraggableF4 : MonoBehaviour
         Debug.Log($"[HandDraggableF4] ¡Colocación correcta! → {gameObject.name}");
     }
 
-    void OnDrawGizmos()
-    {
-        if (yaColocadoF4) return;
-        Gizmos.color = new Color(1f, 0.5f, 0f, 0.2f);
-        Gizmos.DrawSphere(transform.position, radioReclamacion);
-        Gizmos.color = new Color(1f, 0.5f, 0f, 0.6f);
-        Gizmos.DrawWireSphere(transform.position, radioReclamacion);
-    }
 }
