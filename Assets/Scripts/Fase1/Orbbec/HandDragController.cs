@@ -18,10 +18,18 @@ public class HandDragController : MonoBehaviour
 
     // Objeto que se está manipulando en este momento (solo uno a la vez)
     private HandDraggable objetoSeleccionado;
+    private bool habilitado = false;
+
+    public void HabilitarArrastre()
+    {
+        habilitado = true;
+        foreach (var obj in objetosMoviles)
+            if (obj != null) obj.yaColocado = false;
+    }
 
     void Update()
     {
-        if (handTracker == null || cam == null)
+        if (!habilitado || handTracker == null || cam == null)
             return;
 
         Vector3 posicionOrbe = OrbeEnPantalla();

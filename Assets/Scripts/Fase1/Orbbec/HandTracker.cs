@@ -49,6 +49,19 @@ public class HandTracker : MonoBehaviour
     [HideInInspector] public float handDepth;
     [HideInInspector] public bool handPressed;
 
+    private bool _habilitado = false;
+
+    public void HabilitarArrastre()
+    {
+        _habilitado = true;
+        foreach (var hs in handSpheres)
+        {
+            if (hs == null) continue;
+            var hd = hs.GetComponent<HandDraggable>();
+            if (hd != null) hd.yaColocado = false;
+        }
+    }
+
     private float alturaFijaY;
     private bool lastHandPressed;
 
@@ -243,7 +256,8 @@ public class HandTracker : MonoBehaviour
             // screenPos sigue siendo necesario para proyectar la esfera 3D
             Vector3 screenPos = new Vector3(hand.x * Screen.width, (1f - hand.y) * Screen.height, 0f);
 
-            // mover esfera 3D — hover-to-claim: la mano debe quedarse cerca del objeto tiempoParaReclamar segundos
+            // mover esfera 3D — bloqueado hasta que la ruleta termine
+            if (!_habilitado) continue;
             if (Camera.main != null)
             {
                 Plane plane = new Plane(Vector3.up, new Vector3(0, alturaFijaY, 0));

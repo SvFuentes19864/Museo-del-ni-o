@@ -9,12 +9,6 @@ public class HandDraggable : MonoBehaviour
     [Header("Colocación")]
     public bool yaColocado = true;
 
-    [Header("Timer de desbloqueo")]
-    [Tooltip("Segundos hasta que el objeto se puede manipular. 20 = 20 seg.")]
-    public float tiempoDesbloqueo = 20f;
-
-    private float timerDesbloqueo = 0f;
-    private bool desbloqueado = false;
 
     [Header("Zona correcta")]
     public Transform zonaCorrecta;
@@ -47,25 +41,10 @@ public class HandDraggable : MonoBehaviour
 
     void Update()
     {
-        if (!desbloqueado)
-        {
-            timerDesbloqueo += Time.deltaTime;
-            if (timerDesbloqueo >= tiempoDesbloqueo)
-            {
-                desbloqueado = true;
-                yaColocado   = false;
-                Debug.Log($"[HandDraggable] {gameObject.name} desbloqueado para manipulación.");
-            }
-            return;
-        }
-
-        if (yaColocado)
-            return;
+        if (yaColocado) return;
 
         if (PuedeColocarse())
-        {
             Colocar();
-        }
     }
 
     public bool PuedeColocarse()

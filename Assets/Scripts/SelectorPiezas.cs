@@ -22,7 +22,9 @@ public class SelectorArco : MonoBehaviour
 
     [Header("Offset Visual")]
     public Vector3 offsetVisual;
-    public OrbbecUnity.OrbbecDevice orbbecDevice;
+
+    [Header("Arrastre")]
+    public HandTracker handTracker;
 
     private int ultimoGanador = -1;
     private int ultimoIndiceMostrado = -1;
@@ -53,18 +55,6 @@ public class SelectorArco : MonoBehaviour
     public void IniciarRuleta()
     {
         StartCoroutine(Ruleta());
-    }
-
-    IEnumerator EncenderOrbbec()
-    {
-        yield return new WaitForSeconds(1f);
-
-        if (orbbecDevice != null)
-        {
-            orbbecDevice.enabled = true;
-
-            Debug.Log("ORBBEC ACTIVADO");
-        }
     }
 
     IEnumerator Ruleta()
@@ -185,9 +175,7 @@ public class SelectorArco : MonoBehaviour
             (ganador + 1)
         );
 
-        StartCoroutine(
-            EncenderOrbbec()
-        );
+        handTracker?.HabilitarArrastre();
     }
 
     IEnumerator FadeIn()
