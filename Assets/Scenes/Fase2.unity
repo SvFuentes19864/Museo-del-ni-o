@@ -9466,8 +9466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa774ff6e36d59c4fae9641536c6da67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTracker
-  pythonExecutable: C:\juegos-nino\Tracking-Server\.venv\Scripts\python.exe
-  pythonScriptPath: C:\juegos-nino\Tracking-Server\main.py
+  pythonExecutable: C:\Users\alane\OneDrive\Escritorio\Tracking Server\.venv\Scripts\python.exe
+  pythonScriptPath: C:\Users\alane\OneDrive\Escritorio\Tracking Server\main.py
   serverHost: 127.0.0.1
   serverPort: 9000
   reconnectDelaySec: 2
@@ -9487,7 +9487,7 @@ MonoBehaviour:
   - {fileID: 873279421}
   areaCanvas: {fileID: 1729519252}
   deadZonePx: 6
-  radioDeReclamacion: 2
+  radioDeReclamacion: 3
   tiempoParaReclamar: 1
   suavizadoAvatares: 10
   handPositionNormalized: {x: 0, y: 0}
@@ -28154,10 +28154,10 @@ MonoBehaviour:
         z: 2.7574656
       Rotation:
         value:
-          x: -0.028165793
-          y: 0.8987563
-          z: -0.32232478
-          w: 0.2958894
+          x: -0.028165802
+          y: 0.89875627
+          z: -0.32232475
+          w: 0.29588935
     - Position:
         x: 9.099999
         y: -9.31
@@ -39725,7 +39725,6 @@ GameObject:
   - component: {fileID: 1508154648}
   - component: {fileID: 1508154647}
   - component: {fileID: 1508154651}
-  - component: {fileID: 1508154644}
   - component: {fileID: 1508154650}
   m_Layer: 0
   m_Name: Iglesia
@@ -39754,22 +39753,6 @@ Transform:
   - {fileID: 1787635257}
   m_Father: {fileID: 1939339324}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!208 &1508154644
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1508154641}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.010000001, z: 0.043}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: -0.003, y: 0.039, z: 0.041}
-  m_TimeToStationary: 0.5
 --- !u!23 &1508154647
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -39853,7 +39836,7 @@ MonoBehaviour:
   gameManager: {fileID: 774813800}
   yaColocado: 1
   zonaCorrecta: {fileID: 33275456}
-  distanciaSnap: 1.5
+  distanciaSnap: 3
   onPlaced:
     m_PersistentCalls:
       m_Calls:
@@ -47085,7 +47068,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1939339324}
-  - component: {fileID: 1939339326}
   - component: {fileID: 1939339325}
   m_Layer: 0
   m_Name: IglesiaPivot
@@ -47141,27 +47123,6 @@ MonoBehaviour:
   audioGanador: {fileID: 1787635258}
   offsetVisual: {x: 0, y: 0, z: 0}
   handTracker: {fileID: 421260217}
---- !u!135 &1939339326
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1939339323}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!64 &1945262998
 MeshCollider:
   m_ObjectHideFlags: 0
