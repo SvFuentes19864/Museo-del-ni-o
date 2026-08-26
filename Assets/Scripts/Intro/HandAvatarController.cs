@@ -17,11 +17,15 @@ public class HandAvatarController : MonoBehaviour
     public float smoothSpeed = 10f;
     [Tooltip("Movimiento mínimo (px canvas) para actualizar el target. Elimina jitter estacionario.")]
     public float deadZonePx = 6f;
+    [Tooltip("Corrección manual (px canvas) si la mano tracked queda desfasada de lo proyectado.")]
+    public Vector2 offsetTracking = Vector2.zero;
+    [Tooltip("Factor de escala por eje. Sube si el rango tracked queda 'corto' respecto a la mesa, baja si se pasa.")]
+    public Vector2 escalaTracking = Vector2.one;
 
     // ── Estado interno ────────────────────────────────────────────────────────
 
     private readonly Dictionary<int, int> _manoAAvatar = new();
-    private bool[]    _avatarEnUso;
+    private bool[] _avatarEnUso;
     private Vector2[] _targetPos;      // destino actualizado por TCP (~26 fps)
 
     // ── Lifecycle ─────────────────────────────────────────────────────────────
@@ -29,14 +33,14 @@ public class HandAvatarController : MonoBehaviour
     void Start()
     {
         _avatarEnUso = new bool[avatares.Length];
-        _targetPos   = new Vector2[avatares.Length];
+        _targetPos = new Vector2[avatares.Length];
 
         foreach (var av in avatares)
             if (av) av.gameObject.SetActive(false);
 
         handTracker.OnHandDown += OnManoAbajo;
         handTracker.OnHandMove += OnManoMueve;
-        handTracker.OnHandUp   += OnManoSube;
+        handTracker.OnHandUp += OnManoSube;
     }
 
     void OnDestroy()
@@ -44,7 +48,7 @@ public class HandAvatarController : MonoBehaviour
         if (handTracker == null) return;
         handTracker.OnHandDown -= OnManoAbajo;
         handTracker.OnHandMove -= OnManoMueve;
-        handTracker.OnHandUp   -= OnManoSube;
+        handTracker.OnHandUp -= OnManoSube;
     }
 
     // Update corre a 60 fps: lerp suave desde posición actual hacia _targetPos
@@ -66,7 +70,7 @@ public class HandAvatarController : MonoBehaviour
         int idx = PrimerAvatarLibre();
         if (idx < 0) return;
 
-        _avatarEnUso[idx]  = true;
+        _avatarEnUso[idx] = true;
         _manoAAvatar[p.id] = idx;
 
         // En down: teletransportar al punto inicial sin lerp
@@ -101,9 +105,9 @@ public class HandAvatarController : MonoBehaviour
         if (areaCanvas == null) return Vector2.zero;
         Rect r = areaCanvas.rect;
         return new Vector2(
-            (nx - 0.5f) * r.width,
-            (0.5f - ny) * r.height
-        );
+            (nx - 0.5f) * r.width * escalaTracking.x,
+            (0.5f - ny) * r.height * escalaTracking.y
+        ) + offsetTracking;
     }
 
     int PrimerAvatarLibre()
