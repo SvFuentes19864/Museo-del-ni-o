@@ -9466,8 +9466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa774ff6e36d59c4fae9641536c6da67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTracker
-  pythonExecutable: C:\Users\alane\OneDrive\Escritorio\Tracking Server\.venv\Scripts\python.exe
-  pythonScriptPath: C:\Users\alane\OneDrive\Escritorio\Tracking Server\main.py
+  pythonExecutable: C:\juegos-nino\Opencv-nino\.venv\Scripts\python.exe
+  pythonScriptPath: C:\juegos-nino\Opencv-nino\main.py
   serverHost: 127.0.0.1
   serverPort: 9000
   reconnectDelaySec: 2
@@ -28154,10 +28154,10 @@ MonoBehaviour:
         z: 2.7574656
       Rotation:
         value:
-          x: -0.028165793
-          y: 0.8987563
-          z: -0.32232478
-          w: 0.2958894
+          x: -0.028165802
+          y: 0.89875627
+          z: -0.32232475
+          w: 0.29588935
     - Position:
         x: 9.099999
         y: -9.31

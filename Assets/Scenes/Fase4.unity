@@ -14186,8 +14186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89a89a452f91cbc40ac4bb7c5cfbf960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTrackerF4
-  pythonExecutable: C:\Users\alane\OneDrive\Escritorio\Tracking Server\.venv\Scripts\python.exe
-  pythonScriptPath: C:\Users\alane\OneDrive\Escritorio\Tracking Server\main.py
+  pythonExecutable: C:\juegos-nino\Opencv-nino\.venv\Scripts\python.exe
+  pythonScriptPath: C:\juegos-nino\Opencv-nino\main.py
   serverHost: 127.0.0.1
   serverPort: 9000
   reconnectDelaySec: 2
@@ -36911,6 +36911,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 1
   tiempoParaReclamar: 0.1
+  suavizadoMovimiento: 10
   zonaCorrectaF4: {fileID: 1343162737}
   offsetSnap: {x: 0.1077, y: 0, z: 0.0551}
   objetosAOcultar:
@@ -77159,6 +77160,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 1
   tiempoParaReclamar: 0.1
+  suavizadoMovimiento: 10
   zonaCorrectaF4: {fileID: 218571214}
   offsetSnap: {x: -0.048, y: 0, z: -0.37}
   objetosAOcultar:
@@ -81140,6 +81142,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 1
   tiempoParaReclamar: 0.1
+  suavizadoMovimiento: 10
   zonaCorrectaF4: {fileID: 1303891756}
   offsetSnap: {x: 0, y: 0, z: 0}
   objetosAOcultar:
@@ -81968,6 +81971,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 1
   tiempoParaReclamar: 0.1
+  suavizadoMovimiento: 10
   zonaCorrectaF4: {fileID: 116269522}
   offsetSnap: {x: 0, y: 0, z: 0}
   objetosAOcultar:
@@ -122681,6 +122685,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 1
   tiempoParaReclamar: 0.1
+  suavizadoMovimiento: 10
   zonaCorrectaF4: {fileID: 1356902322}
   offsetSnap: {x: 0.128, y: 0, z: 0.01}
   objetosAOcultar:
@@ -200081,6 +200086,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 1
   tiempoParaReclamar: 0.1
+  suavizadoMovimiento: 10
   zonaCorrectaF4: {fileID: 211634913}
   offsetSnap: {x: 0, y: 0, z: 0}
   objetosAOcultar:
@@ -303997,6 +304003,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 1
   tiempoParaReclamar: 0.1
+  suavizadoMovimiento: 10
   zonaCorrectaF4: {fileID: 1351270003}
   offsetSnap: {x: 0, y: 0, z: 0}
   objetosAOcultar:
@@ -308694,6 +308701,7 @@ MonoBehaviour:
   gameManager: {fileID: 615146690}
   yaColocadoF4: 1
   tiempoParaReclamar: 0.1
+  suavizadoMovimiento: 10
   zonaCorrectaF4: {fileID: 156370158}
   offsetSnap: {x: 0, y: 0, z: 0}
   objetosAOcultar:
