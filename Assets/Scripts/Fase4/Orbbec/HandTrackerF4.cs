@@ -37,6 +37,9 @@ public class HandTrackerF4 : MonoBehaviour
     [HideInInspector] public readonly Dictionary<int, Vector2> handViewportPositions = new();
     [HideInInspector] public readonly Dictionary<int, bool>    handPressedStates     = new();
 
+    // Manos ya reclamadas por algún HandDraggableF4, para que una mano no mueva dos objetos a la vez.
+    [HideInInspector] public readonly HashSet<int> manosReclamadas = new();
+
     private readonly Dictionary<int, int>   _manoAAvatar = new();
     private bool[]    _avatarEnUso;
     private Vector2[] _targetPos;

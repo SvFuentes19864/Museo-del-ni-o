@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,9 +17,16 @@ public class HandDraggableF4 : MonoBehaviour
     [Tooltip("Segundos que la mano debe mantenerse dentro del BoxCollider antes de tomar control")]
     public float tiempoParaReclamar = 1f;
 
+    [Header("Suavizado de movimiento")]
+    [Tooltip("Igual que suavizadoAvatares en el tracker. Sube para más respuesta.")]
+    public float suavizadoMovimiento = 10f;
+
     [Header("Zona correcta")]
     public Transform zonaCorrectaF4;
     public Vector3 offsetSnap = Vector3.zero;
+
+    [Header("Objetos a ocultar al colocar")]
+    public List<GameObject> objetosAOcultar = new();
 
 
     [Header("Evento al colocar")]
@@ -34,8 +42,8 @@ public class HandDraggableF4 : MonoBehaviour
 
     public void HabilitarArrastre()
     {
-        desbloqueado  = true;
-        yaColocadoF4  = false;
+        desbloqueado = true;
+        yaColocadoF4 = false;
     }
 
     private int handIdReclamante = -1;
@@ -59,6 +67,7 @@ public class HandDraggableF4 : MonoBehaviour
             // mano desapareció (TCP "up")
             if (!positions.ContainsKey(handIdReclamante))
             {
+                handTracker.manosReclamadas.Remove(handIdReclamante);
                 handIdReclamante = -1;
                 hoverTimer = 0f;
                 return;
@@ -69,7 +78,9 @@ public class HandDraggableF4 : MonoBehaviour
             Vector3 colOffset = _col != null
                 ? transform.TransformPoint(_col.center) - transform.position
                 : Vector3.zero;
-            transform.position = new Vector3(pos.x - colOffset.x, transform.position.y, pos.z - colOffset.z);
+            Vector3 destino = new Vector3(pos.x - colOffset.x, transform.position.y, pos.z - colOffset.z);
+            float t = suavizadoMovimiento <= 0f ? 1f : 1f - Mathf.Exp(-suavizadoMovimiento * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, destino, t);
 
             // snap inmediato al entrar en la zona
             if (PuedeColocarseF4()) ColocarF4();
@@ -86,6 +97,7 @@ public class HandDraggableF4 : MonoBehaviour
 
             foreach (var kvp in worldPositions)
             {
+                if (handTracker.manosReclamadas.Contains(kvp.Key)) continue; // ya la tiene otro objeto
                 // chequeo solo en XZ: el Y de la mano proyectada puede no coincidir con el collider
                 Vector3 posXZ = new Vector3(kvp.Value.x, col.bounds.center.y, kvp.Value.z);
                 if (!col.bounds.Contains(posXZ)) continue;
@@ -99,6 +111,7 @@ public class HandDraggableF4 : MonoBehaviour
                 if (hoverTimer >= tiempoParaReclamar)
                 {
                     handIdReclamante = nearestId;
+                    handTracker.manosReclamadas.Add(nearestId);
                     Debug.Log($"[HandDraggableF4] {gameObject.name} reclamado por mano {nearestId}");
                 }
             }
@@ -136,6 +149,17 @@ public class HandDraggableF4 : MonoBehaviour
 
         yaColocadoF4 = true;
         this.enabled = false;
+
+        if (handIdReclamante >= 0)
+        {
+            handTracker.manosReclamadas.Remove(handIdReclamante);
+            handIdReclamante = -1;
+        }
+
+        zonaCorrectaF4?.gameObject.SetActive(false); // oculta la zona una vez usada
+
+        foreach (var obj in objetosAOcultar)
+            if (obj != null) obj.SetActive(false);
 
         gameManager?.RegistrarColocacion();
         onPlacedF4?.Invoke();
