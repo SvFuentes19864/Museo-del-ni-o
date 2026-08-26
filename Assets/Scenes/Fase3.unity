@@ -27538,8 +27538,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa774ff6e36d59c4fae9641536c6da67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTracker
-  pythonExecutable: C:\juegos-nino\Tracking-Server\.venv\Scripts\python.exe
-  pythonScriptPath: C:\juegos-nino\Tracking-Server\main.py
+  pythonExecutable: C:\Users\alane\OneDrive\Escritorio\Tracking Server\.venv\Scripts\python.exe
+  pythonScriptPath: C:\Users\alane\OneDrive\Escritorio\Tracking Server\main.py
   serverHost: 127.0.0.1
   serverPort: 9000
   reconnectDelaySec: 2
@@ -27560,7 +27560,7 @@ MonoBehaviour:
   areaCanvas: {fileID: 220568739}
   deadZonePx: 6
   radioDeReclamacion: 3
-  tiempoParaReclamar: 1
+  tiempoParaReclamar: 0.1
   suavizadoAvatares: 10
   handPositionNormalized: {x: 0, y: 0}
   handDepth: 0
@@ -34176,12 +34176,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -6763858364670572316, guid: 6a673c940bc3f0c438685121863c99ef, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1083467623}
-    - targetCorrespondingSourceObject: {fileID: -6763858364670572316, guid: 6a673c940bc3f0c438685121863c99ef, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1083467624}
-    - targetCorrespondingSourceObject: {fileID: -6763858364670572316, guid: 6a673c940bc3f0c438685121863c99ef, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1083467629}
     - targetCorrespondingSourceObject: {fileID: -6763858364670572316, guid: 6a673c940bc3f0c438685121863c99ef, type: 3}
       insertIndex: -1
@@ -35967,43 +35961,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -6763858364670572316, guid: 6a673c940bc3f0c438685121863c99ef, type: 3}
   m_PrefabInstance: {fileID: 955015149}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1083467623
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1083467619}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 104.12748, y: 24.954185, z: 53.37218}
-  m_Center: {x: -0.008596419, y: 0.059087284, z: 0.013017654}
---- !u!208 &1083467624
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1083467619}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 52.064003, y: 12.477, z: 26.686}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: -0.009000001, y: 0.059000004, z: 0.013}
-  m_TimeToStationary: 0.5
 --- !u!4 &1083467625 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -775069670341356040, guid: 6a673c940bc3f0c438685121863c99ef, type: 3}
@@ -36055,7 +36012,7 @@ MonoBehaviour:
   gameManager: {fileID: 774813800}
   yaColocado: 1
   zonaCorrecta: {fileID: 33275456}
-  distanciaSnap: 1.5
+  distanciaSnap: 3
   onPlaced:
     m_PersistentCalls:
       m_Calls:
