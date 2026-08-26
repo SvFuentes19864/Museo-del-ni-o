@@ -716,7 +716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IntroDetectorManos
   introManager: {fileID: 1729423525}
-  manosNecesarias: 2
+  manosNecesarias: 1
   tiempoParaIniciar: 3
   radioActivacion: 80
   avatarController: {fileID: 150679155}
@@ -1899,8 +1899,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3d767a92d0d634a922bb03fd2194ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IntroHandTracker
-  pythonExecutable: C:\juegos-nino\Tracking-Server\.venv\Scripts\python.exe
-  pythonScriptPath: C:\juegos-nino\Tracking-Server\main.py
+  pythonExecutable: C:\Users\alane\OneDrive\Escritorio\Tracking Server\.venv\Scripts\python.exe
+  pythonScriptPath: C:\Users\alane\OneDrive\Escritorio\Tracking Server\main.py
   serverHost: 127.0.0.1
   serverPort: 9000
   reconnectDelaySec: 2

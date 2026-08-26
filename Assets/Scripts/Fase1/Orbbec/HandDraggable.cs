@@ -76,6 +76,11 @@ public class HandDraggable : MonoBehaviour
         yaColocado    = true;
         this.enabled  = false; // bloqueado permanentemente, HandTracker ya no lo moverá
 
+        if (zonaCorrecta != null)
+        {
+            zonaCorrecta.gameObject.SetActive(false); // oculta la zona una vez usada
+        }
+
         if (gameManager != null)
         {
             gameManager.RegistrarColocacion();
